@@ -31,3 +31,9 @@ resources 而不是try-finally
 new runnable waiting time-waiting(可以自动返回) terminated blocked(阻塞状态，被锁了)
 ###### 既然有了字节流,为什么还要有字符流
 不管是文件读写还是网络发送接收，信息的最小存储单元都是字节,但是将字节流转换成字符流的过程非常耗时。
+###### get与post的区别
+本质上没区别，都是tcp链接。给GET加上request body，给POST带上url参数，技术上是完全行的通的。只是HTTP的规定和浏览器/服务器的限制，
+导致他们在应用过程中体现出一些不同。 restful api的要求是get请求用来从服务器上获得资源，而post是用来向服务器提交数据。另外，对于GET
+方式的请求，浏览器会把http header和data一并发送出去，服务器响应200（返回数据）;而对于POST，浏览器先发送header，服务器响应100 
+continue，浏览器再发送data，服务器响应200 ok（返回数据）。在网络环境好的情况下，发一次包的时间和发两次包的时间差别基本可以无视。
+而在网络环境差的情况下，两次包的TCP在验证数据包完整性上，有非常大的优点。并且，也不是所有浏览器post都发两次，firefox就只发一次。
