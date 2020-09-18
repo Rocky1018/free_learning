@@ -37,11 +37,8 @@ new runnable waiting time-waiting(可以自动返回) terminated blocked(阻塞�
 方式的请求，浏览器会把http header和data一并发送出去，服务器响应200（返回数据）;而对于POST，浏览器先发送header，服务器响应100 
 continue，浏览器再发送data，服务器响应200 ok（返回数据）。在网络环境好的情况下，发一次包的时间和发两次包的时间差别基本可以无视。
 而在网络环境差的情况下，两次包的TCP在验证数据包完整性上，有非常大的优点。并且，也不是所有浏览器post都发两次，firefox就只发一次。
-##### 准备开始啃哈希表
-hashset和hashtable都是基于hashmap实现的，先啃hashmap源码。LinkedHashMap增加了双向链表，啃完hashmap就开始啃这个。然后啃红黑树。
-然后啃扩容机制（array list和hashmap）。
 #### hashmap源码解读
-哈希表的核心原理是基于和哈希值的桶和链表，缺陷是哈希碰撞。
+哈希表的核心原理是基于和哈希值的桶和链表，缺陷是哈希碰撞。另外linked hashmap就是增加了双向链表的hashmap，用来保持键值对的插入顺序。
 ##### hashmap的经典实现（jdk1.7）
 ###### hashmap初始容量是多少？为什么是这个数字？
 初始容量是16，负载因子是0.75。容量是2的幂，如果不是2的幂会向上取幂。默认的哈希桶有16个，hash值有42E个，如何把42E个hash值放进16个
@@ -72,3 +69,6 @@ PS：为了减少哈希碰撞，1.7的hash值做了很多的异或运算，在1.
 5 实际扩容操作 int newCapacity = oldCapacity + (oldCapacity >> 1);然后会比较minCapacity与newCapacity，取较大值作为实际扩容量。
 如果minCapacity大于最大容量（MAX_ARRAY_SIZE），则新容量则为Integer.MAX_VALUE。
 6 最后简单复制一下数组：elementData = Arrays.copyOf(elementData, newCapacity);
+###### ConcurrentHashMap为什么是线程安全的
+采用 CAS 和 synchronized 来保证并发安全，synchronized 只锁定当前链表或红黑二叉树的首节点，这样只要 hash 不冲突，就不会产生并发。
+关于锁和并发的知识以后再补，这里先打个记号
