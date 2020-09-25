@@ -1,6 +1,8 @@
-import sun.util.locale.provider.AvailableLanguageTags;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class AVL {
+    public static final int DELETED_NODE_DATA = -1;
     int data, height;//结点数据和树的高度
     AVL left, right;//左子树右子树
 
@@ -47,13 +49,11 @@ public class AVL {
             node.height = 0;
             node.left = null;
             node.right = null;
-            System.out.println("insert root and data is " + node.data);
-            return node;
         }
 
         //目标节点小于当前节点 则插入当前节点的左子树
         if (data < node.data) {
-            node.left = node.insert(node.left, data);//递归到最后只更新了一个节点高度
+            node.left = insert(node.left, data);//递归到最后只更新了一个节点高度
             //左右子树高度 计算平衡因子
             int leftHeight = getHeight(node.left);
             int rightHeight = getHeight(node.right);
@@ -67,9 +67,9 @@ public class AVL {
                     node = rotationLR(node);
                 }
             }
-        } else if (data < node.data) {
+        } else if (data > node.data) {
             //目标节点大于当前节点 则插入当前节点的右子树
-            node.right = node.insert(node.right, data);
+            node.right = insert(node.right, data);
             int leftHeight = getHeight(node.left);
             int rightHeight = getHeight(node.right);
             //如果插入导致右子树失衡，即右子树比左子树高2
@@ -84,7 +84,6 @@ public class AVL {
             }
         }
         node.height = (getHeight(node.left) > getHeight(node.right) ? getHeight(node.left) : getHeight(node.right)) + 1;
-        System.out.println("method insert returns " + node.data);
         return node;
     }
 
@@ -128,10 +127,13 @@ public class AVL {
         } else {
             //左右子树都不为空时用右子树最小节点代替被删除节点
             if (node.left != null && node.right != null) {
-                //传引用node已经被改过了所以临时保存一下
                 AVL tmp = findMin(node.right);
                 node.data = tmp.data;
-                node.right = delete(node.right, data);
+                //删除这个节点
+                tmp.data = DELETED_NODE_DATA;
+                tmp.left = null;
+                tmp.right = null;
+                //delete(node.right, data);
             } else if (node.left == null) {
                 node = node.right;
             } else if (node.right == null) {
@@ -141,6 +143,7 @@ public class AVL {
         return node;
     }
 
+
     /**
      * 1.	左子树变成新的根节点
      * 2.	旧的根节点变成右子树
@@ -149,6 +152,7 @@ public class AVL {
      * @param node
      */
     AVL rotationLL(AVL node) {
+        System.out.println("LL run");
         AVL root = node.left;
         node.left = root.right;
         root.right = node;
@@ -161,11 +165,13 @@ public class AVL {
     //1.	根节点的左子树进行右旋转
     //2.	根节点进行左旋转
     AVL rotationLR(AVL node) {
+        System.out.println("LR run");
         node.left = rotationRR(node.left);
         return rotationLL(node);
     }
 
     AVL rotationRR(AVL node) {
+        System.out.println("RR run");
         AVL root = node.right;
         node.right = root.left;
         root.left = node;
@@ -178,13 +184,14 @@ public class AVL {
     //1.	根节点的右子树进行左旋转
     //2.	根节点进行右旋转
     AVL rotationRL(AVL node) {
+        System.out.println("RL run");
         node.right = rotationLL(node.right);
         return rotationRR(node);
     }
 
 
     void preOrderTraversal(AVL node) {
-        if (node == null) {
+        if (node == null || node.data == DELETED_NODE_DATA) {
             return;
         }
         System.out.print(node.data + " ");
@@ -193,7 +200,7 @@ public class AVL {
     }
 
     void inOrderTraversal(AVL node) {
-        if (node == null) {
+        if (node == null || node.data == DELETED_NODE_DATA) {
             return;
         }
         node.inOrderTraversal(node.left);
@@ -202,7 +209,7 @@ public class AVL {
     }
 
     void postOrderTraversal(AVL node) {
-        if (node == null) {
+        if (node == null || node.data == DELETED_NODE_DATA) {
             return;
         }
         node.postOrderTraversal(node.left);
@@ -210,20 +217,38 @@ public class AVL {
         System.out.print(node.data + " ");
     }
 
+    //层序遍历
+    void layerOrder(AVL node) {
+        Queue<AVL> queue = new LinkedList<>();
+        queue.offer(node);
+        while (!queue.isEmpty()) {
+            AVL iterator = queue.poll();
+            if (iterator != null && iterator.data != DELETED_NODE_DATA) {
+                System.out.print(iterator.data + "\t");
+            }
+            if (iterator.left != null) {
+                queue.offer(iterator.left);
+            }
+            if (iterator.right != null) {
+                queue.offer(iterator.right);
+            }
+        }
+    }
+
     AVL create(int[] data) {
         AVL node = null;
         for (int i = 0; i < data.length; i++) {
             node = insert(node, data[i]);
+            System.out.println("insert returns node data " + node.data);
         }
         return node;
     }
 
 
     public static void main(String[] args) {
-        int data[] = {20, 10};
-        AVL node = new AVL();
-        node.create(data);
-
-        System.out.println(node.data);
+        int data[] = {10, 20, 30, 40, 50, 60, 70};
+        AVL node = new AVL().create(data);
+        new AVL().delete(node, 40);
+        new AVL().layerOrder(node);
     }
 }
