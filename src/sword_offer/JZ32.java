@@ -18,7 +18,7 @@ public class JZ32 {
                 }
             }
         }
-        String str = new String("");
+        String str = "";
         for (int i = 0; i < numbers.length; i++)
             str = str + numbers[i];
         return str;
