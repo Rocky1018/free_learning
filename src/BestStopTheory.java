@@ -24,6 +24,7 @@ public class BestStopTheory {
             for (int i = 37; i < 100; i++) {
                 if (candidate[i] > maxInTop37) {
                     bestMatch = maxInTop37;
+                    break;
                 }
             }
             int rank = 1;
