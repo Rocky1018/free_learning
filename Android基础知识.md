@@ -41,3 +41,11 @@ handler获取当前线程looper，looper取出messageQueue，完成三者绑定�
 本质是handler和线程池的封装，实例只能在主线程中创建。最大线程数=cpu核心数*2+1。
 ###### butterKnife原理
 1 扫描所有Java代码中的butterKnife注解 2 ButterKnifeProcessor会根据className生成viewBinder 3 调用bind方法加载生成的viewBinder类
+###### https四次握手
+1 客户端请求建立SSL链接，并向服务端发送一个随机数–Client random和客户端支持的加密方法，比如RSA公钥加密，此时是明文传输。<br>
+2 服务端回复一种客户端支持的加密方法、一个随机数–Server random、授信的服务器证书和非对称加密的公钥。<br>
+3 客户端收到服务端的回复后利用服务端的公钥，加上新的随机数–Premaster secret 通过服务端下发的公钥及加密方法进行加密，发送给服务器。<br>
+4 服务端收到客户端的回复，利用已知的加解密方式进行解密，同时利用Client random、Server random和Premaster secret通过一定的算法
+生成HTTP链接数据传输的对称加密key – session key。<br>
+个人总结和tcp三次握手基本一样，发送的随机数作用就和syn和ack的作用差不多，区别就是每次携带了支持的加密类型或者公钥。最后多出来的一次
+握手其实就是服务端做的解密工作。
