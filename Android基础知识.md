@@ -49,3 +49,15 @@ handler获取当前线程looper，looper取出messageQueue，完成三者绑定�
 生成HTTP链接数据传输的对称加密key – session key。<br>
 个人总结和tcp三次握手基本一样，发送的随机数作用就和syn和ack的作用差不多，区别就是每次携带了支持的加密类型或者公钥。最后多出来的一次
 握手其实就是服务端做的解密工作。
+服务端创建aidl；
+服务端实现aidl并向客户端开放接口（创建service ，声明ibinder，实现stub实例。stub实例中实现的方法就是后面供客户端调用的方法）；
+客户端调用aidl（包目录保持一致，然后绑定服务即可，绑定的时候走stub的asinterface方法）；
+jni与ndk开发
+线程池：
+主要就是减少线程开销，有固定线程池（核心线程数和最大线程数相等），带缓冲的线程池（核心线程数为0，每次有新的runnable进来就再创建线程），单线程线程池（保证线程顺序执行）等等。执行线程的时候execute没有返回值，submit会返回future。
+耗时操作处理
+用intentservice，或者线程池，或者handlerthread，或者asynctask。
+sqlite支持多线程吗
+并发读无限，不支持并发写。基于文件系统的锁机制。
+关于锁的知识
+mvvm模式：无论业务怎么变，只操作viewmodel
