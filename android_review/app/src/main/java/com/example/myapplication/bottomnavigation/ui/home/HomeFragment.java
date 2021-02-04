@@ -49,7 +49,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private RecyclerView idlePropertyRecyclerView;
     private Toolbar homeFragmentHeadToolbar;
 
-    private LinearLayoutManager manager;
 
     private HomeViewModel homeViewModel;
 
@@ -84,8 +83,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
 
         idlePropertyRecyclerView = (RecyclerView) root.findViewById(R.id.rv_idleProperty);
-        manager = new LinearLayoutManager(getContext());
-        idlePropertyRecyclerView.setLayoutManager(manager);
+        idlePropertyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         IdleGoodsAdapter idleGoodsAdapter = new IdleGoodsAdapter(idleGoodsInfoList, getContext());
         View view = LayoutInflater.from(getContext()).
                 inflate(R.layout.idle_goods_header, idlePropertyRecyclerView, false);

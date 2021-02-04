@@ -1,11 +1,10 @@
 <resources>
     <string name="app_name">校园二手</string>
-    <string name="title_activity_botton_navigation">主页</string>
 
     <string name="title_activity_register">用户注册</string>
 
     <!--底部菜单栏-->
-    <string name="title_home">闲虾</string>
+    <string name="title_home">首页</string>
     <string name="title_add">卖闲置</string>
     <string name="title_my">我的</string>
     <string name="title_message">消息</string>

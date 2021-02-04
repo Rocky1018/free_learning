@@ -13,12 +13,12 @@
 
     <ImageView
         android:id="@+id/iv_login_myIcon"
-        android:background="@drawable/ic_myicon"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginStart="130dp"
         android:layout_marginTop="96dp"
         android:layout_marginEnd="130dp"
+        android:background="@mipmap/app_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
