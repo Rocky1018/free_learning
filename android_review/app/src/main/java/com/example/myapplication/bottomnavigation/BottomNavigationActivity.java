@@ -21,35 +21,7 @@ import com.example.myapplication.bottomnavigation.ui.my.MyFragment;
 import com.example.myapplication.myview.FixFragmentNavigator;
 import com.example.myapplication.utils.BaseActivity;
 
-public class BottonNavigationActivity extends BaseActivity {
-
-    /*@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_botton_navigation);
-
-        //隐藏系统自带顶部状态栏
-        ActionBar supportActionBar = getSupportActionBar();
-        if (supportActionBar != null) {
-            supportActionBar.hide();
-        }
-
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-
-        // 用跳转目的地fragment构建配置类
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_add, R.id.navigation_message, R.id.navigation_my)
-                .build();
-
-        // 用fragment容器构建导航控制器
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-
-        // 为导航控制器设置配置类
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        // 关联NavigationView和导航控制器
-        NavigationUI.setupWithNavController(navView, navController);
-    }*/
-
+public class BottomNavigationActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +53,7 @@ public class BottonNavigationActivity extends BaseActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 navController.navigate(item.getItemId());
-//                Toast.makeText(BottonNavigationActivity.this, "You clicked me!" + item.getItemId(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(BottomNavigationActivity.this, "You clicked me!" + item.getItemId(), Toast.LENGTH_SHORT).show();
                 return true;
             }
         });

@@ -18,7 +18,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 
 import com.example.myapplication.R;
-import com.example.myapplication.bottomnavigation.BottonNavigationActivity;
+import com.example.myapplication.bottomnavigation.BottomNavigationActivity;
 import com.example.myapplication.domain.User;
 import com.example.myapplication.register.RegisterActivity;
 import com.example.myapplication.service.GetUserInfo;
@@ -28,8 +28,6 @@ import com.example.myapplication.utils.IdentifyingCodeUtils;
 import com.example.myapplication.utils.MD5Util;
 import com.example.myapplication.utils.SharePreferencesUtils;
 import com.google.gson.Gson;
-
-import java.util.Map;
 
 public class LoginActivity extends BaseActivity {
 
@@ -108,7 +106,7 @@ public class LoginActivity extends BaseActivity {
                 Toast.makeText(LoginActivity.this, "登入成功", Toast.LENGTH_SHORT).show();
 
                 //跳转主页面
-                Intent intent = new Intent(LoginActivity.this, BottonNavigationActivity.class);
+                Intent intent = new Intent(LoginActivity.this, BottomNavigationActivity.class);
                 startActivity(intent);
             } else {
                 loadingProgressBar.setVisibility(View.INVISIBLE);
@@ -132,7 +130,7 @@ public class LoginActivity extends BaseActivity {
             }
 
             //跳转主页面
-            Intent intent = new Intent(LoginActivity.this, BottonNavigationActivity.class);
+            Intent intent = new Intent(LoginActivity.this, BottomNavigationActivity.class);
             startActivity(intent);
         }
 
@@ -180,7 +178,7 @@ public class LoginActivity extends BaseActivity {
                                     SharePreferencesUtils.USER_INFORMATION_FILE);
 
                             //跳转主页面
-                            Intent intent = new Intent(LoginActivity.this, BottonNavigationActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, BottomNavigationActivity.class);
                             startActivity(intent);
                         } else {
                             loadingProgressBar.setVisibility(View.INVISIBLE);
