@@ -1,7 +1,10 @@
 package com.example.myapplication.bottomnavigation;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -13,20 +16,25 @@ import androidx.navigation.NavigatorProvider;
 import androidx.navigation.fragment.FragmentNavigator;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.myapplication.R;
 import com.example.myapplication.bottomnavigation.ui.add.AddFragment;
 import com.example.myapplication.bottomnavigation.ui.home.HomeFragment;
 import com.example.myapplication.bottomnavigation.ui.my.MyFragment;
+import com.example.myapplication.login.LoginActivity;
 import com.example.myapplication.myview.FixFragmentNavigator;
 import com.example.myapplication.utils.BaseActivity;
+import com.example.myapplication.utils.SharePreferencesUtils;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BottomNavigationActivity extends BaseActivity {
+    String userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_botton_navigation);
         BottomNavigationView navView = findViewById(R.id.nav_view);
+        userId = (String) SharePreferencesUtils.getParam(this, "userId", "");
 
         //隐藏系统自带顶部状态栏
         ActionBar supportActionBar = getSupportActionBar();
@@ -49,15 +57,21 @@ public class BottomNavigationActivity extends BaseActivity {
         //设置导航图
         navController.setGraph(navGraph);
         //底部导航设置点击事件
-        navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        navView.setOnNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.navigation_my) {
+                if (TextUtils.isEmpty(userId)) {
+                    startActivity(new Intent(this, LoginActivity.class));
+                    return false;
+                } else {
+                    navController.navigate(item.getItemId());
+                }
+            } else {
                 navController.navigate(item.getItemId());
-//                Toast.makeText(BottomNavigationActivity.this, "You clicked me!" + item.getItemId(), Toast.LENGTH_SHORT).show();
-                return true;
             }
+            return true;
         });
     }
+
 
     private NavGraph initNavGraph(NavigatorProvider provider, FixFragmentNavigator fragmentNavigator) {
         NavGraph navGraph = new NavGraph(new NavGraphNavigator(provider));
