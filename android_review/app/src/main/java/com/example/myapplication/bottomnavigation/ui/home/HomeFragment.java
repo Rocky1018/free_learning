@@ -52,6 +52,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private HomeViewModel homeViewModel;
 
+    private List<IdleGoods> initFakeGoods() {
+        List<IdleGoods> goods = new ArrayList<>();
+        goods.add(new IdleGoods().initTestData());
+        goods.add(new IdleGoods().initTestData());
+        goods.add(new IdleGoods().initTestData());
+        goods.add(new IdleGoods().initTestData());
+        goods.add(new IdleGoods().initTestData());
+        goods.add(new IdleGoods().initTestData());
+        return goods;
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
@@ -79,7 +90,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         // 初始化闲置物列表
         idleGoodsInfoList = GetIdleGoodsInfoList.getIdleGoodsInfoList();
         if (idleGoodsInfoList == null) {
-            idleGoodsInfoList = new ArrayList<>();
+            idleGoodsInfoList = initFakeGoods();
         }
 
         idlePropertyRecyclerView = (RecyclerView) root.findViewById(R.id.rv_idleProperty);
@@ -281,7 +292,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             case R.id.tv_myOtherFunction24:
             case R.id.iv_myOtherFunction25:
             case R.id.tv_myOtherFunction25:
-                Toast.makeText(getContext(), "You clicked me!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "开发中", Toast.LENGTH_SHORT).show();
                 break;
 
         }

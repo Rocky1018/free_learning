@@ -29,6 +29,22 @@ public class IdleGoods {
 
     private String orderId;
 
+    public IdleGoods initTestData() {
+        IdleGoods goods = new IdleGoods("userId" + Math.random(),
+                "categoryId" + Math.random(), "goodsTags",
+                "goodsName", "goodsDetail", 11.45d, 1,
+                "江苏", "https://ae01.alicdn.com/kf/Uf8cd7a9ee0054a1c85f95633ccb722fc3.jpg");
+        goods.goodsId = "goodsId" + Math.random();
+        goods.goodsCreateDate = new Timestamp(System.currentTimeMillis());
+        goods.messageNum = 22;
+        goods.orderId = "orderId" + Math.random();
+        goods.user = new User("userId" + Math.random(), "userLoginId" + Math.random(),
+                1, "username", "password", "userPhoneNum",
+                "userEmail", new Timestamp(System.currentTimeMillis()), 1);
+        return goods;
+    }
+
+
     @Override
     public String toString() {
         return "IdleGoods{" +
@@ -183,7 +199,9 @@ public class IdleGoods {
         this.messageNum = messageNum;
     }
 
-    public IdleGoods(String userId, String categoryId, String goodsTags, String goodsName, String goodsDetail, Double goodsPrice, Integer goodsStatus, String goodsProvince) {
+    public IdleGoods(String userId, String categoryId, String goodsTags, String goodsName,
+                     String goodsDetail, Double goodsPrice, Integer goodsStatus,
+                     String goodsProvince, String goodsCoverImgDir) {
         this.goodsId = createIdleGoodsId();
         this.userId = userId;
         this.categoryId = categoryId;
@@ -193,12 +211,12 @@ public class IdleGoods {
         this.goodsPrice = goodsPrice;
         this.goodsStatus = goodsStatus;
         this.goodsProvince = goodsProvince;
-        int i = this.goodsDetail.indexOf("<img src=") + 10;
-        int j = this.goodsDetail.indexOf("\"", i);
-        this.goodsCoverImgDir = this.goodsDetail.substring(i, j);
+        this.goodsCoverImgDir = goodsCoverImgDir;
     }
 
+
     public IdleGoods() {
+
     }
 
     private String createIdleGoodsId() {

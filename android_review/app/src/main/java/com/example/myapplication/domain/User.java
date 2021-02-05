@@ -13,14 +13,21 @@ public class User {
     private String userPassword;
     private String userPhoneNum;
 
-    public User(String userLoginId, String userPassword) {
-        this.userLoginId = userLoginId;
-        this.userPassword = userPassword;
-    }
-
     private String userEmail;
     private Timestamp userRegisterDate;
     private int userStatus;
+
+    public User(String userId, String userLoginId, int userRole, String userName, String userPassword, String userPhoneNum, String userEmail, Timestamp userRegisterDate, int userStatus) {
+        this.userId = userId;
+        this.userLoginId = userLoginId;
+        this.userRole = userRole;
+        this.userName = userName;
+        this.userPassword = userPassword;
+        this.userPhoneNum = userPhoneNum;
+        this.userEmail = userEmail;
+        this.userRegisterDate = userRegisterDate;
+        this.userStatus = userStatus;
+    }
 
     @Override
     public String toString() {

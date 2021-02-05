@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.bottomnavigation.ui.home.IdleGoodsDetailInfoActivity;
 import com.example.myapplication.domain.IdleGoods;
@@ -87,7 +88,7 @@ public class IdleGoodsAdapter extends RecyclerView.Adapter<IdleGoodsAdapter.View
                 //这里加载数据的时候要注意，是从position-1开始，因为position==0已经被header占用了
                 IdleGoods goods = this.idleGoodsInfoList.get(position - 1);
 
-                holder.idlePropertyImgMyImageView.setImageURL(goods.getGoodsCoverImgDir());
+                Glide.with(mcontext).load(goods.getGoodsCoverImgDir()).into(holder.idlePropertyImgMyImageView);
                 holder.idlePropertyTitleTextView.setText(goods.getGoodsName());
                 holder.idlePropertyPersonTextView.setText(goods.getUser().getUserName());
                 holder.idlePropertyLocationTextView.setText(goods.getGoodsProvince());
