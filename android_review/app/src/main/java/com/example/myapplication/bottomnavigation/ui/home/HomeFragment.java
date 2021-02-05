@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
 import com.example.myapplication.R;
@@ -48,15 +49,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private ListPopupWindow searchRecordsListPopupWindow;
     private RecyclerView idlePropertyRecyclerView;
     private Toolbar homeFragmentHeadToolbar;
+    private SwipeRefreshLayout refreshStuff;
 
 
     private HomeViewModel homeViewModel;
 
     private List<IdleGoods> initFakeGoods() {
         List<IdleGoods> goods = new ArrayList<>();
-        goods.add(new IdleGoods().initTestData());
-        goods.add(new IdleGoods().initTestData());
-        goods.add(new IdleGoods().initTestData());
         goods.add(new IdleGoods().initTestData());
         goods.add(new IdleGoods().initTestData());
         goods.add(new IdleGoods().initTestData());
@@ -74,6 +73,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         homeFragmentSearchView = (SearchView) root.findViewById(R.id.searchView_homeSearch);
         homeFragmentSearchView.setSubmitButtonEnabled(true); //设置右端搜索键显示
         homeFragmentHeadToolbar = (Toolbar) root.findViewById(R.id.toolbar_homeSearch);
+        refreshStuff = root.findViewById(R.id.refresh_stuff_layout);
         //创建下拉列表
         searchRecordsListPopupWindow = new ListPopupWindow(getContext());
         //创建下拉列表数据项
@@ -125,6 +125,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 homeFragmentSearchView.clearFocus(); //去除搜索框焦点
 //                Toast.makeText(getContext(), "键盘隐藏 高度" + height, Toast.LENGTH_SHORT).show();
             }
+        });
+        refreshStuff.setOnRefreshListener(() -> {
+            /*idleGoodsInfoList.add(new IdleGoods().initTestData());
+            refreshStuff.setRefreshing(false);
+            idleGoodsAdapter.notifyDataSetChanged();*/
         });
 
         //监听搜索框被选中，即force监听
