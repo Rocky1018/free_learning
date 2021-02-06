@@ -7,4 +7,5 @@ data class Stuff(var stuffId: String) {
     var owner: User? = null
     var status: String? = null
     var comments: String? = null
+    var category: String? = null
 }

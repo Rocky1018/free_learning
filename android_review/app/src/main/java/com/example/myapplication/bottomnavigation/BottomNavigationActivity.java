@@ -3,6 +3,7 @@ package com.example.myapplication.bottomnavigation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ import androidx.navigation.fragment.FragmentNavigator;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.myapplication.R;
+import com.example.myapplication.bean.User;
 import com.example.myapplication.bottomnavigation.ui.add.AddFragment;
 import com.example.myapplication.bottomnavigation.ui.home.HomeFragment;
 import com.example.myapplication.bottomnavigation.ui.my.MyFragment;
@@ -26,6 +28,14 @@ import com.example.myapplication.utils.BaseActivity;
 import com.example.myapplication.utils.SharePreferencesUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.UUID;
+
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
+
 public class BottomNavigationActivity extends BaseActivity {
     String userId;
 
@@ -33,6 +43,26 @@ public class BottomNavigationActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_botton_navigation);
+        Bmob.initialize(this, "acb82b8fb5c6b9cbc68c4464959681f7");
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                User p2 = new User(UUID.randomUUID().toString());
+                p2.setUsername("name11");
+                p2.setPassword("pwd11");
+                p2.setPhoneNum("15632563258");
+                p2.save(new SaveListener<String>() {
+                    @Override
+                    public void done(String objectId, BmobException e) {
+                        if (e == null) {
+                            Log.d("User", "添加数据成功，返回objectId为：" + objectId);
+                        } else {
+                            Log.d("User", "创建数据失败：" + e.getMessage());
+                        }
+                    }
+                });
+            }
+        }, 3000);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         userId = (String) SharePreferencesUtils.getParam(this, "userId", "");
 
