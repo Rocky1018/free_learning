@@ -20,7 +20,7 @@ import com.example.myapplication.myview.MyTitleBar;
 import com.example.myapplication.service.UpDateUserInfo;
 import com.example.myapplication.utils.SharePreferencesUtils;
 
-public class MyDeatilInfoActivity extends AppCompatActivity {
+public class MyDetailInfoActivity extends AppCompatActivity {
 
     private MyTitleBar myInfoMyTitleBar;
     private MyItemGroup userIdMyItemGroup;
@@ -84,21 +84,21 @@ public class MyDeatilInfoActivity extends AppCompatActivity {
         userIdMyItemGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MyDeatilInfoActivity.this, "用户ID不允许改动！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyDetailInfoActivity.this, "用户ID不允许改动！", Toast.LENGTH_SHORT).show();
             }
         });
 
         userRegisterDateMyItemGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MyDeatilInfoActivity.this, "用户注册日期不允许改动！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyDetailInfoActivity.this, "用户注册日期不允许改动！", Toast.LENGTH_SHORT).show();
             }
         });
 
         userLoginIdMyItemGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final EditText userloginidEditText = new EditText(MyDeatilInfoActivity.this);
+                final EditText userloginidEditText = new EditText(MyDetailInfoActivity.this);
                 userloginidEditText.setText(userLoginIdMyItemGroup.getContentTextViewText());
                 userloginidEditText.addTextChangedListener(new TextWatcher() {
                     @Override
@@ -118,7 +118,7 @@ public class MyDeatilInfoActivity extends AppCompatActivity {
                 });
 
                 //创建弹窗
-                AlertDialog.Builder dialog = new AlertDialog.Builder(MyDeatilInfoActivity.this);
+                AlertDialog.Builder dialog = new AlertDialog.Builder(MyDetailInfoActivity.this);
                 dialog.setTitle("提示");
                 dialog.setMessage("更改登录账号为").setView(userloginidEditText).setNegativeButton("取消", null);
                 dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -127,9 +127,9 @@ public class MyDeatilInfoActivity extends AppCompatActivity {
                         // 将信息更新至文本框中，待最终按下保存按钮再更新至本地共享文件并更新数据库
                         if (!userloginidEditText.getText().toString().isEmpty() && userloginidEditText.getError() == null) {
                             userLoginIdMyItemGroup.setContentTextViewText(userloginidEditText.getText().toString());
-                            Toast.makeText(MyDeatilInfoActivity.this, "修改成功！", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MyDetailInfoActivity.this, "修改成功！", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(MyDeatilInfoActivity.this, "登录账号格式错误请重试！", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MyDetailInfoActivity.this, "登录账号格式错误请重试！", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -140,7 +140,7 @@ public class MyDeatilInfoActivity extends AppCompatActivity {
         userNameMyItemGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final EditText usernameEditText = new EditText(MyDeatilInfoActivity.this);
+                final EditText usernameEditText = new EditText(MyDetailInfoActivity.this);
                 usernameEditText.setText(userNameMyItemGroup.getContentTextViewText());
                 usernameEditText.addTextChangedListener(new TextWatcher() {
                     @Override
@@ -160,7 +160,7 @@ public class MyDeatilInfoActivity extends AppCompatActivity {
                 });
 
                 //创建弹窗
-                AlertDialog.Builder dialog = new AlertDialog.Builder(MyDeatilInfoActivity.this);
+                AlertDialog.Builder dialog = new AlertDialog.Builder(MyDetailInfoActivity.this);
                 dialog.setTitle("提示");
                 dialog.setMessage("更改用户名为").setView(usernameEditText).setNegativeButton("取消", null);
                 dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -169,9 +169,9 @@ public class MyDeatilInfoActivity extends AppCompatActivity {
                         // 将信息更新至文本框中，待最终按下保存按钮再更新至本地共享文件并更新数据库
                         if (!usernameEditText.getText().toString().isEmpty() && usernameEditText.getError() == null) {
                             userNameMyItemGroup.setContentTextViewText(usernameEditText.getText().toString());
-                            Toast.makeText(MyDeatilInfoActivity.this, "修改成功！", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MyDetailInfoActivity.this, "修改成功！", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(MyDeatilInfoActivity.this, "用户密码格式错误请重试！", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MyDetailInfoActivity.this, "用户密码格式错误请重试！", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -182,7 +182,7 @@ public class MyDeatilInfoActivity extends AppCompatActivity {
         userEmailMyItemGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final EditText useremailEditText = new EditText(MyDeatilInfoActivity.this);
+                final EditText useremailEditText = new EditText(MyDetailInfoActivity.this);
                 useremailEditText.setText(userEmailMyItemGroup.getContentTextViewText());
                 useremailEditText.addTextChangedListener(new TextWatcher() {
                     @Override
@@ -202,7 +202,7 @@ public class MyDeatilInfoActivity extends AppCompatActivity {
                 });
 
                 //创建弹窗
-                AlertDialog.Builder dialog = new AlertDialog.Builder(MyDeatilInfoActivity.this);
+                AlertDialog.Builder dialog = new AlertDialog.Builder(MyDetailInfoActivity.this);
                 dialog.setTitle("提示");
                 dialog.setMessage("更改用户邮箱为").setView(useremailEditText).setNegativeButton("取消", null);
                 dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -211,9 +211,9 @@ public class MyDeatilInfoActivity extends AppCompatActivity {
                         // 将信息更新至文本框中，待最终按下保存按钮再更新至本地共享文件并更新数据库
                         if (!useremailEditText.getText().toString().isEmpty() && useremailEditText.getError() == null) {
                             userEmailMyItemGroup.setContentTextViewText(useremailEditText.getText().toString());
-                            Toast.makeText(MyDeatilInfoActivity.this, "修改成功！", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MyDetailInfoActivity.this, "修改成功！", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(MyDeatilInfoActivity.this, "用户邮箱格式错误请重试！", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MyDetailInfoActivity.this, "用户邮箱格式错误请重试！", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -224,7 +224,7 @@ public class MyDeatilInfoActivity extends AppCompatActivity {
         userPhoneNumMyItemGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final EditText phonenumEditText = new EditText(MyDeatilInfoActivity.this);
+                final EditText phonenumEditText = new EditText(MyDetailInfoActivity.this);
                 phonenumEditText.setText(userPhoneNumMyItemGroup.getContentTextViewText());
                 phonenumEditText.addTextChangedListener(new TextWatcher() {
                     @Override
@@ -247,7 +247,7 @@ public class MyDeatilInfoActivity extends AppCompatActivity {
                 });
 
                 //创建弹窗
-                AlertDialog.Builder dialog = new AlertDialog.Builder(MyDeatilInfoActivity.this);
+                AlertDialog.Builder dialog = new AlertDialog.Builder(MyDetailInfoActivity.this);
                 dialog.setTitle("提示");
                 dialog.setMessage("更改用户联系方式为").setView(phonenumEditText).setNegativeButton("取消", null);
                 dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -256,9 +256,9 @@ public class MyDeatilInfoActivity extends AppCompatActivity {
                         // 将信息更新至文本框中，待最终按下保存按钮再更新至本地共享文件并更新数据库
                         if (!phonenumEditText.getText().toString().isEmpty() && phonenumEditText.getError() == null) {
                             userPhoneNumMyItemGroup.setContentTextViewText(phonenumEditText.getText().toString());
-                            Toast.makeText(MyDeatilInfoActivity.this, "修改成功！", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MyDetailInfoActivity.this, "修改成功！", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(MyDeatilInfoActivity.this, "用户联系方式格式错误请重试！", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MyDetailInfoActivity.this, "用户联系方式格式错误请重试！", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -281,15 +281,15 @@ public class MyDeatilInfoActivity extends AppCompatActivity {
                 if (flag) {
                     // 若更新数据库成功
                     // 再更新本地共享文件
-                    SharePreferencesUtils.save(MyDeatilInfoActivity.this, userLoginIdMyItemGroup.getContentTextViewText(),
+                    SharePreferencesUtils.save(MyDetailInfoActivity.this, userLoginIdMyItemGroup.getContentTextViewText(),
                             userNameMyItemGroup.getContentTextViewText(), userEmailMyItemGroup.getContentTextViewText(),
                             userPhoneNumMyItemGroup.getContentTextViewText(), SharePreferencesUtils.USER_INFORMATION_FILE);
-                    Toast.makeText(MyDeatilInfoActivity.this, "保存成功！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyDetailInfoActivity.this, "保存成功！", Toast.LENGTH_SHORT).show();
                 } else {
                     // 更新数据库失败
-                    Toast.makeText(MyDeatilInfoActivity.this, "保存失败，请重试！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyDetailInfoActivity.this, "保存失败，请重试！", Toast.LENGTH_SHORT).show();
                 }
-                MyDeatilInfoActivity.this.finish();
+                MyDetailInfoActivity.this.finish();
             }
         });
     }

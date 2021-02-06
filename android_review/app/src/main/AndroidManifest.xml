@@ -19,7 +19,7 @@
             android:name=".bottomnavigation.ui.my.MyCollectedListActivity"
             android:label="收藏夹" />
         <activity
-            android:name=".bottomnavigation.ui.my.MyDeatilInfoActivity"
+            android:name=".bottomnavigation.ui.my.MyDetailInfoActivity"
             android:label="个人详情" />
         <activity
             android:name=".register.RegisterActivity"

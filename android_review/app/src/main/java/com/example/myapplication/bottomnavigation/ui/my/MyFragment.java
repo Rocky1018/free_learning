@@ -156,7 +156,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
             case R.id.btn_showMyInfoDetail:
             case R.id.ly_myUserInfo:
                 // 简单个人信息展示点击进入详细信息展示页
-                intent = new Intent(getContext(), MyDeatilInfoActivity.class);
+                intent = new Intent(getContext(), MyDetailInfoActivity.class);
                 startActivity(intent);
                 break;
             case R.id.tv_myCollection:
