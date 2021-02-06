@@ -5,5 +5,7 @@ data class User(val userId: String) {
     var phoneNum: String? = null
     var password: String? = null
     var shoppingCar: List<Stuff>? = null
+    var stuffs: List<Stuff>? = null
+    var collections: List<Stuff>? = null
     var orderList: List<Order>? = null
 }

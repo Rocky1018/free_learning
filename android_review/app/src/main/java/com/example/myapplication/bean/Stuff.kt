@@ -5,5 +5,6 @@ data class Stuff(var stuffId: String) {
     var desc: String? = null
     var img: List<String>? = null
     var owner: User? = null
-    var tradeStatus: String? = null
+    var status: String? = null
+    var comments: String? = null
 }
