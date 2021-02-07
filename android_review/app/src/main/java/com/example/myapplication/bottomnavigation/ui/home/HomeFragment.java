@@ -70,9 +70,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         searchRecords = homeViewModel.getSearchRecords(getContext());
 
         //根据id获取控件
-        homeFragmentSearchView = (SearchView) root.findViewById(R.id.searchView_homeSearch);
+        homeFragmentSearchView = root.findViewById(R.id.searchView_homeSearch);
         homeFragmentSearchView.setSubmitButtonEnabled(true); //设置右端搜索键显示
-        homeFragmentHeadToolbar = (Toolbar) root.findViewById(R.id.toolbar_homeSearch);
+        homeFragmentHeadToolbar = root.findViewById(R.id.toolbar_homeSearch);
         refreshStuff = root.findViewById(R.id.refresh_stuff_layout);
         //创建下拉列表
         searchRecordsListPopupWindow = new ListPopupWindow(getContext());
@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             idleGoodsInfoList = initFakeGoods();
         }
 
-        idlePropertyRecyclerView = (RecyclerView) root.findViewById(R.id.rv_idleProperty);
+        idlePropertyRecyclerView = root.findViewById(R.id.rv_idleProperty);
         idlePropertyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         IdleGoodsAdapter idleGoodsAdapter = new IdleGoodsAdapter(idleGoodsInfoList, getContext());
         View view = LayoutInflater.from(getContext()).
@@ -127,9 +127,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             }
         });
         refreshStuff.setOnRefreshListener(() -> {
-            /*idleGoodsInfoList.add(new IdleGoods().initTestData());
+            idleGoodsInfoList.add(new IdleGoods().initTestData());
             refreshStuff.setRefreshing(false);
-            idleGoodsAdapter.notifyDataSetChanged();*/
+            idleGoodsAdapter.notifyDataSetChanged();
         });
 
         //监听搜索框被选中，即force监听
@@ -235,7 +235,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 } else {
                     List<String> recordsFilter = new ArrayList<>();
                     for (String searchRecord : searchRecords) {
-                        String s = new String(searchRecord);
+                        String s = searchRecord;
                         if (s.toLowerCase().contains(query)) {
                             recordsFilter.add(searchRecord);
                         }

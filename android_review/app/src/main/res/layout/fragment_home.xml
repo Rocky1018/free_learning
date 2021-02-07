@@ -12,6 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:background="?attr/colorPrimary"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         tools:ignore="MissingConstraints">
 
         <SearchView

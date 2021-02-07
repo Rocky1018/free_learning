@@ -44,25 +44,6 @@ public class BottomNavigationActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_botton_navigation);
         Bmob.initialize(this, "acb82b8fb5c6b9cbc68c4464959681f7");
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                User p2 = new User(UUID.randomUUID().toString());
-                p2.setUsername("name11");
-                p2.setPassword("pwd11");
-                p2.setPhoneNum("15632563258");
-                p2.save(new SaveListener<String>() {
-                    @Override
-                    public void done(String objectId, BmobException e) {
-                        if (e == null) {
-                            Log.d("User", "添加数据成功，返回objectId为：" + objectId);
-                        } else {
-                            Log.d("User", "创建数据失败：" + e.getMessage());
-                        }
-                    }
-                });
-            }
-        }, 3000);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         userId = (String) SharePreferencesUtils.getParam(this, "userId", "");
 
