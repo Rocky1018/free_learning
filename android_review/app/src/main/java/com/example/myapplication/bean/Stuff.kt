@@ -8,6 +8,7 @@ data class Stuff(var stuffId: String) {
     var status: String? = null
     var comments: List<Comment>? = null
     var category: String? = null
+    var publishTime: String? = null
 
     data class Comment(
         val commentId: String, val content: String, val publishTime: String,
