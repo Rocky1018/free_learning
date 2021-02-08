@@ -17,7 +17,6 @@ import com.example.myapplication.utils.SharePreferencesUtils;
 
 public class IdleGoodsDetailInfoActivity extends AppCompatActivity {
     private MyTitleBar idleGoodsDetailInfoMyTitleBar;
-    private WebView idleGoodsDetailInfoWebView;
     private SharedPreferences userinformation;
 
     @Override
@@ -34,7 +33,6 @@ public class IdleGoodsDetailInfoActivity extends AppCompatActivity {
         String localUserId = userinformation.getString("userId", null);
 
         idleGoodsDetailInfoMyTitleBar = (MyTitleBar) findViewById(R.id.myTitleBar_idleGoodsDetailInfo);
-        idleGoodsDetailInfoWebView = (WebView) findViewById(R.id.wv_idleGoodsDetailInfo);
 
         //隐藏系统自带顶部状态栏
         ActionBar supportActionBar = getSupportActionBar();
@@ -46,10 +44,6 @@ public class IdleGoodsDetailInfoActivity extends AppCompatActivity {
         idleGoodsDetailInfoMyTitleBar.setTvTitleText("闲置物详情");
         idleGoodsDetailInfoMyTitleBar.getTvForward().setVisibility(View.INVISIBLE);
 
-        idleGoodsDetailInfoWebView.getSettings().setJavaScriptEnabled(true);
-        idleGoodsDetailInfoWebView.setWebViewClient(new WebViewClient());
-        String url = new StringBuilder("http://wowowowo.vipgz1.idcfengye.com/demo/android/idlegooddetail.jsp?goodsId=")
-                .append(goodsId).append("&userId=").append(localUserId).toString();
-        idleGoodsDetailInfoWebView.loadUrl(url);
+
     }
 }

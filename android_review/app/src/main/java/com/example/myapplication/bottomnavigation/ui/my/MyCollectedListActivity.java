@@ -15,7 +15,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.domain.IdleGoods;
 import com.example.myapplication.myview.MyTitleBar;
 import com.example.myapplication.service.GetMyCollectedList;
-import com.example.myapplication.utils.MyCollectedListAdapter;
+import com.example.myapplication.adapter.MyCollectedListAdapter;
 import com.example.myapplication.utils.SharePreferencesUtils;
 
 import java.util.ArrayList;

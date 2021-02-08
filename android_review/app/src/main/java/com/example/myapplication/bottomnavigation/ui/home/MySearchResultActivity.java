@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.domain.IdleGoods;
 import com.example.myapplication.myview.MyTitleBar;
-import com.example.myapplication.utils.MyCollectedListAdapter;
+import com.example.myapplication.adapter.MyCollectedListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

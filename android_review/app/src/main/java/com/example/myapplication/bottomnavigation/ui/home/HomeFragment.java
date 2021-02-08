@@ -28,7 +28,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.domain.IdleGoods;
 import com.example.myapplication.service.GetIdleGoodsInfoList;
 import com.example.myapplication.utils.FilePersistenceUtils;
-import com.example.myapplication.utils.IdleGoodsAdapter;
+import com.example.myapplication.adapter.IdleGoodsAdapter;
 import com.example.myapplication.utils.ScreenUtils;
 import com.example.myapplication.utils.SoftKeyBoardListener;
 import com.google.gson.Gson;
