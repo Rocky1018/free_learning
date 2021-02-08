@@ -1,10 +1,12 @@
 package com.example.myapplication.bottomnavigation;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,7 +20,6 @@ import androidx.navigation.fragment.FragmentNavigator;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.myapplication.R;
-import com.example.myapplication.bean.User;
 import com.example.myapplication.bottomnavigation.ui.add.AddFragment;
 import com.example.myapplication.bottomnavigation.ui.home.HomeFragment;
 import com.example.myapplication.bottomnavigation.ui.my.MyFragment;
@@ -28,25 +29,35 @@ import com.example.myapplication.utils.BaseActivity;
 import com.example.myapplication.utils.SharePreferencesUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.UUID;
-
-import cn.bmob.v3.Bmob;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.SaveListener;
-
 public class BottomNavigationActivity extends BaseActivity {
     String userId;
+    private static final String PERMISSION_WRITE_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+    private static final int REQUEST_PERMISSION_CODE = 267;
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Log.i("AddFragment", "onRequestPermissionsResult: permission granted");
+        } else {
+            Log.i("AddFragment", "onRequestPermissionsResult: permission denied");
+            Toast.makeText(this, "You Denied Permission", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_botton_navigation);
-        Bmob.initialize(this, "acb82b8fb5c6b9cbc68c4464959681f7");
+        //Bmob.initialize(this, "acb82b8fb5c6b9cbc68c4464959681f7");
         BottomNavigationView navView = findViewById(R.id.nav_view);
         userId = (String) SharePreferencesUtils.getParam(this, "userId", "");
-
+        /*申请读取存储的权限*/
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(PERMISSION_WRITE_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{PERMISSION_WRITE_STORAGE}, REQUEST_PERMISSION_CODE);
+            }
+        }
         //隐藏系统自带顶部状态栏
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
