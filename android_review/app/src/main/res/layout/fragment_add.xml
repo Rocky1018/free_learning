@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/ll_total_fragment"
     tools:context="com.example.myapplication.bottomnavigation.BottomNavigationActivity">
 
     <com.example.myapplication.myview.MyTitleBar
@@ -20,19 +21,36 @@
         android:gravity="top"
         android:hint="@string/stuff_detail_desc" />
 
-    <FrameLayout
-        android:id="@+id/fl_add_stuff_pic"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:layout_margin="10dp"
-        android:background="@drawable/add_pic_bg">
 
-        <ImageView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_pic_add_24" />
-    </FrameLayout>
+            android:layout_margin="10dp">
+
+            <ImageView
+                android:id="@+id/add_stuff_pic"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:background="@drawable/add_pic_bg"
+                android:src="@drawable/ic_pic_add_24" />
+
+            <ImageView
+                android:id="@+id/clear_stuff_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:src="@drawable/ic_baseline_clear_24"
+                android:visibility="gone" />
+        </FrameLayout>
+
+
+    </LinearLayout>
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -64,13 +82,15 @@
             android:layout_marginLeft="36dp"
             android:text="价格" />
 
-        <TextView
+        <EditText
+            android:background="@null"
+            android:inputType="numberDecimal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="18dp"
-            android:text="￥0.00"
+            android:text="0.00"
             android:textColor="@color/purple_700" />
 
         <ImageView
