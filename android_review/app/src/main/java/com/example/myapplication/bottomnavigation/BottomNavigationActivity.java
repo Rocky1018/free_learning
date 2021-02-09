@@ -20,6 +20,7 @@ import androidx.navigation.fragment.FragmentNavigator;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.myapplication.R;
+import com.example.myapplication.bean.User;
 import com.example.myapplication.bottomnavigation.ui.add.AddFragment;
 import com.example.myapplication.bottomnavigation.ui.home.HomeFragment;
 import com.example.myapplication.bottomnavigation.ui.my.MyFragment;
@@ -28,6 +29,14 @@ import com.example.myapplication.myview.FixFragmentNavigator;
 import com.example.myapplication.utils.BaseActivity;
 import com.example.myapplication.utils.SharePreferencesUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.UUID;
+
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
 
 public class BottomNavigationActivity extends BaseActivity {
     String userId;
@@ -49,7 +58,7 @@ public class BottomNavigationActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_botton_navigation);
-        //Bmob.initialize(this, "acb82b8fb5c6b9cbc68c4464959681f7");
+        Bmob.initialize(this, "acb82b8fb5c6b9cbc68c4464959681f7");
         BottomNavigationView navView = findViewById(R.id.nav_view);
         userId = (String) SharePreferencesUtils.getParam(this, "userId", "");
         /*申请读取存储的权限*/

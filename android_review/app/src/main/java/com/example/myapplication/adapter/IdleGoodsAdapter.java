@@ -100,7 +100,6 @@ public class IdleGoodsAdapter extends RecyclerView.Adapter<IdleGoodsAdapter.View
                         Intent intent = new Intent(mcontext, IdleGoodsDetailInfoActivity.class);
                         intent.putExtra("goodsId", goods.getGoodsId());
                         mcontext.startActivity(intent);
-                        Toast.makeText(mcontext, goods.getGoodsName(), Toast.LENGTH_SHORT).show();
                     }
                 });
 

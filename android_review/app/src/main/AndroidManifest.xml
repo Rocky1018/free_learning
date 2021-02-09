@@ -59,10 +59,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-        <!-- <provider
+         <provider
              android:name="cn.bmob.v3.util.BmobContentProvider"
-             android:authorities="com.example.myapplication.BmobContentProvider">
-         </provider>-->
+             android:authorities="com.example.myapplication.BmobContentProvider"></provider>
     </application>
 
 </manifest>
