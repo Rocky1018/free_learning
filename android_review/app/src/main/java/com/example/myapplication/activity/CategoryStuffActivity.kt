@@ -23,13 +23,13 @@ class CategoryStuffActivity : AppCompatActivity() {
 
     private fun getStuffList(categoryId: String?): List<Stuff>? {
         val bmobQuery = BmobQuery<Stuff>()
-        bmobQuery.addWhereEqualTo("categoryId", categoryId)
         val result: MutableList<Stuff> = ArrayList()
-        bmobQuery.findObjects(object : FindListener<Stuff>() {
-            override fun done(list: List<Stuff>, e: BmobException) {
-                result.addAll(list)
-            }
-        })
+        bmobQuery.addWhereEqualTo("categoryId", categoryId)
+            .findObjects(object : FindListener<Stuff>() {
+                override fun done(list: List<Stuff>, e: BmobException) {
+                    result.addAll(list)
+                }
+            })
         return result
     }
 

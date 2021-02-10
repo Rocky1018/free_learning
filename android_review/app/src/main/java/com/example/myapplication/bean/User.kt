@@ -2,8 +2,8 @@ package com.example.myapplication.bean
 
 import cn.bmob.v3.BmobObject
 
-data class User(val userId: String) : BmobObject() {
-    var username: String? = null
+data class User(val username: String) : BmobObject() {
+    var nickname: String? = null
     var phoneNum: String? = null
     var address: String? = null
     var password: String? = null

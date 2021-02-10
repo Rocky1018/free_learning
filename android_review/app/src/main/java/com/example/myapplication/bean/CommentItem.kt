@@ -4,8 +4,7 @@ import cn.bmob.v3.BmobObject
 import java.text.SimpleDateFormat
 import java.util.*
 
-data class CommentItem(val commentId: String) : BmobObject() {
-    var content: String? = null
+data class CommentItem(val content: String) : BmobObject() {
     var date: String? = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date())
     var username: String? = null
     var portrait: String? = null
