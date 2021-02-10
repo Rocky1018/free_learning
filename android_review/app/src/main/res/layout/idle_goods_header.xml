@@ -17,6 +17,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="15dp"
             android:src="@drawable/ic_other_function_01"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,7 +30,7 @@
             android:layout_marginTop="3dp"
             android:layout_marginBottom="7.5dp"
             android:gravity="center_horizontal"
-            android:text="商店"
+            android:text=""
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,6 +44,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="15dp"
             android:src="@drawable/ic_other_function_02"
+            android:visibility="gone"
             app:layout_constraintStart_toEndOf="@+id/iv_myOtherFunction16"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,7 +57,7 @@
             android:layout_marginTop="3dp"
             android:layout_marginBottom="7.5dp"
             android:gravity="center_horizontal"
-            android:text="超市"
+            android:text=""
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_myOtherFunction16"
@@ -69,6 +71,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="16dp"
             android:src="@drawable/ic_other_function_03"
+            android:visibility="gone"
             app:layout_constraintStart_toEndOf="@+id/iv_myOtherFunction17"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -81,7 +84,7 @@
             android:layout_marginTop="3dp"
             android:layout_marginBottom="7.5dp"
             android:gravity="center_horizontal"
-            android:text="店铺"
+            android:text=""
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_myOtherFunction17"
@@ -92,10 +95,11 @@
             android:id="@+id/iv_myOtherFunction19"
             android:layout_width="35dp"
             android:layout_height="35dp"
-
             android:layout_marginLeft="30dp"
+
             android:layout_marginTop="15dp"
             android:src="@drawable/ic_other_function_04"
+            android:visibility="gone"
             app:layout_constraintStart_toEndOf="@+id/iv_myOtherFunction18"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -108,7 +112,7 @@
             android:layout_marginTop="3dp"
             android:layout_marginBottom="7.5dp"
             android:gravity="center_horizontal"
-            android:text="商城"
+            android:text=""
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_myOtherFunction18"
@@ -119,10 +123,11 @@
             android:id="@+id/iv_myOtherFunction20"
             android:layout_width="35dp"
             android:layout_height="35dp"
-
             android:layout_marginLeft="30dp"
+
             android:layout_marginTop="15dp"
             android:src="@drawable/ic_other_function_05"
+            android:visibility="gone"
             app:layout_constraintStart_toEndOf="@+id/iv_myOtherFunction19"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -135,7 +140,7 @@
             android:layout_marginTop="3dp"
             android:layout_marginBottom="7.5dp"
             android:gravity="center_horizontal"
-            android:text="花店"
+            android:text=""
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_myOtherFunction19"
@@ -155,6 +160,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="7.5dp"
             android:src="@drawable/ic_other_function_04"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -167,7 +173,7 @@
             android:layout_marginTop="3dp"
             android:layout_marginBottom="7.5dp"
             android:gravity="center_horizontal"
-            android:text="超市"
+            android:text=""
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -178,10 +184,10 @@
             android:id="@+id/iv_myOtherFunction22"
             android:layout_width="35dp"
             android:layout_height="35dp"
-
             android:layout_marginLeft="30dp"
             android:layout_marginTop="7.5dp"
             android:src="@drawable/ic_other_function_01"
+            android:visibility="gone"
             app:layout_constraintStart_toEndOf="@+id/iv_myOtherFunction21"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -194,7 +200,7 @@
             android:layout_marginTop="3dp"
             android:layout_marginBottom="7.5dp"
             android:gravity="center_horizontal"
-            android:text="当铺"
+            android:text=""
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_myOtherFunction21"
@@ -205,10 +211,10 @@
             android:id="@+id/iv_myOtherFunction23"
             android:layout_width="35dp"
             android:layout_height="35dp"
-
             android:layout_marginLeft="30dp"
             android:layout_marginTop="7.5dp"
             android:src="@drawable/ic_other_function_05"
+            android:visibility="gone"
             app:layout_constraintStart_toEndOf="@+id/iv_myOtherFunction22"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -221,7 +227,7 @@
             android:layout_marginTop="3dp"
             android:layout_marginBottom="7.5dp"
             android:gravity="center_horizontal"
-            android:text="酒店"
+            android:text=""
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_myOtherFunction22"
@@ -232,10 +238,10 @@
             android:id="@+id/iv_myOtherFunction24"
             android:layout_width="35dp"
             android:layout_height="35dp"
-
             android:layout_marginLeft="30dp"
             android:layout_marginTop="7.5dp"
             android:src="@drawable/ic_other_function_02"
+            android:visibility="gone"
             app:layout_constraintStart_toEndOf="@+id/iv_myOtherFunction23"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -248,7 +254,7 @@
             android:layout_marginTop="3dp"
             android:layout_marginBottom="7.5dp"
             android:gravity="center_horizontal"
-            android:text="电商"
+            android:text=""
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_myOtherFunction23"
@@ -259,10 +265,10 @@
             android:id="@+id/iv_myOtherFunction25"
             android:layout_width="35dp"
             android:layout_height="35dp"
-
             android:layout_marginLeft="30dp"
             android:layout_marginTop="7.5dp"
             android:src="@drawable/ic_other_function_03"
+            android:visibility="gone"
             app:layout_constraintStart_toEndOf="@+id/iv_myOtherFunction24"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -275,7 +281,7 @@
             android:layout_marginTop="3dp"
             android:layout_marginBottom="7.5dp"
             android:gravity="center_horizontal"
-            android:text="无印"
+            android:text=""
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_myOtherFunction24"
