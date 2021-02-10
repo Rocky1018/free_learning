@@ -31,7 +31,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.example.myapplication.R;
 import com.example.myapplication.bottomnavigation.add.AddFragment;
 import com.example.myapplication.bottomnavigation.home.HomeFragment;
-import com.example.myapplication.bottomnavigation.ui.my.MyFragment;
+import com.example.myapplication.bottomnavigation.my.MyFragment;
 import com.example.myapplication.domain.User;
 import com.example.myapplication.myview.FixFragmentNavigator;
 import com.example.myapplication.service.UserRegister;

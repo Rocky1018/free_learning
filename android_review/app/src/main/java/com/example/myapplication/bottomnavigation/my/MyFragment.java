@@ -1,4 +1,4 @@
-package com.example.myapplication.bottomnavigation.ui.my;
+package com.example.myapplication.bottomnavigation.my;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,10 +15,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activity.LoginActivity;
+import com.example.myapplication.activity.MyCollectedListActivity;
+import com.example.myapplication.activity.MyDetailInfoActivity;
 import com.example.myapplication.utils.SharePreferencesUtils;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -27,7 +28,6 @@ public class MyFragment extends Fragment implements View.OnClickListener {
 
     public static final String TAG = "MyFragment";
 
-    private MyViewModel myViewModel;
     private Button logoutButton;
     private Button showMyInfoDetailButton;
     private ImageView myCollectionImageView;
@@ -38,15 +38,14 @@ public class MyFragment extends Fragment implements View.OnClickListener {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        myViewModel = new ViewModelProvider(this).get(MyViewModel.class);
         View root = inflater.inflate(R.layout.fragment_my, container, false);
 
-        showMyInfoDetailButton = (Button) root.findViewById(R.id.btn_showMyInfoDetail);
-        logoutButton = (Button) root.findViewById(R.id.btn_logout);
-        myCollectionImageView = (ImageView) root.findViewById(R.id.iv_myCollection);
-        myCollectionTextView = (TextView) root.findViewById(R.id.tv_myCollection);
-        myUserNameTextView = (TextView) root.findViewById(R.id.tv_myUserName);
-        myUserInfoLinearLayout = (LinearLayout) root.findViewById(R.id.ly_myUserInfo);
+        showMyInfoDetailButton = root.findViewById(R.id.btn_showMyInfoDetail);
+        logoutButton = root.findViewById(R.id.btn_logout);
+        myCollectionImageView = root.findViewById(R.id.iv_myCollection);
+        myCollectionTextView = root.findViewById(R.id.tv_myCollection);
+        myUserNameTextView = root.findViewById(R.id.tv_myUserName);
+        myUserInfoLinearLayout = root.findViewById(R.id.ly_myUserInfo);
 
         userinfo = getContext().getSharedPreferences(SharePreferencesUtils.USER_INFORMATION_FILE, MODE_PRIVATE);
         String localUserId = userinfo.getString("userId", null);
