@@ -26,10 +26,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activity.MySearchResultActivity;
-import com.example.myapplication.domain.IdleGoods;
-import com.example.myapplication.service.GetIdleGoodsInfoList;
+import com.example.myapplication.bean.Stuff;
 import com.example.myapplication.utils.FilePersistenceUtils;
-import com.example.myapplication.adapter.IdleGoodsAdapter;
+import com.example.myapplication.adapter.StuffAdapter;
 import com.example.myapplication.utils.ScreenUtils;
 import com.example.myapplication.utils.SoftKeyBoardListener;
 import com.google.gson.Gson;
@@ -38,13 +37,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
     // 数据的列表，即搜索下拉框列表元素，后从数据库获取
     private List<String> searchRecords;
 
     //闲置物列表
-    public List<IdleGoods> idleGoodsInfoList;
+    public List<Stuff> idleGoodsInfoList;
 
     private SearchView homeFragmentSearchView;
     private ListPopupWindow searchRecordsListPopupWindow;
@@ -55,12 +58,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private HomeViewModel homeViewModel;
 
-    private List<IdleGoods> initFakeGoods() {
-        List<IdleGoods> goods = new ArrayList<>();
-        goods.add(new IdleGoods().initTestData());
-        goods.add(new IdleGoods().initTestData());
-        goods.add(new IdleGoods().initTestData());
-        return goods;
+
+    private List<com.example.myapplication.bean.Stuff> getStuffList() {
+        BmobQuery<com.example.myapplication.bean.Stuff> bmobQuery = new BmobQuery<>();
+        List<com.example.myapplication.bean.Stuff> result = new ArrayList<>();
+        bmobQuery.setLimit(10).order("-publishTime").findObjects(new FindListener<com.example.myapplication.bean.Stuff>() {
+            @Override
+            public void done(List<com.example.myapplication.bean.Stuff> list, BmobException e) {
+                result.addAll(list);
+            }
+        });
+        return result;
+
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,6 +78,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         //获取搜索记录
         searchRecords = homeViewModel.getSearchRecords(getContext());
+
 
         //根据id获取控件
         homeFragmentSearchView = root.findViewById(R.id.searchView_homeSearch);
@@ -89,14 +99,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         searchRecordsListPopupWindow.setModal(false);
 
         // 初始化闲置物列表
-        idleGoodsInfoList = GetIdleGoodsInfoList.getIdleGoodsInfoList();
-        if (idleGoodsInfoList == null) {
-            idleGoodsInfoList = initFakeGoods();
-        }
+        idleGoodsInfoList = getStuffList();
+
 
         idlePropertyRecyclerView = root.findViewById(R.id.rv_idleProperty);
         idlePropertyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        IdleGoodsAdapter idleGoodsAdapter = new IdleGoodsAdapter(idleGoodsInfoList, getContext());
+        StuffAdapter idleGoodsAdapter = new StuffAdapter(idleGoodsInfoList, getContext());
         View view = LayoutInflater.from(getContext()).
                 inflate(R.layout.idle_goods_header, idlePropertyRecyclerView, false);
         idleGoodsAdapter.setHeaderView(view);
@@ -128,7 +136,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             }
         });
         refreshStuff.setOnRefreshListener(() -> {
-            idleGoodsInfoList.add(new IdleGoods().initTestData());
+            idleGoodsInfoList.add(new Stuff());
             refreshStuff.setRefreshing(false);
             idleGoodsAdapter.notifyDataSetChanged();
         });
@@ -209,9 +217,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     adapter.notifyDataSetChanged();
 
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                        List<IdleGoods> collect = idleGoodsInfoList.stream()
+                        List<Stuff> collect = idleGoodsInfoList.stream()
                                 .filter(idleGoods -> {
-                                    String goodsName = idleGoods.getGoodsName();
+                                    String goodsName = idleGoods.getName();
 
                                     return goodsName.contains(query);
                                 }).collect(Collectors.toList());

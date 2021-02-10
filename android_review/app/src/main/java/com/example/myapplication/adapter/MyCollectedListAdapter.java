@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.domain.IdleGoods;
+import com.example.myapplication.domain.Stuff;
 import com.example.myapplication.myview.MyImageView;
 
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
  * 放置闲置物品的RecyclerView的适配器
  */
 public class MyCollectedListAdapter extends RecyclerView.Adapter<MyCollectedListAdapter.ViewHolder> {
-    private List<IdleGoods> idleGoodsInfoList;
+    private final List<Stuff> idleGoodsInfoList;
 
     class ViewHolder extends RecyclerView.ViewHolder {
         MyImageView idlePropertyImgMyImageView;
@@ -30,15 +30,15 @@ public class MyCollectedListAdapter extends RecyclerView.Adapter<MyCollectedList
         public ViewHolder(@NonNull View view) {
             super(view);
 
-            idlePropertyImgMyImageView = (MyImageView) view.findViewById(R.id.mv_idleGoodsImg);
-            idlePropertyTitleTextView = (TextView) view.findViewById(R.id.tv_idleGoodsTitle);
-            idlePropertyPersonTextView = (TextView) view.findViewById(R.id.tv_idleGoodsPerson);
-            idlePropertyLocationTextView = (TextView) view.findViewById(R.id.tv_idleGoodsLocation);
-            idlePropertyPriceTextView = (TextView) view.findViewById(R.id.tv_idleGoodsPrice);
+            idlePropertyImgMyImageView = view.findViewById(R.id.mv_idleGoodsImg);
+            idlePropertyTitleTextView = view.findViewById(R.id.tv_idleGoodsTitle);
+            idlePropertyPersonTextView = view.findViewById(R.id.tv_idleGoodsPerson);
+            idlePropertyLocationTextView = view.findViewById(R.id.tv_idleGoodsLocation);
+            idlePropertyPriceTextView = view.findViewById(R.id.tv_idleGoodsPrice);
         }
     }
 
-    public MyCollectedListAdapter(List<IdleGoods> idleGoodsInfoList) {
+    public MyCollectedListAdapter(List<Stuff> idleGoodsInfoList) {
         this.idleGoodsInfoList = idleGoodsInfoList;
     }
 
@@ -52,7 +52,7 @@ public class MyCollectedListAdapter extends RecyclerView.Adapter<MyCollectedList
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        IdleGoods goods = this.idleGoodsInfoList.get(position);
+        Stuff goods = this.idleGoodsInfoList.get(position);
 
         holder.idlePropertyImgMyImageView.setImageURL(goods.getGoodsCoverImgDir());
         holder.idlePropertyTitleTextView.setText(goods.getGoodsName());

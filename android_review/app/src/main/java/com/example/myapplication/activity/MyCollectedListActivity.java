@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.myapplication.R;
-import com.example.myapplication.domain.IdleGoods;
+import com.example.myapplication.domain.Stuff;
 import com.example.myapplication.myview.MyTitleBar;
 import com.example.myapplication.service.GetMyCollectedList;
 import com.example.myapplication.adapter.MyCollectedListAdapter;
@@ -23,7 +23,7 @@ import java.util.List;
 
 public class MyCollectedListActivity extends AppCompatActivity {
     //闲置物列表
-    public List<IdleGoods> idleGoodsInfoList;
+    public List<Stuff> idleGoodsInfoList;
     private RecyclerView myCollectedListRecyclerView;
 
     private MyTitleBar myCollectedMyTitleBar;
@@ -38,7 +38,7 @@ public class MyCollectedListActivity extends AppCompatActivity {
         userinformation = getSharedPreferences(SharePreferencesUtils.USER_INFORMATION_FILE, MODE_PRIVATE);
         String localUserId = userinformation.getString("userId", null);
 
-        myCollectedMyTitleBar = (MyTitleBar) findViewById(R.id.myTitleBar_myCollected);
+        myCollectedMyTitleBar = findViewById(R.id.myTitleBar_myCollected);
 
         //隐藏系统自带顶部状态栏
         ActionBar supportActionBar = getSupportActionBar();
@@ -56,7 +56,7 @@ public class MyCollectedListActivity extends AppCompatActivity {
             }
 
             Log.d("GetMyCollectedList", idleGoodsInfoList.toString());
-            myCollectedListRecyclerView = (RecyclerView) findViewById(R.id.rv_myCollectedList);
+            myCollectedListRecyclerView = findViewById(R.id.rv_myCollectedList);
             LinearLayoutManager manager = new LinearLayoutManager(MyCollectedListActivity.this);
             myCollectedListRecyclerView.setLayoutManager(manager);
             MyCollectedListAdapter myCollectedListAdapter = new MyCollectedListAdapter(idleGoodsInfoList);

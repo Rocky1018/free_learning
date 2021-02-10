@@ -2,7 +2,7 @@ package com.example.myapplication.service;
 
 import android.util.Log;
 
-import com.example.myapplication.domain.IdleGoods;
+import com.example.myapplication.domain.Stuff;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -14,9 +14,9 @@ import java.util.List;
 
 public class GetIdleGoodsInfoList {
     public static String path = "http://wowowowo.vipgz1.idcfengye.com/demo/android/getidlegoodsinfolist";
-    static List<IdleGoods> idleGoods = null;
+    static List<Stuff> idleGoods = null;
 
-    public static List<IdleGoods> getIdleGoodsInfoList() {
+    public static List<Stuff> getIdleGoodsInfoList() {
         try {
             Thread thread = new Thread(new Runnable() {
                 @Override
@@ -56,7 +56,7 @@ public class GetIdleGoodsInfoList {
                             String result = URLDecoder.decode(strb.toString(), "UTF-8");
                             Log.d("IdleGoodsInfoList", result);
 
-                            idleGoods = IdleGoods.parseToList(result);
+                            idleGoods = Stuff.parseToList(result);
                             Log.d("IdleGoodsInfoList", idleGoods.toString());
                         }
                     } catch (IOException e) {

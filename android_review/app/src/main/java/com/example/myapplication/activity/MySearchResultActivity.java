@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.myapplication.R;
-import com.example.myapplication.domain.IdleGoods;
+import com.example.myapplication.domain.Stuff;
 import com.example.myapplication.myview.MyTitleBar;
 import com.example.myapplication.adapter.MyCollectedListAdapter;
 
@@ -22,15 +22,15 @@ import java.util.List;
 public class MySearchResultActivity extends AppCompatActivity {
     private MyTitleBar mySearchResultMyTitleBar;
     private RecyclerView mySearchResultRecyclerView;
-    private List<IdleGoods> mySearchResultList;
+    private List<Stuff> mySearchResultList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_search_result);
 
-        mySearchResultMyTitleBar = (MyTitleBar) findViewById(R.id.myTitleBar_mySearchResult);
-        mySearchResultRecyclerView = (RecyclerView) findViewById(R.id.rv_mySearchResult);
+        mySearchResultMyTitleBar = findViewById(R.id.myTitleBar_mySearchResult);
+        mySearchResultRecyclerView = findViewById(R.id.rv_mySearchResult);
 
         //隐藏系统自带顶部状态栏
         ActionBar supportActionBar = getSupportActionBar();
@@ -46,7 +46,7 @@ public class MySearchResultActivity extends AppCompatActivity {
 
         Log.d("searchResult", searchResult);
 
-        mySearchResultList = IdleGoods.parseToList(searchResult);
+        mySearchResultList = Stuff.parseToList(searchResult);
         if (mySearchResultList == null) {
             mySearchResultList = new ArrayList<>();
         }

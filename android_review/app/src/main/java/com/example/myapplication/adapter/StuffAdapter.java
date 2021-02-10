@@ -2,12 +2,12 @@ package com.example.myapplication.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.activity.IdleGoodsDetailInfoActivity;
-import com.example.myapplication.domain.IdleGoods;
+import com.example.myapplication.bean.Stuff;
 import com.example.myapplication.myview.MyImageView;
 
 import java.util.List;
@@ -23,13 +23,13 @@ import java.util.List;
 /**
  * 放置闲置物品的RecyclerView的适配器
  */
-public class IdleGoodsAdapter extends RecyclerView.Adapter<IdleGoodsAdapter.ViewHolder> {
+public class StuffAdapter extends RecyclerView.Adapter<StuffAdapter.ViewHolder> {
     public static final int TYPE_HEADER = 0; //说明是带有Header的
     public static final int TYPE_FOOTER = 1; //说明是带有Footer的
     public static final int TYPE_NORMAL = 2; //说明是不带有header和footer的
 
-    private List<IdleGoods> idleGoodsInfoList;
-    private Context mcontext;
+    private final List<Stuff> idleGoodsInfoList;
+    private final Context mcontext;
 
     // RecyclerView顶部
     private View mHeaderView;
@@ -52,17 +52,17 @@ public class IdleGoodsAdapter extends RecyclerView.Adapter<IdleGoodsAdapter.View
             if (view == mFooterView) {
                 return;
             }
-            idleGoodsItemLinearLayout = (LinearLayout) view.findViewById(R.id.ll_idleGoodsItem);
-            idlePropertyImgMyImageView = (MyImageView) view.findViewById(R.id.mv_idleGoodsImg);
+            idleGoodsItemLinearLayout = view.findViewById(R.id.ll_idleGoodsItem);
+            idlePropertyImgMyImageView = view.findViewById(R.id.mv_idleGoodsImg);
 
-            idlePropertyTitleTextView = (TextView) view.findViewById(R.id.tv_idleGoodsTitle);
-            idlePropertyPersonTextView = (TextView) view.findViewById(R.id.tv_idleGoodsPerson);
-            idlePropertyLocationTextView = (TextView) view.findViewById(R.id.tv_idleGoodsLocation);
-            idlePropertyPriceTextView = (TextView) view.findViewById(R.id.tv_idleGoodsPrice);
+            idlePropertyTitleTextView = view.findViewById(R.id.tv_idleGoodsTitle);
+            idlePropertyPersonTextView = view.findViewById(R.id.tv_idleGoodsPerson);
+            idlePropertyLocationTextView = view.findViewById(R.id.tv_idleGoodsLocation);
+            idlePropertyPriceTextView = view.findViewById(R.id.tv_idleGoodsPrice);
         }
     }
 
-    public IdleGoodsAdapter(List<IdleGoods> idleGoodsInfoList, Context mcontext) {
+    public StuffAdapter(List<Stuff> idleGoodsInfoList, Context mcontext) {
         this.idleGoodsInfoList = idleGoodsInfoList;
         this.mcontext = mcontext;
     }
@@ -86,21 +86,19 @@ public class IdleGoodsAdapter extends RecyclerView.Adapter<IdleGoodsAdapter.View
         if (getItemViewType(position) == TYPE_NORMAL) {
             if (holder instanceof ViewHolder) {
                 //这里加载数据的时候要注意，是从position-1开始，因为position==0已经被header占用了
-                IdleGoods goods = this.idleGoodsInfoList.get(position - 1);
+                Stuff goods = this.idleGoodsInfoList.get(position - 1);
+                if (!TextUtils.isEmpty(goods.getImg())) {
+                    Glide.with(mcontext).load(goods.getImg()).into(holder.idlePropertyImgMyImageView);
+                }
+                holder.idlePropertyTitleTextView.setText(goods.getName());
+                holder.idlePropertyPersonTextView.setText(goods.getOwner().getUsername());
+                holder.idlePropertyLocationTextView.setText(goods.getOwner().getAddress());
+                holder.idlePropertyPriceTextView.setText(goods.getPrice() + "");
 
-                Glide.with(mcontext).load(goods.getGoodsCoverImgDir()).into(holder.idlePropertyImgMyImageView);
-                holder.idlePropertyTitleTextView.setText(goods.getGoodsName());
-                holder.idlePropertyPersonTextView.setText(goods.getUser().getUserName());
-                holder.idlePropertyLocationTextView.setText(goods.getGoodsProvince());
-                holder.idlePropertyPriceTextView.setText(goods.getGoodsPrice() + "");
-
-                holder.idleGoodsItemLinearLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(mcontext, IdleGoodsDetailInfoActivity.class);
-                        intent.putExtra("goodsId", goods.getGoodsId());
-                        mcontext.startActivity(intent);
-                    }
+                holder.idleGoodsItemLinearLayout.setOnClickListener(v -> {
+                    Intent intent = new Intent(mcontext, IdleGoodsDetailInfoActivity.class);
+                    intent.putExtra("goodsId", goods.getStuffId());
+                    mcontext.startActivity(intent);
                 });
 
                 return;

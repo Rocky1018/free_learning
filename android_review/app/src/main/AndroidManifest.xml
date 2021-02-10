@@ -20,6 +20,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
+        <activity android:name=".activity.RegisterActivity"></activity>
         <activity
             android:name=".activity.AdminActivity"
             android:label="@string/title_activity_admin">
@@ -35,9 +36,6 @@
         <activity
             android:name=".activity.MyDetailInfoActivity"
             android:label="个人详情" />
-        <activity
-            android:name=".activity.BottomNavigationActivity$RegisterActivity"
-            android:label="@string/title_activity_register" />
         <activity
             android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login" /> <!-- 设置进入该页面时从返回栈中查找而不是重新创建 -->

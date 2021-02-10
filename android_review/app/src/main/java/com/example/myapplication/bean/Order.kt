@@ -1,3 +1,5 @@
 package com.example.myapplication.bean
 
-data class Order(val orderId: String)
+import cn.bmob.v3.BmobObject
+
+data class Order(val orderId: String) : BmobObject()

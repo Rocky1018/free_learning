@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-public class IdleGoods {
+public class Stuff {
     private String goodsId;
     private String userId;
     private String categoryId;
@@ -29,8 +29,8 @@ public class IdleGoods {
 
     private String orderId;
 
-    public IdleGoods initTestData() {
-        IdleGoods goods = new IdleGoods("userId" + Math.random(),
+    public Stuff initTestData() {
+        Stuff goods = new Stuff("userId" + Math.random(),
                 "categoryId" + Math.random(), "goodsTags",
                 "goodsName", "goodsDetail", 11.45d, 1,
                 "江苏", "https://ae01.alicdn.com/kf/Uf8cd7a9ee0054a1c85f95633ccb722fc3.jpg");
@@ -199,9 +199,9 @@ public class IdleGoods {
         this.messageNum = messageNum;
     }
 
-    public IdleGoods(String userId, String categoryId, String goodsTags, String goodsName,
-                     String goodsDetail, Double goodsPrice, Integer goodsStatus,
-                     String goodsProvince, String goodsCoverImgDir) {
+    public Stuff(String userId, String categoryId, String goodsTags, String goodsName,
+                 String goodsDetail, Double goodsPrice, Integer goodsStatus,
+                 String goodsProvince, String goodsCoverImgDir) {
         this.goodsId = createIdleGoodsId();
         this.userId = userId;
         this.categoryId = categoryId;
@@ -215,7 +215,7 @@ public class IdleGoods {
     }
 
 
-    public IdleGoods() {
+    public Stuff() {
 
     }
 
@@ -223,19 +223,19 @@ public class IdleGoods {
         return "ig_" + (new Date()).getTime();
     }
 
-    public static List<IdleGoods> parseToList(String result) {
+    public static List<Stuff> parseToList(String result) {
         if (result.equals("[]")) {
             return null;
         }
-        List<IdleGoods> res = new ArrayList<>();
+        List<Stuff> res = new ArrayList<>();
         List<Map<Object, Object>> mpLists = new Gson().fromJson(result, List.class);
         for (Map<Object, Object> mpList : mpLists) {
-            res.add(new IdleGoods(mpList));
+            res.add(new Stuff(mpList));
         }
         return res;
     }
 
-    public IdleGoods(Map<Object, Object> mp) {
+    public Stuff(Map<Object, Object> mp) {
         this.goodsId = (String) mp.get("goodsId");
         this.goodsProvince = (String) mp.get("goodsProvince");
         this.goodsStatus = (Integer) mp.get("goodsStatus");
