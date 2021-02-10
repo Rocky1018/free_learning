@@ -27,9 +27,9 @@
         android:id="@+id/tv_login_appName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
         android:layout_marginTop="10dp"
         android:hint="@string/app_name"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_login_myIcon" />
@@ -41,8 +41,10 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="86dp"
         android:layout_marginEnd="24dp"
+        android:background="@color/common_edit_bg"
         android:hint="@string/user_login_id"
         android:inputType="text"
+        android:padding="8dp"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,9 +57,11 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
+        android:background="@color/common_edit_bg"
         android:hint="@string/user_password"
         android:imeOptions="actionDone"
         android:inputType="textPassword"
+        android:padding="8dp"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,10 +70,10 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtTxt_login_password">
@@ -77,10 +81,12 @@
         <EditText
             android:id="@+id/edtTxt_login_identifyingCode"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:maxLength="4"
+            android:layout_weight="1"
+            android:background="@color/common_edit_bg"
             android:hint="@string/user_identifying_code"
+            android:maxLength="4"
+            android:padding="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="parent" />
@@ -88,8 +94,8 @@
         <ImageView
             android:id="@+id/iv_login_identifyingCode"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <Button
