@@ -59,46 +59,20 @@
         app:title="联系方式：" />
 
     <com.example.myapplication.myview.MyItemGroup
+        android:id="@+id/user_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:edt_hint_content="修改联系地址"
+        app:paddingLeft="@dimen/padding_left_and_right"
+        app:title="联系地址：" />
+
+    <com.example.myapplication.myview.MyItemGroup
         android:id="@+id/edit_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:edt_hint_content="修改密码"
         app:paddingLeft="@dimen/padding_left_and_right"
         app:title="密码：" />
-
-    <com.example.myapplication.myview.MyItemGroup
-        android:id="@+id/shopping_car"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:edt_hint_content="查看购物车"
-        app:paddingLeft="@dimen/padding_left_and_right"
-        app:title="购物车" />
-
-    <com.example.myapplication.myview.MyItemGroup
-        android:id="@+id/my_stuff"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:edt_hint_content="我发布的二手物品"
-        app:paddingLeft="@dimen/padding_left_and_right"
-        app:title="商品" />
-
-    <com.example.myapplication.myview.MyItemGroup
-        android:id="@+id/my_collections"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:edt_hint_content="我的收藏"
-        app:paddingLeft="@dimen/padding_left_and_right"
-        app:title="收藏" />
-
-
-    <com.example.myapplication.myview.MyItemGroup
-        android:id="@+id/my_orders"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:contentDescription="asdsadasd"
-        app:edt_hint_content="我的订单"
-        app:paddingLeft="@dimen/padding_left_and_right"
-        app:title="订单" />
 
     <com.example.myapplication.myview.MyItemGroup
         android:id="@+id/system_announcement"
