@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.myapplication.bottomnavigation.BottomNavigationActivity">
+    tools:context="com.example.myapplication.activity.BottomNavigationActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_homeSearch"

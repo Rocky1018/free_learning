@@ -1,4 +1,4 @@
-package com.example.myapplication.bottomnavigation.ui.my;
+package com.example.myapplication.activity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

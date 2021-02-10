@@ -1,4 +1,4 @@
-package com.example.myapplication.login;
+package com.example.myapplication.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -18,12 +18,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 
 import com.example.myapplication.R;
-import com.example.myapplication.bottomnavigation.BottomNavigationActivity;
 import com.example.myapplication.domain.User;
-import com.example.myapplication.register.RegisterActivity;
 import com.example.myapplication.service.GetUserInfo;
 import com.example.myapplication.service.UserLogin;
-import com.example.myapplication.utils.BaseActivity;
 import com.example.myapplication.utils.IdentifyingCodeUtils;
 import com.example.myapplication.utils.MD5Util;
 import com.example.myapplication.utils.SharePreferencesUtils;
@@ -242,7 +239,7 @@ public class LoginActivity extends BaseActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(LoginActivity.this, BottomNavigationActivity.RegisterActivity.class);
                 Toast.makeText(LoginActivity.this, "请先注册！", Toast.LENGTH_SHORT).show();
 
                 startActivity(intent);

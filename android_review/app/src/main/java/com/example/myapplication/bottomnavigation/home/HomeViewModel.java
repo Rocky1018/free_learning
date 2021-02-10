@@ -1,4 +1,4 @@
-package com.example.myapplication.bottomnavigation.ui.home;
+package com.example.myapplication.bottomnavigation.home;
 
 import android.content.Context;
 

@@ -1,4 +1,4 @@
-package com.example.myapplication.bottomnavigation.ui;
+package com.example.myapplication.myview;
 
 import android.app.Activity;
 import android.content.Context;

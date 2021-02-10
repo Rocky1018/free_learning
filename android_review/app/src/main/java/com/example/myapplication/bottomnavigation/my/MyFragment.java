@@ -18,7 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.R;
-import com.example.myapplication.login.LoginActivity;
+import com.example.myapplication.activity.LoginActivity;
 import com.example.myapplication.utils.SharePreferencesUtils;
 
 import static android.content.Context.MODE_PRIVATE;

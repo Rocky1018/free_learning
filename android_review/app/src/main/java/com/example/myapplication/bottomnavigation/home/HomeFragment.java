@@ -1,4 +1,4 @@
-package com.example.myapplication.bottomnavigation.ui.home;
+package com.example.myapplication.bottomnavigation.home;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -25,6 +25,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
 import com.example.myapplication.R;
+import com.example.myapplication.activity.MySearchResultActivity;
 import com.example.myapplication.domain.IdleGoods;
 import com.example.myapplication.service.GetIdleGoodsInfoList;
 import com.example.myapplication.utils.FilePersistenceUtils;

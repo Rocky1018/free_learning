@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".bottomnavigation.ui.my.MyDetailInfoActivity">
+    tools:context=".activity.MyDetailInfoActivity">
 
     <com.example.myapplication.myview.MyTitleBar
         android:id="@+id/myTitleBar_myInfo"
@@ -33,22 +33,6 @@
             android:text="修改头像" />
     </LinearLayout>
 
-    <!--编辑界面，此处可以写成一个MyItemGroup上传至com上-->
-    <com.example.myapplication.myview.MyItemGroup
-        android:id="@+id/myItemGroup_userId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:jt_visible="false"
-        app:paddingLeft="@dimen/padding_left_and_right"
-        app:title="用户ID：" />
-
-    <com.example.myapplication.myview.MyItemGroup
-        android:id="@+id/myItemGroup_userLoginId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:edt_hint_content="修改登录账号"
-        app:paddingLeft="@dimen/padding_left_and_right"
-        app:title="登录账号：" />
 
     <com.example.myapplication.myview.MyItemGroup
         android:id="@+id/myItemGroup_userName"
@@ -75,10 +59,55 @@
         app:title="联系方式：" />
 
     <com.example.myapplication.myview.MyItemGroup
-        android:id="@+id/myItemGroup_userRegisterDate"
+        android:id="@+id/edit_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:jt_visible="false"
+        app:edt_hint_content="修改密码"
         app:paddingLeft="@dimen/padding_left_and_right"
-        app:title="注册日期：" />
+        app:title="密码：" />
+
+    <com.example.myapplication.myview.MyItemGroup
+        android:id="@+id/shopping_car"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:edt_hint_content="查看购物车"
+        app:paddingLeft="@dimen/padding_left_and_right"
+        app:title="购物车" />
+
+    <com.example.myapplication.myview.MyItemGroup
+        android:id="@+id/my_stuff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:edt_hint_content="我发布的二手物品"
+        app:paddingLeft="@dimen/padding_left_and_right"
+        app:title="商品" />
+
+    <com.example.myapplication.myview.MyItemGroup
+        android:id="@+id/my_collections"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:edt_hint_content="我的收藏"
+        app:paddingLeft="@dimen/padding_left_and_right"
+        app:title="收藏" />
+
+
+    <com.example.myapplication.myview.MyItemGroup
+        android:id="@+id/my_orders"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="asdsadasd"
+        app:edt_hint_content="我的订单"
+        app:paddingLeft="@dimen/padding_left_and_right"
+        app:title="订单" />
+
+    <com.example.myapplication.myview.MyItemGroup
+        android:id="@+id/system_announcement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="asdsadasd"
+        app:edt_hint_content="系统公告"
+        app:paddingLeft="@dimen/padding_left_and_right"
+        app:title="通知" />
+
+
 </LinearLayout>

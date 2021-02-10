@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/ll_total_fragment"
-    tools:context="com.example.myapplication.bottomnavigation.BottomNavigationActivity">
+    tools:context="com.example.myapplication.activity.BottomNavigationActivity">
 
     <com.example.myapplication.myview.MyTitleBar
         android:id="@+id/myTitleBar_releaseIdle"

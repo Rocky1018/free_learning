@@ -1,4 +1,4 @@
-package com.example.myapplication.bottomnavigation.ui.add;
+package com.example.myapplication.bottomnavigation.add;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -22,7 +22,7 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
-import com.example.myapplication.bottomnavigation.ui.SelectPicPopupWindow;
+import com.example.myapplication.myview.SelectPicPopupWindow;
 import com.example.myapplication.myview.MyTitleBar;
 
 import java.io.File;

@@ -65,6 +65,10 @@ public class MyItemGroup extends FrameLayout {
         addView(view);
     }
 
+    public void pwdType() {
+        contentTextView.setText("******");
+    }
+
     /**
      * 初始化相关属性，引入相关属性
      */

@@ -1,4 +1,4 @@
-package com.example.myapplication.bottomnavigation.ui.my;
+package com.example.myapplication.activity;
 
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -38,12 +38,9 @@ public class MyDetailInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_deatil_info);
 
         myInfoMyTitleBar = (MyTitleBar) findViewById(R.id.myTitleBar_myInfo);
-        userIdMyItemGroup = (MyItemGroup) findViewById(R.id.myItemGroup_userId);
-        userLoginIdMyItemGroup = (MyItemGroup) findViewById(R.id.myItemGroup_userLoginId);
         userNameMyItemGroup = (MyItemGroup) findViewById(R.id.myItemGroup_userName);
         userEmailMyItemGroup = (MyItemGroup) findViewById(R.id.myItemGroup_userEmail);
         userPhoneNumMyItemGroup = (MyItemGroup) findViewById(R.id.myItemGroup_userPhoneNum);
-        userRegisterDateMyItemGroup = (MyItemGroup) findViewById(R.id.myItemGroup_userRegisterDate);
 
         //隐藏系统自带顶部状态栏
         ActionBar supportActionBar = getSupportActionBar();
