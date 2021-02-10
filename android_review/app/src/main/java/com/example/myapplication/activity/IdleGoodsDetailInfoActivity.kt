@@ -1,77 +1,122 @@
 package com.example.myapplication.activity
 
-import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
+import android.text.TextUtils
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.TextView.OnEditorActionListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import cn.bmob.v3.BmobObject
+import cn.bmob.v3.BmobQuery
+import cn.bmob.v3.exception.BmobException
+import cn.bmob.v3.listener.FindListener
+import cn.bmob.v3.listener.QueryListener
+import cn.bmob.v3.listener.UpdateListener
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
+import com.bumptech.glide.load.engine.Resource
 import com.example.myapplication.R
 import com.example.myapplication.adapter.CommentAdapter
+import com.example.myapplication.bean.CategoryItem
 import com.example.myapplication.bean.CommentItem
-import com.example.myapplication.myview.MyTitleBar
+import com.example.myapplication.bean.Stuff
+import com.example.myapplication.utils.Config
 import kotlinx.android.synthetic.main.activity_idle_goods_detail_info.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 class IdleGoodsDetailInfoActivity : AppCompatActivity() {
-    private var idleGoodsDetailInfoMyTitleBar: MyTitleBar? = null
-    private var editComment: EditText? = null
-    private var ll_leave_comment: LinearLayout? = null
-    private var rv_comments: RecyclerView? = null
-    private fun initTestComments(): List<CommentItem> {
-        val commentItems: MutableList<CommentItem> = ArrayList()
-        for (i in 0..9) {
-            val item = CommentItem(UUID.randomUUID().toString())
-            item.content = "fake content$i"
-            item.username = "fake username$i"
-            item.portrait = "fake content$i"
-            item.date = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date())
-            commentItems.add(item)
-        }
-        return commentItems
-    }
+    private var stuff: Stuff? = null
+    private var isCollected: Boolean = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_idle_goods_detail_info)
-        idleGoodsDetailInfoMyTitleBar = findViewById(R.id.myTitleBar_idleGoodsDetailInfo)
-        editComment = findViewById(R.id.et_commemt)
-        ll_leave_comment = findViewById(R.id.ll_leave_comment)
-        rv_comments = findViewById(R.id.rv_comments)
-        rv_comments?.layoutManager = LinearLayoutManager(this)
-        rv_comments?.adapter = CommentAdapter(this, initTestComments())
-        supportActionBar!!.hide()
-        editComment?.setOnEditorActionListener(OnEditorActionListener { v: TextView, actionId: Int, event: KeyEvent? ->
+        supportActionBar?.hide()
+        // 更改顶部菜单栏标题
+        myTitleBar_idleGoodsDetailInfo.setTvTitleText("闲置物详情")
+        myTitleBar_idleGoodsDetailInfo.tvForward?.visibility = View.GONE
+        val bmobQuery = BmobQuery<Stuff>()
+        bmobQuery.getObject("", object : QueryListener<Stuff>() {
+            override fun done(p0: Stuff?, p1: BmobException?) {
+                stuff = p0
+                rv_comments.layoutManager = LinearLayoutManager(this@IdleGoodsDetailInfoActivity)
+                rv_comments.adapter =
+                    stuff?.comments?.let { CommentAdapter(this@IdleGoodsDetailInfoActivity, it) }
+            }
+
+        })
+
+        et_commemt.setOnEditorActionListener { v: TextView, actionId: Int, event: KeyEvent? ->
             if (actionId == EditorInfo.IME_ACTION_SEND) {
                 Log.d("onEditorAction", "" + v.text)
             }
             false
-        })
-        ll_leave_comment?.setOnClickListener(View.OnClickListener { v: View? ->
-            editComment?.requestFocus()
+        }
+        ll_leave_comment?.setOnClickListener { v: View? ->
+            et_commemt.requestFocus()
             val inputManager =
-                editComment?.context?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-            inputManager?.showSoftInput(editComment, 0)
-        })
+                et_commemt.context?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            inputManager.showSoftInput(et_commemt, 0)
+        }
         tv_want.setOnClickListener {
             banWantDialog()
         }
-        // 更改顶部菜单栏标题
-        idleGoodsDetailInfoMyTitleBar?.setTvTitleText("闲置物详情")
-        idleGoodsDetailInfoMyTitleBar?.tvForward?.visibility = View.GONE
+        ll_collect.setOnClickListener {
+            collectStuff()
+        }
+
+    }
+
+    private fun collectStuff() {
+        if (stuff == null) {
+            Toast.makeText(this, "收藏失败，未获取商品详情", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if (!isCollected) {
+            Config.user?.apply {
+                collections?.add(stuff!!)
+                update(object : UpdateListener() {
+                    override fun done(p0: BmobException?) {
+                        if (p0 != null) {
+                            Log.w("collectStuff", "error  ${p0.message}")
+                            return
+                        }
+                        Toast.makeText(
+                            this@IdleGoodsDetailInfoActivity, "收藏成功",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        iv_collect.setImageResource(R.drawable.ic_baseline_star_24)
+                        isCollected = true
+                    }
+                })
+            }
+        } else {
+            Config.user?.apply {
+                collections?.remove(stuff)
+                update(object : UpdateListener() {
+                    override fun done(p0: BmobException?) {
+                        if (p0 != null) {
+                            Log.w("collectStuff", "error  ${p0.message}")
+                            return
+                        }
+                        Toast.makeText(
+                            this@IdleGoodsDetailInfoActivity, "取消收藏",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        iv_collect.setImageResource(R.drawable.ic_baseline_star_border_24)
+                        isCollected = false
+                    }
+                })
+            }
+        }
 
     }
 

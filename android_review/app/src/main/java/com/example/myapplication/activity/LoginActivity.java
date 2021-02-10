@@ -43,13 +43,13 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        userloginidEditText = (EditText) findViewById(R.id.edtTxt_login_userloginid);
-        passwordEditText = (EditText) findViewById(R.id.edtTxt_login_password);
-        loginButton = (Button) findViewById(R.id.btn_login_login);
-        registerButton = (Button) findViewById(R.id.btn_login_register);
-        loadingProgressBar = (ProgressBar) findViewById(R.id.login_loading);
-        identifyingCodeEditText = (EditText) findViewById(R.id.edtTxt_login_identifyingCode);
-        identifyingCodeImageView = (ImageView) findViewById(R.id.iv_login_identifyingCode);
+        userloginidEditText = findViewById(R.id.edtTxt_login_userloginid);
+        passwordEditText = findViewById(R.id.edtTxt_login_password);
+        loginButton = findViewById(R.id.btn_login_login);
+        registerButton = findViewById(R.id.btn_login_register);
+        loadingProgressBar = findViewById(R.id.login_loading);
+        identifyingCodeEditText = findViewById(R.id.edtTxt_login_identifyingCode);
+        identifyingCodeImageView = findViewById(R.id.iv_login_identifyingCode);
 
         //隐藏系统自带顶部状态栏
         ActionBar supportActionBar = getSupportActionBar();
@@ -239,7 +239,7 @@ public class LoginActivity extends BaseActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, BottomNavigationActivity.RegisterActivity.class);
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 Toast.makeText(LoginActivity.this, "请先注册！", Toast.LENGTH_SHORT).show();
 
                 startActivity(intent);

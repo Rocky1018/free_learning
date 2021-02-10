@@ -11,6 +11,6 @@ data class User(val userId: String) : BmobObject() {
     var userRole: Int? = null
     var shoppingCar: List<Stuff>? = null
     var stuffs: List<Stuff>? = null
-    var collections: List<Stuff>? = null
+    var collections: MutableList<Stuff>? = null
     var orderList: List<Order>? = null
 }

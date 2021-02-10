@@ -17,9 +17,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activity.BottomNavigationActivity;
 import com.example.myapplication.activity.LoginActivity;
 import com.example.myapplication.activity.MyCollectedListActivity;
 import com.example.myapplication.activity.MyDetailInfoActivity;
+import com.example.myapplication.utils.Config;
 import com.example.myapplication.utils.SharePreferencesUtils;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -32,9 +34,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     private Button showMyInfoDetailButton;
     private ImageView myCollectionImageView;
     private TextView myCollectionTextView;
-    private TextView myUserNameTextView;
     private LinearLayout myUserInfoLinearLayout;
-    private SharedPreferences userinfo;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -44,7 +44,6 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         logoutButton = root.findViewById(R.id.btn_logout);
         myCollectionImageView = root.findViewById(R.id.iv_myCollection);
         myCollectionTextView = root.findViewById(R.id.tv_myCollection);
-        myUserNameTextView = root.findViewById(R.id.tv_myUserName);
         myUserInfoLinearLayout = root.findViewById(R.id.ly_myUserInfo);
 
 
@@ -57,13 +56,13 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         showMyInfoDetailButton.setOnClickListener(this);
 
         // 退出登录事件绑定
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                startActivity(intent);
-                Toast.makeText(getContext(), "退出登录", Toast.LENGTH_SHORT).show();
-            }
+        logoutButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), BottomNavigationActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+            Config.INSTANCE.setUser(null);
+            SharePreferencesUtils.clear(getContext());
+            Toast.makeText(getContext(), "退出登录", Toast.LENGTH_SHORT).show();
         });
 
         return root;

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".bottomnavigation.ui.home.IdleGoodsDetailInfoActivity">
+    tools:context=".activity.IdleGoodsDetailInfoActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -92,8 +92,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:src="@drawable/leave_message" />
 
                 <TextView
@@ -101,6 +101,27 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="留言" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_collect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginLeft="40dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_collect"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_baseline_star_border_24" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="收藏" />
             </LinearLayout>
 
 
