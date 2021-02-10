@@ -34,4 +34,20 @@
     <string name="ban_want_hint">私密聊天功能暂未开放。如果您想了解更多商品细节请留言。如果您中意该产品可以将其加入购物车。现在是否将其加入购物车？</string>
     <string name="login_failed">登录失败！用户名或密码错误！</string>
     <string name="register_failed">注册失败！用户账号重复！</string>
+    <string name="title_activity_admin">管理页面</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 </resources>

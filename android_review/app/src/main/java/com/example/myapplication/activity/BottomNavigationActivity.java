@@ -94,7 +94,10 @@ public class BottomNavigationActivity extends BaseActivity {
         navView.setOnNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.navigation_my) {
                 if (TextUtils.isEmpty(userId)) {
-                    startActivity(new Intent(this, LoginActivity.class));
+                    startActivity(new Intent(this, AdminActivity.class));
+                    return false;
+                } else if (userId == "admin") {
+                    startActivity(new Intent(this, AdminActivity.class));
                     return false;
                 } else {
                     navController.navigate(item.getItemId());
@@ -158,15 +161,15 @@ public class BottomNavigationActivity extends BaseActivity {
                 supportActionBar.hide();
             }
 
-            userloginidEditText = (EditText) findViewById(R.id.edtTxt_register_user_login_id);
-            passwordEditText = (EditText) findViewById(R.id.edtTxt_register_password);
-            repeatpasswordEditText = (EditText) findViewById(R.id.edtTxt_register_repeat_password);
-            usernameEditText = (EditText) findViewById(R.id.edtTxt_register_username);
-            useremailEditText = (EditText) findViewById(R.id.edtTxt_register_email);
-            phonenumEditText = (EditText) findViewById(R.id.edtTxt_register_phone_num);
-            registerButton = (Button) findViewById(R.id.btn_register_register);
+            userloginidEditText = findViewById(R.id.edtTxt_register_user_login_id);
+            passwordEditText = findViewById(R.id.edtTxt_register_password);
+            repeatpasswordEditText = findViewById(R.id.edtTxt_register_repeat_password);
+            usernameEditText = findViewById(R.id.edtTxt_register_username);
+            useremailEditText = findViewById(R.id.edtTxt_register_email);
+            phonenumEditText = findViewById(R.id.edtTxt_register_phone_num);
+            registerButton = findViewById(R.id.btn_register_register);
 
-            loadingProgressBar = (ProgressBar) findViewById(R.id.register_loading);
+            loadingProgressBar = findViewById(R.id.register_loading);
 
 
             userloginidEditText.addTextChangedListener(new TextWatcher() {
