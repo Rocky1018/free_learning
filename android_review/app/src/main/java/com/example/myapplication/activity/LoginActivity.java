@@ -168,7 +168,7 @@ public class LoginActivity extends BaseActivity {
                         loadingProgressBar.setVisibility(View.VISIBLE);
                         String inputUsername = userloginidEditText.getText().toString();
                         String encodePwd = MD5Util.getMD5Str(passwordEditText.getText().toString());
-                        BmobQuery query = new BmobQuery();
+                        BmobQuery query = new BmobQuery<User>();
                         query.addWhereEqualTo("username", inputUsername).addWhereEqualTo("password", encodePwd)
                                 .findObjects(new FindListener<User>() {
 
