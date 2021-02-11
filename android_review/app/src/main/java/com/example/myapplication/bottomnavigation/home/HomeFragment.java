@@ -59,21 +59,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private Toolbar homeFragmentHeadToolbar;
     private SwipeRefreshLayout refreshStuff;
     private HomeViewModel homeViewModel;
-    private List<CategoryItem> categoryList;
+    private final List<CategoryItem> categoryList = new ArrayList<>();
     private List<View> categoryView;
     private List<TextView> categoryName;
 
     private List<CategoryItem> getCategoryList() {
         BmobQuery<CategoryItem> bmobQuery = new BmobQuery<>();
-        List<CategoryItem> result = new ArrayList<>();
         bmobQuery.setLimit(10).order("-publishTime").findObjects(new FindListener<CategoryItem>() {
             @Override
             public void done(List<CategoryItem> list, BmobException e) {
-                result.addAll(list);
+                if (list != null && list.size() > 0) {
+                    categoryList.addAll(list);
+                }
             }
         });
-        categoryList = result;
-        return result;
+        return categoryList;
     }
 
     private List<Stuff> getStuffList() {
@@ -113,15 +113,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         searchRecordsListPopupWindow.setModal(false);
         idlePropertyRecyclerView = root.findViewById(R.id.rv_idleProperty);
         idlePropertyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        View view = LayoutInflater.from(getContext()).
-                inflate(R.layout.idle_goods_header, idlePropertyRecyclerView, false);
 
         // 初始化闲置物列表
         idleGoodsInfoList = getStuffList();
 
 
         StuffAdapter idleGoodsAdapter = new StuffAdapter(idleGoodsInfoList, getContext());
-        idleGoodsAdapter.setHeaderView(view);
 
         idlePropertyRecyclerView.setAdapter(idleGoodsAdapter);
 
@@ -149,7 +146,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             }
         });
         refreshStuff.setOnRefreshListener(() -> {
-            idleGoodsInfoList.add(new Stuff());
+            idleGoodsInfoList.add(new Stuff("im new item"));
             refreshStuff.setRefreshing(false);
             idleGoodsAdapter.notifyDataSetChanged();
         });
@@ -271,112 +268,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         });
 
         getCategoryList();
-        initUIClick(view);
         return root;
-    }
-
-    private void initUIClick(View view) {
-        categoryView = new ArrayList<>();
-        categoryName = new ArrayList<>();
-        categoryView.add(view.findViewById(R.id.iv_myOtherFunction16));
-        categoryView.add(view.findViewById(R.id.iv_myOtherFunction17));
-        categoryView.add(view.findViewById(R.id.iv_myOtherFunction18));
-        categoryView.add(view.findViewById(R.id.iv_myOtherFunction19));
-        categoryView.add(view.findViewById(R.id.iv_myOtherFunction20));
-        categoryView.add(view.findViewById(R.id.iv_myOtherFunction21));
-        categoryView.add(view.findViewById(R.id.iv_myOtherFunction22));
-        categoryView.add(view.findViewById(R.id.iv_myOtherFunction23));
-        categoryView.add(view.findViewById(R.id.iv_myOtherFunction24));
-        categoryView.add(view.findViewById(R.id.iv_myOtherFunction25));
-        categoryName.add(view.findViewById(R.id.tv_myOtherFunction16));
-        categoryName.add(view.findViewById(R.id.tv_myOtherFunction17));
-        categoryName.add(view.findViewById(R.id.tv_myOtherFunction18));
-        categoryName.add(view.findViewById(R.id.tv_myOtherFunction19));
-        categoryName.add(view.findViewById(R.id.tv_myOtherFunction20));
-        categoryName.add(view.findViewById(R.id.tv_myOtherFunction21));
-        categoryName.add(view.findViewById(R.id.tv_myOtherFunction22));
-        categoryName.add(view.findViewById(R.id.tv_myOtherFunction23));
-        categoryName.add(view.findViewById(R.id.tv_myOtherFunction24));
-        categoryName.add(view.findViewById(R.id.tv_myOtherFunction25));
-        //这么写是真的丑陋！但是我想回家过年了
-        //先拿到目录列表 本地显示固定10个。按照拿到的目录列表开始匹配text，数量还够就显示
-        for (int i = 0; i < categoryList.size(); i++) {
-            categoryName.get(i).setVisibility(View.VISIBLE);
-            categoryView.get(i).setVisibility(View.VISIBLE);
-            categoryName.get(i).setText(categoryList.get(i).getCategoryName());
-        }
-        view.findViewById(R.id.iv_myOtherFunction16).setOnClickListener(this);
-        view.findViewById(R.id.tv_myOtherFunction16).setOnClickListener(this);
-        view.findViewById(R.id.iv_myOtherFunction17).setOnClickListener(this);
-        view.findViewById(R.id.tv_myOtherFunction17).setOnClickListener(this);
-        view.findViewById(R.id.iv_myOtherFunction18).setOnClickListener(this);
-        view.findViewById(R.id.tv_myOtherFunction18).setOnClickListener(this);
-        view.findViewById(R.id.iv_myOtherFunction19).setOnClickListener(this);
-        view.findViewById(R.id.tv_myOtherFunction19).setOnClickListener(this);
-        view.findViewById(R.id.iv_myOtherFunction20).setOnClickListener(this);
-        view.findViewById(R.id.tv_myOtherFunction20).setOnClickListener(this);
-        view.findViewById(R.id.iv_myOtherFunction21).setOnClickListener(this);
-        view.findViewById(R.id.tv_myOtherFunction21).setOnClickListener(this);
-        view.findViewById(R.id.iv_myOtherFunction22).setOnClickListener(this);
-        view.findViewById(R.id.tv_myOtherFunction22).setOnClickListener(this);
-        view.findViewById(R.id.iv_myOtherFunction23).setOnClickListener(this);
-        view.findViewById(R.id.tv_myOtherFunction23).setOnClickListener(this);
-        view.findViewById(R.id.iv_myOtherFunction24).setOnClickListener(this);
-        view.findViewById(R.id.tv_myOtherFunction24).setOnClickListener(this);
-        view.findViewById(R.id.iv_myOtherFunction25).setOnClickListener(this);
-        view.findViewById(R.id.tv_myOtherFunction25).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(getActivity(), CategoryStuffActivity.class);
-        try {
-            switch (v.getId()) {
-                case R.id.iv_myOtherFunction16:
-                case R.id.tv_myOtherFunction16:
-                    intent.putExtra("categoryId", categoryList.get(0).getObjectId());
-                    break;
-                case R.id.iv_myOtherFunction17:
-                case R.id.tv_myOtherFunction17:
-                    intent.putExtra("categoryId", categoryList.get(1).getObjectId());
-                    break;
-                case R.id.iv_myOtherFunction18:
-                case R.id.tv_myOtherFunction18:
-                    intent.putExtra("categoryId", categoryList.get(2).getObjectId());
-                    break;
-                case R.id.iv_myOtherFunction19:
-                case R.id.tv_myOtherFunction19:
-                    intent.putExtra("categoryId", categoryList.get(3).getObjectId());
-                    break;
-                case R.id.iv_myOtherFunction20:
-                case R.id.tv_myOtherFunction20:
-                    intent.putExtra("categoryId", categoryList.get(4).getObjectId());
-                    break;
-                case R.id.iv_myOtherFunction21:
-                case R.id.tv_myOtherFunction21:
-                    intent.putExtra("categoryId", categoryList.get(5).getObjectId());
-                    break;
-                case R.id.iv_myOtherFunction22:
-                case R.id.tv_myOtherFunction22:
-                    intent.putExtra("categoryId", categoryList.get(6).getObjectId());
-                    break;
-                case R.id.iv_myOtherFunction23:
-                case R.id.tv_myOtherFunction23:
-                    intent.putExtra("categoryId", categoryList.get(7).getObjectId());
-                    break;
-                case R.id.iv_myOtherFunction24:
-                case R.id.tv_myOtherFunction24:
-                    intent.putExtra("categoryId", categoryList.get(8).getObjectId());
-                    break;
-                case R.id.iv_myOtherFunction25:
-                case R.id.tv_myOtherFunction25:
-                    intent.putExtra("categoryId", categoryList.get(9).getObjectId());
-                    break;
-            }
-        } catch (RuntimeException e) {
-            Log.w("HomeFragment", "error" + e.getMessage());
-        }
 
-        startActivity(intent);
     }
 }
