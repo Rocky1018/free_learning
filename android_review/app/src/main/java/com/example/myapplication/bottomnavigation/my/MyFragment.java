@@ -70,7 +70,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Intent intent = null;
+        Intent intent;
         switch (v.getId()) {
             case R.id.btn_showMyInfoDetail:
                 break;

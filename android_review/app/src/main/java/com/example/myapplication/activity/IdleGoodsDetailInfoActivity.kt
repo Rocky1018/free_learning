@@ -1,34 +1,26 @@
 package com.example.myapplication.activity
 
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
-import android.widget.TextView.OnEditorActionListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import cn.bmob.v3.BmobObject
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.exception.BmobException
-import cn.bmob.v3.listener.FindListener
 import cn.bmob.v3.listener.QueryListener
 import cn.bmob.v3.listener.UpdateListener
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
-import com.bumptech.glide.load.engine.Resource
 import com.example.myapplication.R
 import com.example.myapplication.adapter.CommentAdapter
-import com.example.myapplication.bean.CategoryItem
-import com.example.myapplication.bean.CommentItem
 import com.example.myapplication.bean.Stuff
 import com.example.myapplication.utils.Config
 import kotlinx.android.synthetic.main.activity_idle_goods_detail_info.*
-import java.text.SimpleDateFormat
 import java.util.*
 
 class IdleGoodsDetailInfoActivity : AppCompatActivity() {
