@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import com.example.myapplication.utils.MD5Util
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -13,5 +14,6 @@ class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
+        print(MD5Util.getMD5Str("123456"))
     }
 }

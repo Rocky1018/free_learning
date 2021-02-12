@@ -98,7 +98,7 @@ public class BottomNavigationActivity extends BaseActivity {
                 if (TextUtils.isEmpty(userId)) {
                     startActivity(new Intent(this, LoginActivity.class));
                     return false;
-                } else if (userId == "Rflr222K") {//这是我手动创建的管理员ID 账号admin 密码123456
+                } else if (userId.equals("Rflr222K")) {//这是我手动创建的管理员ID 账号admin Aa111111
                     startActivity(new Intent(this, AdminActivity.class));
                     return false;
                 } else {

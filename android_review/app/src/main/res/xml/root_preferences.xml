@@ -23,6 +23,10 @@
             app:key="announcement"
             app:title="公告信息管理" />
 
+        <Preference
+            app:key="logout"
+            app:title="退出登录" />
+
     </PreferenceCategory>
 
 
