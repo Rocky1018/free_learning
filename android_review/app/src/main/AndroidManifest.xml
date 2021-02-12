@@ -21,7 +21,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity android:name=".activity.CategoryStuffActivity"></activity>
-        <activity android:name=".activity.RegisterActivity" />
         <activity
             android:name=".activity.AdminActivity"
             android:label="@string/title_activity_admin">

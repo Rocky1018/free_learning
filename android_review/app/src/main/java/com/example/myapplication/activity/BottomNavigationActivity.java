@@ -63,7 +63,6 @@ public class BottomNavigationActivity extends BaseActivity {
         setContentView(R.layout.activity_botton_navigation);
         Bmob.initialize(this, "acb82b8fb5c6b9cbc68c4464959681f7");
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        userId = (String) SharePreferencesUtils.getParam(this, "userId", "");
         /*申请读取存储的权限*/
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(PERMISSION_WRITE_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -94,9 +93,9 @@ public class BottomNavigationActivity extends BaseActivity {
         navView.setOnNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.navigation_my) {
                 if (TextUtils.isEmpty(userId)) {
-                    startActivity(new Intent(this, AdminActivity.class));
+                    startActivity(new Intent(this, LoginActivity.class));
                     return false;
-                } else if (userId == "admin") {
+                } else if (userId == "Rflr222K") {//这是我手动创建的管理员ID 账号admin 密码123456
                     startActivity(new Intent(this, AdminActivity.class));
                     return false;
                 } else {
@@ -109,6 +108,11 @@ public class BottomNavigationActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        userId = (String) SharePreferencesUtils.getParam(this, "userId", "");
+    }
 
     private NavGraph initNavGraph(NavigatorProvider provider, FixFragmentNavigator fragmentNavigator) {
         NavGraph navGraph = new NavGraph(new NavGraphNavigator(provider));
@@ -135,7 +139,6 @@ public class BottomNavigationActivity extends BaseActivity {
         navGraph.setStartDestination(R.id.navigation_home);
         return navGraph;
     }
-
 
 
 }
