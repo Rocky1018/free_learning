@@ -29,6 +29,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.myapplication.R;
 import com.example.myapplication.activity.CategoryStuffActivity;
 import com.example.myapplication.activity.MySearchResultActivity;
+import com.example.myapplication.adapter.CategoryAdapter;
 import com.example.myapplication.bean.CategoryItem;
 import com.example.myapplication.bean.Stuff;
 import com.example.myapplication.utils.FilePersistenceUtils;
@@ -55,7 +56,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private SearchView homeFragmentSearchView;
     private ListPopupWindow searchRecordsListPopupWindow;
-    private RecyclerView idlePropertyRecyclerView;
+    private RecyclerView idlePropertyRecyclerView, categoryRecyclerview;
     private Toolbar homeFragmentHeadToolbar;
     private SwipeRefreshLayout refreshStuff;
     private HomeViewModel homeViewModel;
@@ -96,6 +97,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         searchRecords = homeViewModel.getSearchRecords(getContext());
         //根据id获取控件
         homeFragmentSearchView = root.findViewById(R.id.searchView_homeSearch);
+        categoryRecyclerview = root.findViewById(R.id.rv_category);
         homeFragmentSearchView.setSubmitButtonEnabled(true); //设置右端搜索键显示
         homeFragmentHeadToolbar = root.findViewById(R.id.toolbar_homeSearch);
         refreshStuff = root.findViewById(R.id.refresh_stuff_layout);
@@ -113,6 +115,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         searchRecordsListPopupWindow.setModal(false);
         idlePropertyRecyclerView = root.findViewById(R.id.rv_idleProperty);
         idlePropertyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        categoryRecyclerview.setLayoutManager(new LinearLayoutManager(getContext(),
+                LinearLayoutManager.HORIZONTAL, false));
 
         // 初始化闲置物列表
         idleGoodsInfoList = getStuffList();
@@ -120,6 +124,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         StuffAdapter idleGoodsAdapter = new StuffAdapter(idleGoodsInfoList, getContext());
 
+        categoryRecyclerview.setAdapter(new CategoryAdapter(getContext(), getCategoryList()));
         idlePropertyRecyclerView.setAdapter(idleGoodsAdapter);
 
         //为每项数据项绑定事件
@@ -266,8 +271,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 return true;
             }
         });
-
-        getCategoryList();
         return root;
     }
 
