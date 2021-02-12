@@ -101,8 +101,6 @@ public class LoginActivity extends BaseActivity {
                         !passwordEditText.getText().toString().isEmpty() &&
                         userloginidEditText.getError() == null &&
                         passwordEditText.getError() == null) {
-                    //验证码正确才进行登录
-                    //简单表单校验无误后按下按钮，显示进度条
                     loadingProgressBar.setVisibility(View.VISIBLE);
                     String inputUsername = userloginidEditText.getText().toString();
                     String encodePwd = MD5Util.getMD5Str(passwordEditText.getText().toString());
@@ -122,7 +120,7 @@ public class LoginActivity extends BaseActivity {
                                         Intent intent = new Intent(LoginActivity.this, BottomNavigationActivity.class);
                                         startActivity(intent);
                                         finish();
-                                        break;
+                                        return;
                                     }
                                 }
                                 showPwdErrorDialog();

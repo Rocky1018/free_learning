@@ -28,8 +28,6 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class MyFragment extends Fragment implements View.OnClickListener {
 
-    public static final String TAG = "MyFragment";
-
     private Button logoutButton;
     private Button showMyInfoDetailButton;
     private ImageView myCollectionImageView;
@@ -57,12 +55,10 @@ public class MyFragment extends Fragment implements View.OnClickListener {
 
         // 退出登录事件绑定
         logoutButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), BottomNavigationActivity.class);
-            startActivity(intent);
-            getActivity().finish();
             Config.INSTANCE.setUser(null);
             SharePreferencesUtils.clear(getContext());
             Toast.makeText(getContext(), "退出登录", Toast.LENGTH_SHORT).show();
+            ((BottomNavigationActivity) getActivity()).navigateHome();
         });
 
         return root;

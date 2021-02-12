@@ -45,6 +45,8 @@ public class BottomNavigationActivity extends BaseActivity {
     String userId;
     private static final String PERMISSION_WRITE_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private static final int REQUEST_PERMISSION_CODE = 267;
+    NavController navController;
+    BottomNavigationView navView;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -62,7 +64,7 @@ public class BottomNavigationActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_botton_navigation);
         Bmob.initialize(this, "acb82b8fb5c6b9cbc68c4464959681f7");
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView = findViewById(R.id.nav_view);
         /*申请读取存储的权限*/
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(PERMISSION_WRITE_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -78,7 +80,7 @@ public class BottomNavigationActivity extends BaseActivity {
         //获取页面容器NavHostFragment
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         //获取导航控制器
-        NavController navController = NavHostFragment.findNavController(fragment);
+        navController = NavHostFragment.findNavController(fragment);
         //创建自定义的Fragment导航器
         FixFragmentNavigator fragmentNavigator = new FixFragmentNavigator(this, fragment.getChildFragmentManager(), fragment.getId());
         //获取导航器提供者
@@ -91,6 +93,7 @@ public class BottomNavigationActivity extends BaseActivity {
         navController.setGraph(navGraph);
         //底部导航设置点击事件
         navView.setOnNavigationItemSelectedListener(item -> {
+            userId = (String) SharePreferencesUtils.getParam(this, "userId", "");
             if (item.getItemId() == R.id.navigation_my) {
                 if (TextUtils.isEmpty(userId)) {
                     startActivity(new Intent(this, LoginActivity.class));
@@ -108,11 +111,11 @@ public class BottomNavigationActivity extends BaseActivity {
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        userId = (String) SharePreferencesUtils.getParam(this, "userId", "");
+    public void navigateHome() {
+        navView.setSelectedItemId(R.id.navigation_home);
+        navController.navigate(R.id.navigation_home);
     }
+
 
     private NavGraph initNavGraph(NavigatorProvider provider, FixFragmentNavigator fragmentNavigator) {
         NavGraph navGraph = new NavGraph(new NavGraphNavigator(provider));

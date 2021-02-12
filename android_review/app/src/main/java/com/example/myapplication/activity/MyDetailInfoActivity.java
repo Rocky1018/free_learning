@@ -26,7 +26,7 @@ public class MyDetailInfoActivity extends AppCompatActivity {
     private MyItemGroup userIdMyItemGroup;
 
     private MyItemGroup userLoginIdMyItemGroup;
-    private MyItemGroup userNameMyItemGroup;
+    private MyItemGroup nicknameMyItemGroup;
     private MyItemGroup userEmailMyItemGroup;
     private MyItemGroup userPhoneNumMyItemGroup;
     private MyItemGroup userRegisterDateMyItemGroup;
@@ -37,10 +37,10 @@ public class MyDetailInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_deatil_info);
 
-        myInfoMyTitleBar = (MyTitleBar) findViewById(R.id.myTitleBar_myInfo);
-        userNameMyItemGroup = (MyItemGroup) findViewById(R.id.myItemGroup_userName);
-        userEmailMyItemGroup = (MyItemGroup) findViewById(R.id.myItemGroup_userEmail);
-        userPhoneNumMyItemGroup = (MyItemGroup) findViewById(R.id.myItemGroup_userPhoneNum);
+        myInfoMyTitleBar = findViewById(R.id.myTitleBar_myInfo);
+        nicknameMyItemGroup = findViewById(R.id.myItemGroup_nickName);
+        userEmailMyItemGroup = findViewById(R.id.myItemGroup_userEmail);
+        userPhoneNumMyItemGroup = findViewById(R.id.myItemGroup_userPhoneNum);
 
         //隐藏系统自带顶部状态栏
         ActionBar supportActionBar = getSupportActionBar();
@@ -66,7 +66,7 @@ public class MyDetailInfoActivity extends AppCompatActivity {
             userLoginIdMyItemGroup.setContentTextViewText(localUserLoginId);
         }
         if (localUserName != null) {
-            userNameMyItemGroup.setContentTextViewText(localUserName);
+            nicknameMyItemGroup.setContentTextViewText(localUserName);
         }
         if (localUserEmail != null) {
             userEmailMyItemGroup.setContentTextViewText(localUserEmail);
@@ -134,11 +134,11 @@ public class MyDetailInfoActivity extends AppCompatActivity {
             }
         });
 
-        userNameMyItemGroup.setOnClickListener(new View.OnClickListener() {
+        nicknameMyItemGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final EditText usernameEditText = new EditText(MyDetailInfoActivity.this);
-                usernameEditText.setText(userNameMyItemGroup.getContentTextViewText());
+                usernameEditText.setText(nicknameMyItemGroup.getContentTextViewText());
                 usernameEditText.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -165,7 +165,7 @@ public class MyDetailInfoActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // 将信息更新至文本框中，待最终按下保存按钮再更新至本地共享文件并更新数据库
                         if (!usernameEditText.getText().toString().isEmpty() && usernameEditText.getError() == null) {
-                            userNameMyItemGroup.setContentTextViewText(usernameEditText.getText().toString());
+                            nicknameMyItemGroup.setContentTextViewText(usernameEditText.getText().toString());
                             Toast.makeText(MyDetailInfoActivity.this, "修改成功！", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(MyDetailInfoActivity.this, "用户密码格式错误请重试！", Toast.LENGTH_SHORT).show();
@@ -270,7 +270,7 @@ public class MyDetailInfoActivity extends AppCompatActivity {
                 User user = new User();
                 user.setUserId(localUserId);
                 user.setUserLoginId(userLoginIdMyItemGroup.getContentTextViewText());
-                user.setUserName(userNameMyItemGroup.getContentTextViewText());
+                user.setUserName(nicknameMyItemGroup.getContentTextViewText());
                 user.setUserEmail(userEmailMyItemGroup.getContentTextViewText());
                 user.setUserPhoneNum(userPhoneNumMyItemGroup.getContentTextViewText());
                 // 先更新远程数据库
@@ -279,7 +279,7 @@ public class MyDetailInfoActivity extends AppCompatActivity {
                     // 若更新数据库成功
                     // 再更新本地共享文件
                     SharePreferencesUtils.save(MyDetailInfoActivity.this, userLoginIdMyItemGroup.getContentTextViewText(),
-                            userNameMyItemGroup.getContentTextViewText(), userEmailMyItemGroup.getContentTextViewText(),
+                            nicknameMyItemGroup.getContentTextViewText(), userEmailMyItemGroup.getContentTextViewText(),
                             userPhoneNumMyItemGroup.getContentTextViewText(), SharePreferencesUtils.USER_INFORMATION_FILE);
                     Toast.makeText(MyDetailInfoActivity.this, "保存成功！", Toast.LENGTH_SHORT).show();
                 } else {
