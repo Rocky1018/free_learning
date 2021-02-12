@@ -40,6 +40,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import cn.bmob.v3.BmobQuery;
@@ -66,7 +67,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private List<CategoryItem> getCategoryList() {
         BmobQuery<CategoryItem> bmobQuery = new BmobQuery<>();
-        bmobQuery.setLimit(10).order("-publishTime").findObjects(new FindListener<CategoryItem>() {
+        bmobQuery.findObjects(new FindListener<CategoryItem>() {
             @Override
             public void done(List<CategoryItem> list, BmobException e) {
                 if (list != null && list.size() > 0) {
