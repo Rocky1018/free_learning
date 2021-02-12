@@ -93,9 +93,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        homeViewModel = new ViewModelProvider(getActivity()).get(HomeViewModel.class);
         //获取搜索记录
-        searchRecords = homeViewModel.getSearchRecords(getContext());
+        searchRecords = homeViewModel.getSearchRecords(getActivity());
         //根据id获取控件
         homeFragmentSearchView = root.findViewById(R.id.searchView_homeSearch);
         categoryRecyclerview = root.findViewById(R.id.rv_category);
@@ -103,29 +103,29 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         homeFragmentHeadToolbar = root.findViewById(R.id.toolbar_homeSearch);
         refreshStuff = root.findViewById(R.id.refresh_stuff_layout);
         //创建下拉列表
-        searchRecordsListPopupWindow = new ListPopupWindow(getContext());
+        searchRecordsListPopupWindow = new ListPopupWindow(getActivity());
         //创建下拉列表数据项
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, searchRecords);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, searchRecords);
         //绑定下拉列表数据
         searchRecordsListPopupWindow.setAdapter(adapter);
         //绑定锚点，从什么控件下开始展开
         searchRecordsListPopupWindow.setAnchorView(homeFragmentHeadToolbar);
 
-        searchRecordsListPopupWindow.setHeight(ScreenUtils.getScreenHeight(getContext()) / 2);
+        searchRecordsListPopupWindow.setHeight(ScreenUtils.getScreenHeight(getActivity()) / 2);
 
         searchRecordsListPopupWindow.setModal(false);
         idlePropertyRecyclerView = root.findViewById(R.id.rv_idleProperty);
-        idlePropertyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        categoryRecyclerview.setLayoutManager(new LinearLayoutManager(getContext(),
+        idlePropertyRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        categoryRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.HORIZONTAL, false));
 
         // 初始化闲置物列表
         idleGoodsInfoList = getStuffList();
 
 
-        StuffAdapter idleGoodsAdapter = new StuffAdapter(idleGoodsInfoList, getContext());
+        StuffAdapter idleGoodsAdapter = new StuffAdapter(idleGoodsInfoList, getActivity());
 
-        categoryRecyclerview.setAdapter(new CategoryAdapter(getContext(), getCategoryList()));
+        categoryRecyclerview.setAdapter(new CategoryAdapter(getActivity(), getCategoryList()));
         idlePropertyRecyclerView.setAdapter(idleGoodsAdapter);
 
         //为每项数据项绑定事件
@@ -142,13 +142,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         SoftKeyBoardListener.setListener(getActivity(), new SoftKeyBoardListener.OnSoftKeyBoardChangeListener() {
             @Override
             public void keyBoardShow(int height) {
-//                Toast.makeText(getContext(), "键盘显示 高度" + height, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "键盘显示 高度" + height, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void keyBoardHide(int height) {
                 homeFragmentSearchView.clearFocus(); //去除搜索框焦点
-//                Toast.makeText(getContext(), "键盘隐藏 高度" + height, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "键盘隐藏 高度" + height, Toast.LENGTH_SHORT).show();
             }
         });
         refreshStuff.setOnRefreshListener(() -> {
@@ -176,7 +176,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                                 String record = searchRecords.get(position);
                                 //创建弹窗
-                                AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+                                AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
                                 dialog.setTitle("提示");
                                 dialog.setMessage("删除" + record + "搜索记录？");
 //                                dialog.setCancelable(false);
@@ -187,12 +187,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                                         try {
                                             homeViewModel.removeSearchRecord(record);
                                             adapter.notifyDataSetChanged();
-                                            FilePersistenceUtils.remove(getContext(), record, "searchrecords");
+                                            FilePersistenceUtils.remove(getActivity(), record, "searchrecords");
 
                                             homeFragmentSearchView.setQuery("", false);
-                                            Toast.makeText(getContext(), "删除成功！", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getActivity(), "删除成功！", Toast.LENGTH_SHORT).show();
                                         } catch (Exception ex) {
-                                            Toast.makeText(getContext(), "删除失败！", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getActivity(), "删除失败！", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
@@ -218,10 +218,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             public boolean onQueryTextSubmit(String query) {  //输入关键字后按下搜索键触发
                 homeFragmentSearchView.clearFocus();
                 if (query.length() > 0) {
-                    Toast.makeText(getContext(), "搜索内容：" + query, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "搜索内容：" + query, Toast.LENGTH_SHORT).show();
 
                     //添加记录至本地文件
-                    boolean flag = FilePersistenceUtils.addHeadDistinct(getContext(), query, FilePersistenceUtils.SREARCH_RECORDS_FILE_NAME);
+                    boolean flag = FilePersistenceUtils.addHeadDistinct(getActivity(), query, FilePersistenceUtils.SREARCH_RECORDS_FILE_NAME);
 
                     //若文件中存在当前搜索记录
                     if (!flag) {
@@ -240,7 +240,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                                     return goodsName.contains(query);
                                 }).collect(Collectors.toList());
 
-                        Intent intent = new Intent(getContext(), MySearchResultActivity.class);
+                        Intent intent = new Intent(getActivity(), MySearchResultActivity.class);
                         intent.putExtra("searchResult", new Gson().toJson(collect));
                         startActivity(intent);
                     }
@@ -252,22 +252,26 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public boolean onQueryTextChange(String query) {  //可用于进行关键字筛选
                 query.toLowerCase();
-                searchRecordsListPopupWindow.show();
-                if (TextUtils.isEmpty(query)) {
-                    // 清除ListView的过滤
+                try {
+                    searchRecordsListPopupWindow.show();
+                    if (TextUtils.isEmpty(query)) {
+                        // 清除ListView的过滤
 
-                    searchRecordsListPopupWindow.setAdapter(adapter);
-                } else {
-                    List<String> recordsFilter = new ArrayList<>();
-                    for (String searchRecord : searchRecords) {
-                        String s = searchRecord;
-                        if (s.toLowerCase().contains(query)) {
-                            recordsFilter.add(searchRecord);
+                        searchRecordsListPopupWindow.setAdapter(adapter);
+                    } else {
+                        List<String> recordsFilter = new ArrayList<>();
+                        for (String searchRecord : searchRecords) {
+                            String s = searchRecord;
+                            if (s.toLowerCase().contains(query)) {
+                                recordsFilter.add(searchRecord);
+                            }
+                        }
+                        if (recordsFilter.size() >= 0) {
+                            searchRecordsListPopupWindow.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, recordsFilter));
                         }
                     }
-                    if (recordsFilter.size() >= 0) {
-                        searchRecordsListPopupWindow.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, recordsFilter));
-                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 return true;
             }

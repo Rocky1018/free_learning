@@ -3,12 +3,10 @@ package com.example.myapplication.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,13 +18,10 @@ import androidx.appcompat.app.ActionBar;
 
 import com.example.myapplication.R;
 import com.example.myapplication.bean.User;
-import com.example.myapplication.service.GetUserInfo;
-import com.example.myapplication.service.UserLogin;
 import com.example.myapplication.utils.Config;
 import com.example.myapplication.utils.IdentifyingCodeUtils;
 import com.example.myapplication.utils.MD5Util;
 import com.example.myapplication.utils.SharePreferencesUtils;
-import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -116,6 +111,7 @@ public class LoginActivity extends BaseActivity {
                                         Toast.makeText(LoginActivity.this, "登入成功", Toast.LENGTH_SHORT).show();
                                         //存储此次用户登录信息到本地
                                         SharePreferencesUtils.setParam(LoginActivity.this, "userId", user.getObjectId());
+                                        Config.INSTANCE.setUser(user);
                                         //跳转主页面
                                         Intent intent = new Intent(LoginActivity.this, BottomNavigationActivity.class);
                                         startActivity(intent);

@@ -1,6 +1,5 @@
 package com.example.myapplication.activity
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
@@ -10,9 +9,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import cn.bmob.v3.BmobQuery
+import cn.bmob.v3.exception.BmobException
+import cn.bmob.v3.listener.QueryListener
+import cn.bmob.v3.listener.UpdateListener
 import com.example.myapplication.R
+import com.example.myapplication.bean.User
 import com.example.myapplication.utils.Config
+import com.example.myapplication.utils.MD5Util
 import com.example.myapplication.utils.SharePreferencesUtils
+
 
 class AdminActivity : AppCompatActivity() {
 
@@ -27,10 +33,18 @@ class AdminActivity : AppCompatActivity() {
         }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
 
-    fun getContext(): Activity {
-        return this@AdminActivity
+        val bmobQuery: BmobQuery<User> = BmobQuery<User>()
+        bmobQuery.getObject("Rflr222K", object : QueryListener<User>() {
+            override fun done(obj: User?, e: BmobException?) {
+                if (e == null) {
+                    Config.user = obj
+                    Log.d("bmobQuery", "e==null ${obj?.toString()}")
+                } else {
+                    Toast.makeText(this@AdminActivity, "获取管理员信息失败", Toast.LENGTH_SHORT)
+                }
+            }
+        })
     }
 
     class SettingsFragment : PreferenceFragmentCompat() {
@@ -43,8 +57,18 @@ class AdminActivity : AppCompatActivity() {
                 }
             findPreference<EditTextPreference>("password")?.onPreferenceChangeListener =
                 Preference.OnPreferenceChangeListener { preference, newValue ->
-                    Log.d("terminal_number", "preference:$preference,newValue:$newValue")
-                    //SharePreferencesUtils.setParam(activity, "terminal_number", newValue.toString())
+                    val user = User("admin")
+                    user.password = MD5Util.getMD5Str(newValue.toString())
+                    user.update("Rflr222K", object : UpdateListener() {
+                        override fun done(e: BmobException?) {
+                            if (e == null) {
+                                Toast.makeText(activity, ("更新成功"), Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(activity, ("更新失败:${e.message}"), Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                        }
+                    })
                     true
                 }
             findPreference<Preference>("logout")?.onPreferenceClickListener =
