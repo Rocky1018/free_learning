@@ -9,7 +9,7 @@
 
         <Preference
             app:key="user_info"
-            app:title="用户信息管理" />
+            app:title="用户信息查看" />
 
         <Preference
             app:key="category"
@@ -17,7 +17,7 @@
 
         <Preference
             app:key="stuff_info"
-            app:title="物品信息管理" />
+            app:title="物品信息查看" />
 
         <Preference
             app:key="announcement"

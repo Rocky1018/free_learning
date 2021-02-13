@@ -1,8 +1,7 @@
-package com.example.myapplication.activity
+package com.example.myapplication.activity.admin
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -52,9 +51,26 @@ class AdminActivity : AppCompatActivity() {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
             findPreference<Preference>("user_info")?.onPreferenceClickListener =
                 Preference.OnPreferenceClickListener {
-                    startActivity(Intent(Settings.ACTION_DISPLAY_SETTINGS))
+                    startActivity(Intent(activity, AllUserActivity::class.java))
                     false
                 }
+            findPreference<Preference>("category")?.onPreferenceClickListener =
+                Preference.OnPreferenceClickListener {
+                    startActivity(Intent(activity, AllCategoryActivity::class.java))
+                    false
+                }
+            findPreference<Preference>("stuff_info")?.onPreferenceClickListener =
+                Preference.OnPreferenceClickListener {
+                    startActivity(Intent(activity, AllStuffActivity::class.java))
+                    false
+                }
+            findPreference<Preference>("announcement")?.onPreferenceClickListener =
+                Preference.OnPreferenceClickListener {
+                    startActivity(Intent(activity, AllAnnouncementActivity::class.java))
+                    false
+                }
+
+
             findPreference<EditTextPreference>("password")?.onPreferenceChangeListener =
                 Preference.OnPreferenceChangeListener { preference, newValue ->
                     val user = User("admin")

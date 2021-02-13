@@ -1,21 +1,12 @@
 package com.example.myapplication.activity;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,13 +20,11 @@ import androidx.navigation.fragment.FragmentNavigator;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activity.admin.AdminActivity;
 import com.example.myapplication.bottomnavigation.add.AddFragment;
 import com.example.myapplication.bottomnavigation.home.HomeFragment;
 import com.example.myapplication.bottomnavigation.my.MyFragment;
-import com.example.myapplication.domain.User;
 import com.example.myapplication.myview.FixFragmentNavigator;
-import com.example.myapplication.service.UserRegister;
-import com.example.myapplication.utils.MD5Util;
 import com.example.myapplication.utils.SharePreferencesUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

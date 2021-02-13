@@ -20,9 +20,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name=".activity.CategoryStuffActivity"></activity>
+        <activity android:name=".activity.admin.AllAnnouncementActivity"></activity>
+        <activity android:name=".activity.admin.AllStuffActivity" />
+        <activity android:name=".activity.admin.AllCategoryActivity" />
+        <activity android:name=".activity.admin.AllUserActivity" />
+        <activity android:name=".activity.CategoryStuffActivity" />
         <activity
-            android:name=".activity.AdminActivity"
+            android:name=".activity.admin.AdminActivity"
             android:label="@string/title_activity_admin">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
