@@ -18,18 +18,17 @@ class AllUserActivity : AppCompatActivity() {
         setContentView(R.layout.activity_all_user)
         actionBar?.hide()
         rv_all_user.layoutManager = LinearLayoutManager(this)
-        rv_all_user.adapter = UserAdapter(this, getUserList())
+        getUserList()
     }
 
-    private fun getUserList(): List<User> {
-        val result = mutableListOf<User>()
+    private fun getUserList() {
+        mutableListOf<User>()
         val query: BmobQuery<User> = BmobQuery<User>()
-        query.findObjects(object : FindListener<User?>() {
-            override fun done(p0: MutableList<User?>?, p1: BmobException?) {
-                TODO("Not yet implemented")
+        query.findObjects(object : FindListener<User>() {
+            override fun done(p0: MutableList<User>, p1: BmobException?) {
+                rv_all_user.adapter = UserAdapter(this@AllUserActivity, p0)
             }
 
         })
-        return result
     }
 }
