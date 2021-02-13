@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.admin.AllAnnouncementActivity">
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_announcement"
         android:layout_width="match_parent"
@@ -18,4 +17,4 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
         android:src="@drawable/ic_pic_add_24" />
-</>
+</FrameLayout>

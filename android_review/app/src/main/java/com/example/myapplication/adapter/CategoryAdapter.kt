@@ -12,11 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.R
 import com.example.myapplication.activity.CategoryStuffActivity
-import com.example.myapplication.bean.CategoryItem
+import com.example.myapplication.bean.Category
 
 class CategoryAdapter(
     private val context: Context,
-    private val categoryList: MutableList<CategoryItem>
+    private val categoryList: MutableList<Category>
 ) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
     private val commonCategoryIconList = arrayOf(
         R.drawable.ic_other_function_01,

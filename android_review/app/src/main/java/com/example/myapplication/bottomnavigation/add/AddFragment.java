@@ -25,7 +25,7 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
-import com.example.myapplication.bean.CategoryItem;
+import com.example.myapplication.bean.Category;
 import com.example.myapplication.myview.SelectPicPopupWindow;
 import com.example.myapplication.myview.MyTitleBar;
 
@@ -162,10 +162,10 @@ public class AddFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getCategory() {
-        BmobQuery<CategoryItem> query = new BmobQuery<>();
-        query.findObjects(new FindListener<CategoryItem>() {
+        BmobQuery<Category> query = new BmobQuery<>();
+        query.findObjects(new FindListener<Category>() {
             @Override
-            public void done(List<CategoryItem> object, BmobException e) {
+            public void done(List<Category> object, BmobException e) {
                 if (e == null) {
                     initPopWindow(object);
                 } else {
@@ -175,7 +175,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         });
     }
 
-    private void initPopWindow(List<CategoryItem> object) {
+    private void initPopWindow(List<Category> object) {
         String[] items = new String[object.size()];
         for (int i = 0; i < object.size(); i++) {
             items[i] = object.get(i).getCategoryName();

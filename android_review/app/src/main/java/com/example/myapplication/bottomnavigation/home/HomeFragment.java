@@ -13,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListPopupWindow;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,7 +27,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.myapplication.R;
 import com.example.myapplication.activity.MySearchResultActivity;
 import com.example.myapplication.adapter.CategoryAdapter;
-import com.example.myapplication.bean.CategoryItem;
+import com.example.myapplication.bean.Category;
 import com.example.myapplication.bean.Stuff;
 import com.example.myapplication.utils.FilePersistenceUtils;
 import com.example.myapplication.adapter.StuffAdapter;
@@ -60,13 +59,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private Toolbar homeFragmentHeadToolbar;
     private SwipeRefreshLayout refreshStuff;
     private HomeViewModel homeViewModel;
-    private final List<CategoryItem> categoryList = new ArrayList<>();
+    private final List<Category> categoryList = new ArrayList<>();
 
-    private List<CategoryItem> getCategoryList() {
-        BmobQuery<CategoryItem> bmobQuery = new BmobQuery<>();
-        bmobQuery.findObjects(new FindListener<CategoryItem>() {
+    private List<Category> getCategoryList() {
+        BmobQuery<Category> bmobQuery = new BmobQuery<>();
+        bmobQuery.findObjects(new FindListener<Category>() {
             @Override
-            public void done(List<CategoryItem> list, BmobException e) {
+            public void done(List<Category> list, BmobException e) {
                 if (list != null && list.size() > 0) {
                     categoryList.addAll(list);
                 }

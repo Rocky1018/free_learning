@@ -15,12 +15,12 @@ import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.bumptech.glide.Glide
 import com.example.myapplication.R
-import com.example.myapplication.bean.CategoryItem
+import com.example.myapplication.bean.Category
 
 
 class AllCategoryAdapter(
     private val context: Context,
-    private val categoryList: MutableList<CategoryItem>
+    private val categoryList: MutableList<Category>
 ) : RecyclerView.Adapter<AllCategoryAdapter.ViewHolder>() {
     private val commonCategoryIconList = arrayOf(
         R.drawable.ic_other_function_01,
@@ -71,7 +71,7 @@ class AllCategoryAdapter(
                 .onPositive { dialog: MaterialDialog, _: DialogAction? ->
                     val name = dialog.inputEditText?.text.toString().trim()
                     categoryList[position].categoryName = name
-                    val item = CategoryItem(name)
+                    val item = Category(name)
                     item.update(categoryList[position].objectId, object : UpdateListener() {
                         override fun done(e: BmobException?) {
                             if (e == null) {

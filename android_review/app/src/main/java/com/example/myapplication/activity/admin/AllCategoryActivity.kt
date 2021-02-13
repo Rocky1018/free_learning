@@ -12,7 +12,7 @@ import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.example.myapplication.R
 import com.example.myapplication.adapter.AllCategoryAdapter
-import com.example.myapplication.bean.CategoryItem
+import com.example.myapplication.bean.Category
 import kotlinx.android.synthetic.main.activity_all_category.*
 
 
@@ -32,7 +32,7 @@ class AllCategoryActivity : AppCompatActivity() {
                 .negativeText(android.R.string.cancel)
                 .onPositive { dialog: MaterialDialog, _: DialogAction? ->
                     val name = dialog.inputEditText?.text.toString().trim()
-                    val categoryItem = CategoryItem(name)
+                    val categoryItem = Category(name)
                     categoryItem.save(object : SaveListener<String>() {
                         override fun done(objectId: String, e: BmobException) {
                             if (e == null) {
@@ -52,10 +52,10 @@ class AllCategoryActivity : AppCompatActivity() {
     }
 
     private fun getCategoryList() {
-        var categoryList = mutableListOf<CategoryItem>()
-        val bmobQuery = BmobQuery<CategoryItem>()
-        bmobQuery.findObjects(object : FindListener<CategoryItem>() {
-            override fun done(list: List<CategoryItem>, e: BmobException?) {
+        var categoryList = mutableListOf<Category>()
+        val bmobQuery = BmobQuery<Category>()
+        bmobQuery.findObjects(object : FindListener<Category>() {
+            override fun done(list: List<Category>, e: BmobException?) {
                 if (list != null && list.isNotEmpty()) {
                     categoryList.addAll(list)
                     var adapter = AllCategoryAdapter(this@AllCategoryActivity, categoryList)
