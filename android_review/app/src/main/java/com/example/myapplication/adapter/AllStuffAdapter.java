@@ -6,8 +6,10 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,10 +22,13 @@ import com.example.myapplication.myview.MyImageView;
 
 import java.util.List;
 
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
+
 /**
  * 放置闲置物品的RecyclerView的适配器
  */
-public class StuffAdapter extends RecyclerView.Adapter<StuffAdapter.ViewHolder> {
+public class AllStuffAdapter extends RecyclerView.Adapter<AllStuffAdapter.ViewHolder> {
 
     private final List<Stuff> idleGoodsInfoList;
     private final Context mcontext;
@@ -36,6 +41,7 @@ public class StuffAdapter extends RecyclerView.Adapter<StuffAdapter.ViewHolder> 
         TextView idlePropertyPersonTextView;
         TextView idlePropertyLocationTextView;
         TextView idlePropertyPriceTextView;
+        Button del;
 
         public ViewHolder(@NonNull View view) {
             super(view);
@@ -46,10 +52,11 @@ public class StuffAdapter extends RecyclerView.Adapter<StuffAdapter.ViewHolder> 
             idlePropertyPersonTextView = view.findViewById(R.id.tv_idleGoodsPerson);
             idlePropertyLocationTextView = view.findViewById(R.id.tv_idleGoodsLocation);
             idlePropertyPriceTextView = view.findViewById(R.id.tv_idleGoodsPrice);
+            del = view.findViewById(R.id.btn_del);
         }
     }
 
-    public StuffAdapter(List<Stuff> idleGoodsInfoList, Context mcontext) {
+    public AllStuffAdapter(List<Stuff> idleGoodsInfoList, Context mcontext) {
         this.idleGoodsInfoList = idleGoodsInfoList;
         this.mcontext = mcontext;
     }
@@ -57,7 +64,7 @@ public class StuffAdapter extends RecyclerView.Adapter<StuffAdapter.ViewHolder> 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.idle_goods_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.all_goods_item, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
@@ -72,11 +79,22 @@ public class StuffAdapter extends RecyclerView.Adapter<StuffAdapter.ViewHolder> 
         holder.idlePropertyPersonTextView.setText(goods.getOwner().getUsername());
         holder.idlePropertyLocationTextView.setText(goods.getOwner().getAddress());
         holder.idlePropertyPriceTextView.setText(goods.getPrice() + "");
+        holder.del.setOnClickListener(v -> {
+            Stuff stuff = new Stuff(idleGoodsInfoList.get(position).getName());
+            stuff.setObjectId(idleGoodsInfoList.get(position).getObjectId());
+            stuff.delete(new UpdateListener() {
 
-        holder.idleGoodsItemLinearLayout.setOnClickListener(v -> {
-            Intent intent = new Intent(mcontext, IdleGoodsDetailInfoActivity.class);
-            intent.putExtra("goodsId", goods.getObjectId());
-            mcontext.startActivity(intent);
+                @Override
+                public void done(BmobException e) {
+                    if (e == null) {
+                        Toast.makeText(mcontext, "删除成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(mcontext, "删除失败：" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                    notifyDataSetChanged();
+                }
+
+            });
         });
     }
 

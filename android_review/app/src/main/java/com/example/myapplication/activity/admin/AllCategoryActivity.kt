@@ -55,7 +55,7 @@ class AllCategoryActivity : AppCompatActivity() {
         var categoryList = mutableListOf<CategoryItem>()
         val bmobQuery = BmobQuery<CategoryItem>()
         bmobQuery.findObjects(object : FindListener<CategoryItem>() {
-            override fun done(list: List<CategoryItem>, e: BmobException) {
+            override fun done(list: List<CategoryItem>, e: BmobException?) {
                 if (list != null && list.isNotEmpty()) {
                     categoryList.addAll(list)
                     var adapter = AllCategoryAdapter(this@AllCategoryActivity, categoryList)

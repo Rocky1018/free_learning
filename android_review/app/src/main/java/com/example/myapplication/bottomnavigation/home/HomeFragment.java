@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
 import com.example.myapplication.R;
-import com.example.myapplication.activity.CategoryStuffActivity;
 import com.example.myapplication.activity.MySearchResultActivity;
 import com.example.myapplication.adapter.CategoryAdapter;
 import com.example.myapplication.bean.CategoryItem;
@@ -40,7 +38,6 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import cn.bmob.v3.BmobQuery;
@@ -53,7 +50,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private List<String> searchRecords;
 
     //闲置物列表
-    public List<Stuff> idleGoodsInfoList;
+    public List<Stuff> idleGoodsInfoList = new ArrayList<>();
+
+    StuffAdapter idleGoodsAdapter;
 
     private SearchView homeFragmentSearchView;
     private ListPopupWindow searchRecordsListPopupWindow;
@@ -62,8 +61,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private SwipeRefreshLayout refreshStuff;
     private HomeViewModel homeViewModel;
     private final List<CategoryItem> categoryList = new ArrayList<>();
-    private List<View> categoryView;
-    private List<TextView> categoryName;
 
     private List<CategoryItem> getCategoryList() {
         BmobQuery<CategoryItem> bmobQuery = new BmobQuery<>();
@@ -78,16 +75,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         return categoryList;
     }
 
-    private List<Stuff> getStuffList() {
+    private void getStuffList() {
         BmobQuery<Stuff> bmobQuery = new BmobQuery<>();
         List<Stuff> result = new ArrayList<>();
         bmobQuery.setLimit(10).order("-publishTime").findObjects(new FindListener<Stuff>() {
             @Override
             public void done(List<Stuff> list, BmobException e) {
-                result.addAll(list);
+                idleGoodsInfoList.addAll(list);
+                idleGoodsAdapter = new StuffAdapter(idleGoodsInfoList, getActivity());
+                idlePropertyRecyclerView.setAdapter(idleGoodsAdapter);
             }
         });
-        return result;
     }
 
 
@@ -114,19 +112,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         searchRecordsListPopupWindow.setHeight(ScreenUtils.getScreenHeight(getActivity()) / 2);
 
         searchRecordsListPopupWindow.setModal(false);
-        idlePropertyRecyclerView = root.findViewById(R.id.rv_idleProperty);
+        idlePropertyRecyclerView = root.findViewById(R.id.rv_goods);
         idlePropertyRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         categoryRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.HORIZONTAL, false));
 
         // 初始化闲置物列表
-        idleGoodsInfoList = getStuffList();
-
-
-        StuffAdapter idleGoodsAdapter = new StuffAdapter(idleGoodsInfoList, getActivity());
+        getStuffList();
 
         categoryRecyclerview.setAdapter(new CategoryAdapter(getActivity(), getCategoryList()));
-        idlePropertyRecyclerView.setAdapter(idleGoodsAdapter);
 
         //为每项数据项绑定事件
         searchRecordsListPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -154,7 +148,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         refreshStuff.setOnRefreshListener(() -> {
             idleGoodsInfoList.add(new Stuff("im new item"));
             refreshStuff.setRefreshing(false);
-            idleGoodsAdapter.notifyDataSetChanged();
+            if (idleGoodsAdapter != null) {
+                idleGoodsAdapter.notifyDataSetChanged();
+            }
         });
 
         //监听搜索框被选中，即force监听

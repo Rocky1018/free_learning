@@ -114,7 +114,6 @@ class IdleGoodsDetailInfoActivity : AppCompatActivity() {
 
     private fun banWantDialog() {
         MaterialDialog.Builder(this)
-            .title("请输入管理密码！")
             .content(R.string.ban_want_hint)
             .positiveText(android.R.string.ok)
             .negativeText(android.R.string.cancel)
