@@ -217,6 +217,5 @@ public class LoginActivity extends BaseActivity {
         identifyingCode = IdentifyingCodeUtils.getInstance().getCode();
         identifyingCodeImageView.setImageBitmap(identifyingCodeBitmap);
         identifyingCodeEditText.setText("");
-        passwordEditText.setText("");
     }
 }

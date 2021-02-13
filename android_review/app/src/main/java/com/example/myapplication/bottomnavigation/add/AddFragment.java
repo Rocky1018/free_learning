@@ -2,6 +2,7 @@ package com.example.myapplication.bottomnavigation.add;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -28,14 +29,18 @@ import com.example.myapplication.R;
 import com.example.myapplication.bean.Category;
 import com.example.myapplication.myview.SelectPicPopupWindow;
 import com.example.myapplication.myview.MyTitleBar;
+import com.example.myapplication.utils.GetImagePathUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Objects;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.UploadFileListener;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -107,6 +112,30 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         getActivity().sendBroadcast(mediaScanIntent);
     }
 
+    private void uploadPic(Uri uri) {
+        String picPath = GetImagePathUtil.getPathFromUri(getActivity(), uri);
+        Log.d("upload", "path   " + picPath);
+        BmobFile bmobFile = new BmobFile(new File(picPath));
+        bmobFile.uploadblock(new UploadFileListener() {
+
+            @Override
+            public void done(BmobException e) {
+                if (e == null) {
+                    Log.d("upload", "上传文件成功:" + bmobFile.getFileUrl());
+                } else {
+                    Log.d("upload", "上传文件失败：" + e.getMessage());
+                    Toast.makeText(getActivity(), "上传失败", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onProgress(Integer value) {
+                // 返回的上传进度（百分比）
+            }
+        });
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (resultCode == RESULT_OK && requestCode == REQUEST_PHOTO) {
@@ -116,7 +145,8 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                 Log.i("onActivityResult", "onActivityResult: imageUri " + mImageUri);
                 stuffPic.setImageBitmap(bitmap);//显示到ImageView上
                 delStuffPic.setVisibility(View.VISIBLE);
-                galleryAddPic(mImageUriFromFile);
+                //galleryAddPic(mImageUriFromFile);
+                uploadPic(mImageUri);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -125,8 +155,10 @@ public class AddFragment extends Fragment implements View.OnClickListener {
             Uri fullPhotoUri = data.getData();
             stuffPic.setImageURI(fullPhotoUri);
             delStuffPic.setVisibility(View.VISIBLE);
+            uploadPic(fullPhotoUri);
         }
         menuWindow.dismiss();
+        //uploadPic(mImageUri);
         Toast.makeText(getActivity(), "当前版本仅支持上传一张图片", Toast.LENGTH_SHORT).show();
     }
 
