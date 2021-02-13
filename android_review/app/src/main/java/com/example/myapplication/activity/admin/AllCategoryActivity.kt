@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_all_category.*
 
 
 class AllCategoryActivity : AppCompatActivity() {
+    var adapter: AllCategoryAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all_category)
@@ -33,8 +34,9 @@ class AllCategoryActivity : AppCompatActivity() {
                 .onPositive { dialog: MaterialDialog, _: DialogAction? ->
                     val name = dialog.inputEditText?.text.toString().trim()
                     val categoryItem = Category(name)
-                    categoryItem.save(object : SaveListener<String>() {
-                        override fun done(objectId: String, e: BmobException) {
+                    categoryItem.save(object : SaveListener<String?>() {
+                        override fun done(objectId: String?, e: BmobException?) {
+                            getCategoryList()
                             if (e == null) {
                                 Toast.makeText(this@AllCategoryActivity, "添加成功", Toast.LENGTH_SHORT)
                             } else {
@@ -58,9 +60,8 @@ class AllCategoryActivity : AppCompatActivity() {
             override fun done(list: List<Category>, e: BmobException?) {
                 if (list != null && list.isNotEmpty()) {
                     categoryList.addAll(list)
-                    var adapter = AllCategoryAdapter(this@AllCategoryActivity, categoryList)
+                    adapter = AllCategoryAdapter(this@AllCategoryActivity, categoryList)
                     rv_all_category.adapter = adapter
-                    adapter.notifyDataSetChanged()
                 }
             }
         })

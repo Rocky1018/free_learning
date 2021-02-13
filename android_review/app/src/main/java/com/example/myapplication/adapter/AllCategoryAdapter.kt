@@ -37,7 +37,7 @@ class AllCategoryAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.category_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.all_category_item, parent, false)
         )
     }
 
@@ -50,14 +50,17 @@ class AllCategoryAdapter(
             Log.w("onBindViewHolder", "error.${e.message}")
         }
         holder.del.setOnClickListener {
+            val item = Category(categoryList[position].categoryName)
+            item.objectId = categoryList[position].objectId
             categoryList.removeAt(position)
-            categoryList[position].delete(object : UpdateListener() {
+            item.delete(object : UpdateListener() {
                 override fun done(e: BmobException?) {
                     if (e == null) {
                         Toast.makeText(context, "修改成功", Toast.LENGTH_SHORT)
                     } else {
                         Toast.makeText(context, "修改失败${e.message}", Toast.LENGTH_SHORT)
                     }
+                    notifyDataSetChanged()
                 }
             })
         }
@@ -82,6 +85,7 @@ class AllCategoryAdapter(
                         }
                     })
                     dialog.dismiss()
+                    notifyDataSetChanged()
                 }.show()
         }
     }

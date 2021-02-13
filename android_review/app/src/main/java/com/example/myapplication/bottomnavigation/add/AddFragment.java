@@ -188,23 +188,13 @@ public class AddFragment extends Fragment implements View.OnClickListener {
             public void onClick(DialogInterface dialogInterface, int i) {
                 Toast.makeText(getContext(), items[i], Toast.LENGTH_SHORT).show();
                 String name = items[i];
-                selectCategory.setText("category" + name);
+                selectCategory.setText("已选择 " + name);
             }
         });
 
-        alertBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                alertDialog2.dismiss();
-            }
-        });
+        alertBuilder.setPositiveButton("确定", (dialogInterface, i) -> alertDialog2.dismiss());
 
-        alertBuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                alertDialog2.dismiss();
-            }
-        });
+        alertBuilder.setNegativeButton("取消", (dialogInterface, i) -> alertDialog2.dismiss());
 
         alertDialog2 = alertBuilder.create();
         alertDialog2.show();
