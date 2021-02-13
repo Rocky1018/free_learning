@@ -1,5 +1,6 @@
 package com.example.myapplication.bottomnavigation.add;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,19 +15,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
+import com.example.myapplication.bean.CategoryItem;
 import com.example.myapplication.myview.SelectPicPopupWindow;
 import com.example.myapplication.myview.MyTitleBar;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -36,6 +45,8 @@ public class AddFragment extends Fragment implements View.OnClickListener {
     private View root;
     public static final int REQUEST_PHOTO = 4;
     public static final int REQUEST_IMAGE = 5;
+    private TextView selectCategory;
+    AlertDialog alertDialog2; //单选框
     private Uri mImageUri, mImageUriFromFile;
     private File imageFile;
 
@@ -50,15 +61,18 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         releaseIdleMyTitleBar = root.findViewById(R.id.myTitleBar_releaseIdle);
         stuffPic = root.findViewById(R.id.add_stuff_pic);
         delStuffPic = root.findViewById(R.id.clear_stuff_pic);
+        selectCategory = root.findViewById(R.id.tv_select_category);
         menuWindow = new SelectPicPopupWindow(getActivity(), this);
         stuffPic.setOnClickListener(this);
         delStuffPic.setOnClickListener(this);
+        selectCategory.setOnClickListener(this);
         releaseIdleMyTitleBar.setTvTitleText("发布闲置物");
         releaseIdleMyTitleBar.setTvForwardText("发布");
 
         releaseIdleMyTitleBar.getTvForward().setOnClickListener(v -> Toast.makeText(getContext(), "发布闲置物", Toast.LENGTH_SHORT).show());
 
         releaseIdleMyTitleBar.getIvBackward().setVisibility(View.INVISIBLE);
+
 
         return root;
     }
@@ -147,6 +161,55 @@ public class AddFragment extends Fragment implements View.OnClickListener {
 
     }
 
+    private void getCategory() {
+        BmobQuery<CategoryItem> query = new BmobQuery<>();
+        query.findObjects(new FindListener<CategoryItem>() {
+            @Override
+            public void done(List<CategoryItem> object, BmobException e) {
+                if (e == null) {
+                    initPopWindow(object);
+                } else {
+                    Toast.makeText(getContext(), "error " + e.getMessage(), Toast.LENGTH_SHORT);
+                }
+            }
+        });
+    }
+
+    private void initPopWindow(List<CategoryItem> object) {
+        String[] items = new String[object.size()];
+        for (int i = 0; i < object.size(); i++) {
+            items[i] = object.get(i).getCategoryName();
+        }
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getContext());
+        alertBuilder.setTitle("这是单选框");
+
+        alertBuilder.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(getContext(), items[i], Toast.LENGTH_SHORT).show();
+                String name = items[i];
+                selectCategory.setText("category" + name);
+            }
+        });
+
+        alertBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                alertDialog2.dismiss();
+            }
+        });
+
+        alertBuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                alertDialog2.dismiss();
+            }
+        });
+
+        alertDialog2 = alertBuilder.create();
+        alertDialog2.show();
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -154,7 +217,9 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                 menuWindow.showAtLocation(root.findViewById(R.id.ll_total_fragment),
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
-
+            case R.id.tv_select_category:
+                getCategory();
+                break;
             case R.id.clear_stuff_pic:
                 stuffPic.setImageResource(R.drawable.ic_pic_add_24);
                 delStuffPic.setVisibility(View.GONE);
