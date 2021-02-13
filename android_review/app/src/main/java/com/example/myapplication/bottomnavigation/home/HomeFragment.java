@@ -68,6 +68,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             public void done(List<Category> list, BmobException e) {
                 if (list != null && list.size() > 0) {
                     categoryList.addAll(list);
+                    categoryRecyclerview.setAdapter(new CategoryAdapter(getActivity(), categoryList));
                 }
             }
         });
@@ -118,8 +119,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         // 初始化闲置物列表
         getStuffList();
-
-        categoryRecyclerview.setAdapter(new CategoryAdapter(getActivity(), getCategoryList()));
+        getCategoryList();
 
         //为每项数据项绑定事件
         searchRecordsListPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
