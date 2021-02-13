@@ -10,14 +10,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.R
-import com.example.myapplication.bean.Comment
+import com.example.myapplication.bean.User
 
-class CommentAdapter(private val context: Context, private val commentList: List<Comment>) :
-    RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
+class UserAdapter(private val context: Context, private val userList: List<User>) :
+    RecyclerView.Adapter<UserAdapter.ViewHolder>() {
     class ViewHolder(commentItemView: View) : RecyclerView.ViewHolder(commentItemView) {
         var username = commentItemView.findViewById<View>(R.id.tv_comment_username) as TextView
         var portrait = commentItemView.findViewById<View>(R.id.iv_comment_portrait) as ImageView
-        var content = commentItemView.findViewById<View>(R.id.tv_connect) as TextView
+        var connect = commentItemView.findViewById<View>(R.id.tv_connect) as TextView
         var date = commentItemView.findViewById<View>(R.id.tv_create_time) as TextView
     }
 
@@ -27,17 +27,17 @@ class CommentAdapter(private val context: Context, private val commentList: List
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.content.text = commentList[position].content
-        holder.username.text = commentList[position].username
-        holder.date.text = commentList[position].date
+        holder.connect.text = "联系方式：" + userList[position].phoneNum
+        holder.username.text = userList[position].username
+        holder.date.text = "注册时间：" + userList[position].createdAt
         try {
-            Glide.with(context).load(commentList[position].portrait).into(holder.portrait)
+            Glide.with(context).load(userList[position].portrait).into(holder.portrait)
         } catch (e: Exception) {
             Log.w("onBindViewHolder", "error.${e.message}")
         }
     }
 
     override fun getItemCount(): Int {
-        return commentList.size
+        return userList.size
     }
 }

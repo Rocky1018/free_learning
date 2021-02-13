@@ -18,7 +18,7 @@ class OrderAdapter(private val context: Context, private val orderList: List<Ord
         var username = orderItemView.findViewById<View>(R.id.username) as TextView
         var stuffImage = orderItemView.findViewById<View>(R.id.stuff_image) as ImageView
         var orderStatus = orderItemView.findViewById<View>(R.id.order_status) as TextView
-        var date = orderItemView.findViewById<View>(R.id.tv_comment_date) as TextView
+        var date = orderItemView.findViewById<View>(R.id.tv_create_time) as TextView
         var stuffName = orderItemView.findViewById<View>(R.id.stuff_name) as TextView
         var stuffPrice = orderItemView.findViewById<View>(R.id.stuff_price) as TextView
     }

@@ -3,20 +3,20 @@ package com.example.myapplication.domain;
 /**
  * 闲置物实体类
  */
-public class IdleProperty {
+public class DoMainIdleProperty {
     private String id;  //闲置物id
     private String title;  //闲置物标题
     private String describe;  //闲置物商品描述
     private int imgId;  //图片id
 
-    public IdleProperty(String title, int imgId) {
+    public DoMainIdleProperty(String title, int imgId) {
         this.title = title;
         this.imgId = imgId;
     }
 
     @Override
     public String toString() {
-        return "IdleProperty{" +
+        return "DoMainIdleProperty{" +
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", describe='" + describe + '\'' +
@@ -56,10 +56,10 @@ public class IdleProperty {
         this.imgId = imgId;
     }
 
-    public IdleProperty() {
+    public DoMainIdleProperty() {
     }
 
-    public IdleProperty(String id, String title, String describe, int imgId) {
+    public DoMainIdleProperty(String id, String title, String describe, int imgId) {
         this.id = id;
         this.title = title;
         this.describe = describe;

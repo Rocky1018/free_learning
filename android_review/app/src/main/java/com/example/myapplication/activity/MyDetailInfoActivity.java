@@ -14,7 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.R;
-import com.example.myapplication.domain.User;
+import com.example.myapplication.domain.DoMainUser;
 import com.example.myapplication.myview.MyItemGroup;
 import com.example.myapplication.myview.MyTitleBar;
 import com.example.myapplication.service.UpDateUserInfo;
@@ -267,14 +267,14 @@ public class MyDetailInfoActivity extends AppCompatActivity {
         myInfoMyTitleBar.getTvForward().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User user = new User();
-                user.setUserId(localUserId);
-                user.setUserLoginId(userLoginIdMyItemGroup.getContentTextViewText());
-                user.setUserName(nicknameMyItemGroup.getContentTextViewText());
-                user.setUserEmail(userEmailMyItemGroup.getContentTextViewText());
-                user.setUserPhoneNum(userPhoneNumMyItemGroup.getContentTextViewText());
+                DoMainUser doMainUser = new DoMainUser();
+                doMainUser.setUserId(localUserId);
+                doMainUser.setUserLoginId(userLoginIdMyItemGroup.getContentTextViewText());
+                doMainUser.setUserName(nicknameMyItemGroup.getContentTextViewText());
+                doMainUser.setUserEmail(userEmailMyItemGroup.getContentTextViewText());
+                doMainUser.setUserPhoneNum(userPhoneNumMyItemGroup.getContentTextViewText());
                 // 先更新远程数据库
-                boolean flag = UpDateUserInfo.modifyUserInfo(user);
+                boolean flag = UpDateUserInfo.modifyUserInfo(doMainUser);
                 if (flag) {
                     // 若更新数据库成功
                     // 再更新本地共享文件

@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Map;
 
-public class User {
+public class DoMainUser {
 
     private String userId;
     private String userLoginId;
@@ -17,7 +17,7 @@ public class User {
     private Timestamp userRegisterDate;
     private int userStatus;
 
-    public User(String userId, String userLoginId, int userRole, String userName, String userPassword, String userPhoneNum, String userEmail, Timestamp userRegisterDate, int userStatus) {
+    public DoMainUser(String userId, String userLoginId, int userRole, String userName, String userPassword, String userPhoneNum, String userEmail, Timestamp userRegisterDate, int userStatus) {
         this.userId = userId;
         this.userLoginId = userLoginId;
         this.userRole = userRole;
@@ -31,7 +31,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "DoMainUser{" +
                 "userId='" + userId + '\'' +
                 ", userLoginId='" + userLoginId + '\'' +
                 ", userRole=" + userRole +
@@ -44,7 +44,7 @@ public class User {
                 '}';
     }
 
-    public User(String userLoginId, int userRole, String userName, String userPassword, String userPhoneNum, String userEmail, int userStatus) {
+    public DoMainUser(String userLoginId, int userRole, String userName, String userPassword, String userPhoneNum, String userEmail, int userStatus) {
         this.userId = createUserId();
         this.userLoginId = userLoginId;
         this.userRole = userRole;
@@ -55,7 +55,7 @@ public class User {
         this.userStatus = userStatus;
     }
 
-    public User(String userLoginId, String userPassword, String userName, String userEmail, String userPhoneNum) {
+    public DoMainUser(String userLoginId, String userPassword, String userName, String userEmail, String userPhoneNum) {
         this.userLoginId = userLoginId;
         this.userName = userName;
         this.userPassword = userPassword;
@@ -63,7 +63,7 @@ public class User {
         this.userEmail = userEmail;
     }
 
-    public User(Map<Object, Object> mp) {
+    public DoMainUser(Map<Object, Object> mp) {
         this.userId = (String) mp.get("userId");
         this.userLoginId = (String) mp.get("userLoginId");
         this.userPassword = (String) mp.get("userPassword");
@@ -146,7 +146,7 @@ public class User {
         this.userStatus = userStatus;
     }
 
-    public User() {
+    public DoMainUser() {
     }
 
     private String createUserId() {

@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-public class Stuff {
+public class DoMainStuff {
     private String goodsId;
     private String userId;
     private String categoryId;
@@ -24,13 +24,13 @@ public class Stuff {
     private Timestamp goodsCreateDate;
     private Integer messageNum;
     private String goodsProvince;
-    private User user;
+    private DoMainUser doMainUser;
     private String goodsCoverImgDir; //封面图片地址
 
     private String orderId;
 
-    public Stuff initTestData() {
-        Stuff goods = new Stuff("userId" + Math.random(),
+    public DoMainStuff initTestData() {
+        DoMainStuff goods = new DoMainStuff("userId" + Math.random(),
                 "categoryId" + Math.random(), "goodsTags",
                 "goodsName", "goodsDetail", 11.45d, 1,
                 "江苏", "https://ae01.alicdn.com/kf/Uf8cd7a9ee0054a1c85f95633ccb722fc3.jpg");
@@ -38,7 +38,7 @@ public class Stuff {
         goods.goodsCreateDate = new Timestamp(System.currentTimeMillis());
         goods.messageNum = 22;
         goods.orderId = "orderId" + Math.random();
-        goods.user = new User("userId" + Math.random(), "userLoginId" + Math.random(),
+        goods.doMainUser = new DoMainUser("userId" + Math.random(), "userLoginId" + Math.random(),
                 1, "username", "password", "userPhoneNum",
                 "userEmail", new Timestamp(System.currentTimeMillis()), 1);
         return goods;
@@ -59,7 +59,7 @@ public class Stuff {
                 ", goodsCreateDate=" + goodsCreateDate +
                 ", messageNum=" + messageNum +
                 ", goodsProvince='" + goodsProvince + '\'' +
-                ", user=" + user +
+                ", doMainUser=" + doMainUser +
                 ", goodsCoverImgDir='" + goodsCoverImgDir + '\'' +
                 ", orderId='" + orderId + '\'' +
                 ", isCollected=" + isCollected +
@@ -95,12 +95,12 @@ public class Stuff {
         isCollected = collected;
     }
 
-    public User getUser() {
-        return user;
+    public DoMainUser getDoMainUser() {
+        return doMainUser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setDoMainUser(DoMainUser doMainUser) {
+        this.doMainUser = doMainUser;
     }
 
     public String getGoodsCoverImgDir() {
@@ -199,9 +199,9 @@ public class Stuff {
         this.messageNum = messageNum;
     }
 
-    public Stuff(String userId, String categoryId, String goodsTags, String goodsName,
-                 String goodsDetail, Double goodsPrice, Integer goodsStatus,
-                 String goodsProvince, String goodsCoverImgDir) {
+    public DoMainStuff(String userId, String categoryId, String goodsTags, String goodsName,
+                       String goodsDetail, Double goodsPrice, Integer goodsStatus,
+                       String goodsProvince, String goodsCoverImgDir) {
         this.goodsId = createIdleGoodsId();
         this.userId = userId;
         this.categoryId = categoryId;
@@ -215,7 +215,7 @@ public class Stuff {
     }
 
 
-    public Stuff() {
+    public DoMainStuff() {
 
     }
 
@@ -223,19 +223,19 @@ public class Stuff {
         return "ig_" + (new Date()).getTime();
     }
 
-    public static List<Stuff> parseToList(String result) {
+    public static List<DoMainStuff> parseToList(String result) {
         if (result.equals("[]")) {
             return null;
         }
-        List<Stuff> res = new ArrayList<>();
+        List<DoMainStuff> res = new ArrayList<>();
         List<Map<Object, Object>> mpLists = new Gson().fromJson(result, List.class);
         for (Map<Object, Object> mpList : mpLists) {
-            res.add(new Stuff(mpList));
+            res.add(new DoMainStuff(mpList));
         }
         return res;
     }
 
-    public Stuff(Map<Object, Object> mp) {
+    public DoMainStuff(Map<Object, Object> mp) {
         this.goodsId = (String) mp.get("goodsId");
         this.goodsProvince = (String) mp.get("goodsProvince");
         this.goodsStatus = (Integer) mp.get("goodsStatus");
@@ -244,10 +244,10 @@ public class Stuff {
         this.isCollected = (Boolean) mp.get("collected");
         this.goodsCoverImgDir = (String) mp.get("goodsCoverImgDir");
         this.goodsName = (String) mp.get("goodsName");
-        Map<Object, Object> user = (Map<Object, Object>) mp.get("user");
+        Map<Object, Object> user = (Map<Object, Object>) mp.get("doMainUser");
         Log.d("IdleGoodsInfoList", user.toString());
 
-        this.user = new User();
-        this.user.setUserName((String) user.get("userName"));
+        this.doMainUser = new DoMainUser();
+        this.doMainUser.setUserName((String) user.get("userName"));
     }
 }

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.myapplication.R;
-import com.example.myapplication.domain.Stuff;
+import com.example.myapplication.domain.DoMainStuff;
 import com.example.myapplication.myview.MyTitleBar;
 import com.example.myapplication.service.GetMyCollectedList;
 import com.example.myapplication.adapter.MyCollectedListAdapter;
@@ -23,7 +23,7 @@ import java.util.List;
 
 public class MyCollectedListActivity extends AppCompatActivity {
     //闲置物列表
-    public List<Stuff> idleGoodsInfoList;
+    public List<DoMainStuff> idleGoodsInfoList;
     private RecyclerView myCollectedListRecyclerView;
 
     private MyTitleBar myCollectedMyTitleBar;

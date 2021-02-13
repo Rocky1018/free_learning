@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.myapplication.R;
-import com.example.myapplication.domain.Stuff;
+import com.example.myapplication.domain.DoMainStuff;
 import com.example.myapplication.myview.MyTitleBar;
 import com.example.myapplication.adapter.MyCollectedListAdapter;
 
@@ -22,7 +22,7 @@ import java.util.List;
 public class MySearchResultActivity extends AppCompatActivity {
     private MyTitleBar mySearchResultMyTitleBar;
     private RecyclerView mySearchResultRecyclerView;
-    private List<Stuff> mySearchResultList;
+    private List<DoMainStuff> mySearchResultList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class MySearchResultActivity extends AppCompatActivity {
 
         Log.d("searchResult", searchResult);
 
-        mySearchResultList = Stuff.parseToList(searchResult);
+        mySearchResultList = DoMainStuff.parseToList(searchResult);
         if (mySearchResultList == null) {
             mySearchResultList = new ArrayList<>();
         }

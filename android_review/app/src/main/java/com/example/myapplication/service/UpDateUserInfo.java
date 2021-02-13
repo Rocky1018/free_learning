@@ -2,7 +2,7 @@ package com.example.myapplication.service;
 
 import android.util.Log;
 
-import com.example.myapplication.domain.User;
+import com.example.myapplication.domain.DoMainUser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,7 +16,7 @@ public class UpDateUserInfo {
     public static String path = "http://wowowowo.vipgz1.idcfengye.com/demo/modifyuserinfo";
     static boolean result = false;
 
-    public static boolean modifyUserInfo(User user) {
+    public static boolean modifyUserInfo(DoMainUser doMainUser) {
         try {
             Thread thread = new Thread(new Runnable() {
                 @Override
@@ -28,11 +28,11 @@ public class UpDateUserInfo {
                     String data = null;//设置数据
                     try {
                         httpURLConnection = (HttpURLConnection) new URL(path).openConnection();
-                        data = new StringBuilder("userId=").append(URLEncoder.encode(user.getUserId(), "UTF-8")).
-                                append("&userloginid=").append(URLEncoder.encode(user.getUserLoginId(), "UTF-8")).
-                                append("&username=").append(URLEncoder.encode(user.getUserName(), "UTF-8")).
-                                append("&useremail=").append(URLEncoder.encode(user.getUserEmail(), "UTF-8")).
-                                append("&usephonenumber=").append(URLEncoder.encode(user.getUserPhoneNum(), "UTF-8")).toString();
+                        data = new StringBuilder("userId=").append(URLEncoder.encode(doMainUser.getUserId(), "UTF-8")).
+                                append("&userloginid=").append(URLEncoder.encode(doMainUser.getUserLoginId(), "UTF-8")).
+                                append("&username=").append(URLEncoder.encode(doMainUser.getUserName(), "UTF-8")).
+                                append("&useremail=").append(URLEncoder.encode(doMainUser.getUserEmail(), "UTF-8")).
+                                append("&usephonenumber=").append(URLEncoder.encode(doMainUser.getUserPhoneNum(), "UTF-8")).toString();
                         Log.d("Login", data);
 
 

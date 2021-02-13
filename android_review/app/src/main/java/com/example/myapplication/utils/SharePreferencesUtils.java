@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.example.myapplication.domain.User;
+import com.example.myapplication.domain.DoMainUser;
 
 /**
  * 用与存储用户信息及注销时删除用户信息
@@ -17,25 +17,25 @@ public class SharePreferencesUtils {
     //登录时保存信息
     public static void save(Context context, String username, String passwordm, String fileName) {
         //将用户名密码缓存至本地共享文件
-        SharedPreferences.Editor edit = context.getSharedPreferences(fileName, context.MODE_PRIVATE).edit();
+        SharedPreferences.Editor edit = context.getSharedPreferences(fileName, Context.MODE_PRIVATE).edit();
         edit.putString("username", "admin");
         edit.putString("password", "123456");
         edit.apply();
     }
 
     //登录时保存信息
-    public static void save(Context context, User user, String fileName) {
-        Log.d("LoginInfo", user.toString());
+    public static void save(Context context, DoMainUser doMainUser, String fileName) {
+        Log.d("LoginInfo", doMainUser.toString());
         //将用户名密码缓存至本地共享文件
-        SharedPreferences.Editor edit = context.getSharedPreferences(fileName, context.MODE_PRIVATE).edit();
-        edit.putString("userId", user.getUserId());
-        edit.putString("userLoginId", user.getUserLoginId());
-        edit.putString("userRole", String.valueOf(user.getUserRole()));
-        edit.putString("userName", user.getUserName());
-        edit.putString("userPassword", user.getUserPassword());
-        edit.putString("userPhoneNum", user.getUserPhoneNum());
-        edit.putString("userEmail", user.getUserEmail());
-        edit.putString("userRegisterDate", user.getUserRegisterDate().toLocaleString());
+        SharedPreferences.Editor edit = context.getSharedPreferences(fileName, Context.MODE_PRIVATE).edit();
+        edit.putString("userId", doMainUser.getUserId());
+        edit.putString("userLoginId", doMainUser.getUserLoginId());
+        edit.putString("userRole", String.valueOf(doMainUser.getUserRole()));
+        edit.putString("userName", doMainUser.getUserName());
+        edit.putString("userPassword", doMainUser.getUserPassword());
+        edit.putString("userPhoneNum", doMainUser.getUserPhoneNum());
+        edit.putString("userEmail", doMainUser.getUserEmail());
+        edit.putString("userRegisterDate", doMainUser.getUserRegisterDate().toLocaleString());
         edit.apply();
     }
 
@@ -43,7 +43,7 @@ public class SharePreferencesUtils {
     public static void save(Context context, String localUserLoginId, String localUserName, String localUserEmail, String localUserPhoneNum, String fileName) {
         Log.d("LoginInfo", localUserLoginId + " " + localUserName + " " + localUserEmail + " " + localUserEmail);
         //将用户名密码缓存至本地共享文件
-        SharedPreferences.Editor edit = context.getSharedPreferences(fileName, context.MODE_PRIVATE).edit();
+        SharedPreferences.Editor edit = context.getSharedPreferences(fileName, Context.MODE_PRIVATE).edit();
         edit.putString("userLoginId", localUserLoginId);
         edit.putString("userName", localUserName);
         edit.putString("userPhoneNum", localUserPhoneNum);
