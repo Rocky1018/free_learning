@@ -39,6 +39,11 @@ class IdleGoodsDetailInfoActivity : AppCompatActivity() {
         bmobQuery.getObject(intent.getStringExtra("goodsId"), object : QueryListener<Stuff>() {
             override fun done(p0: Stuff?, p1: BmobException?) {
                 stuff = p0
+                stuff?.apply {
+                    tv_desc.text = desc
+                    tv_username.text = name
+                }
+
                 rv_comments.layoutManager = LinearLayoutManager(this@IdleGoodsDetailInfoActivity)
                 rv_comments.adapter =
                     stuff?.comments?.let { CommentAdapter(this@IdleGoodsDetailInfoActivity, it) }
