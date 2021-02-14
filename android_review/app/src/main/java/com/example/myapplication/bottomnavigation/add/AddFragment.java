@@ -2,7 +2,6 @@ package com.example.myapplication.bottomnavigation.add;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -15,6 +14,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,21 +25,24 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.myapplication.R;
 import com.example.myapplication.bean.Category;
+import com.example.myapplication.bean.Stuff;
 import com.example.myapplication.myview.SelectPicPopupWindow;
 import com.example.myapplication.myview.MyTitleBar;
+import com.example.myapplication.utils.Config;
 import com.example.myapplication.utils.GetImagePathUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
-import java.util.Objects;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
 import static android.app.Activity.RESULT_OK;
@@ -51,6 +54,8 @@ public class AddFragment extends Fragment implements View.OnClickListener {
     public static final int REQUEST_PHOTO = 4;
     public static final int REQUEST_IMAGE = 5;
     private TextView selectCategory;
+    private EditText stuffName, stuffPrice, stuffDesc;
+    private String categoryMame = "";
     AlertDialog alertDialog2; //单选框
     private Uri mImageUri, mImageUriFromFile;
     private File imageFile;
@@ -67,6 +72,9 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         stuffPic = root.findViewById(R.id.add_stuff_pic);
         delStuffPic = root.findViewById(R.id.clear_stuff_pic);
         selectCategory = root.findViewById(R.id.tv_select_category);
+        stuffPrice = root.findViewById(R.id.et_stuff_price);
+        stuffName = root.findViewById(R.id.et_stuff_name);
+        stuffDesc = root.findViewById(R.id.et_stuff_desc);
         menuWindow = new SelectPicPopupWindow(getActivity(), this);
         stuffPic.setOnClickListener(this);
         delStuffPic.setOnClickListener(this);
@@ -74,7 +82,28 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         releaseIdleMyTitleBar.setTvTitleText("发布闲置物");
         releaseIdleMyTitleBar.setTvForwardText("发布");
 
-        releaseIdleMyTitleBar.getTvForward().setOnClickListener(v -> Toast.makeText(getContext(), "发布闲置物", Toast.LENGTH_SHORT).show());
+        releaseIdleMyTitleBar.getTvForward().setOnClickListener(v -> {
+            Stuff stuff = new Stuff(stuffName.getText().toString().trim());
+            stuff.setCategory(categoryMame);
+            stuff.setPrice(stuffPrice.getText().toString().trim());
+            stuff.setDesc(stuffDesc.getText().toString().trim());
+            stuff.setOwnerId(Config.INSTANCE.getUser().getObjectId());
+            stuff.setOwnerName(Config.INSTANCE.getUser().getNickname());
+            stuff.setOwnerAddress(Config.INSTANCE.getUser().getAddress());
+            stuff.save(new SaveListener<String>() {
+                @Override
+                public void done(String s, BmobException e) {
+                    if (e == null) {
+                        //发布成功
+                        new MaterialDialog.Builder(getContext()).title("发布成功")
+                                .positiveText(android.R.string.ok).show();
+                    } else {
+                        new MaterialDialog.Builder(getContext()).title("发布失败").content("云后台异常" + e.getMessage())
+                                .positiveText(android.R.string.ok).show();
+                    }
+                }
+            });
+        });
 
         releaseIdleMyTitleBar.getIvBackward().setVisibility(View.INVISIBLE);
 
@@ -124,7 +153,8 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                     Log.d("upload", "上传文件成功:" + bmobFile.getFileUrl());
                 } else {
                     Log.d("upload", "上传文件失败：" + e.getMessage());
-                    Toast.makeText(getActivity(), "上传失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "上传文件失败：文件服务现需绑定域名。" +
+                            "本程序暂无公网FTP服务器。回显仅供参考", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -159,7 +189,6 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         }
         menuWindow.dismiss();
         //uploadPic(mImageUri);
-        Toast.makeText(getActivity(), "当前版本仅支持上传一张图片", Toast.LENGTH_SHORT).show();
     }
 
     private void selectImage() {
@@ -219,8 +248,8 @@ public class AddFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Toast.makeText(getContext(), items[i], Toast.LENGTH_SHORT).show();
-                String name = items[i];
-                selectCategory.setText("已选择 " + name);
+                categoryMame = items[i];
+                selectCategory.setText("已选择 " + categoryMame);
             }
         });
 

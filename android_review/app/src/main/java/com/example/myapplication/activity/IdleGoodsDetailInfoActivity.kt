@@ -36,7 +36,7 @@ class IdleGoodsDetailInfoActivity : AppCompatActivity() {
         myTitleBar_idleGoodsDetailInfo.setTvTitleText("闲置物详情")
         myTitleBar_idleGoodsDetailInfo.tvForward?.visibility = View.GONE
         val bmobQuery = BmobQuery<Stuff>()
-        bmobQuery.getObject("", object : QueryListener<Stuff>() {
+        bmobQuery.getObject(intent.getStringExtra("goodsId"), object : QueryListener<Stuff>() {
             override fun done(p0: Stuff?, p1: BmobException?) {
                 stuff = p0
                 rv_comments.layoutManager = LinearLayoutManager(this@IdleGoodsDetailInfoActivity)

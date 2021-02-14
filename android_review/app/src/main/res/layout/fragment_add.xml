@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_total_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/ll_total_fragment"
     tools:context="com.example.myapplication.activity.BottomNavigationActivity">
 
     <com.example.myapplication.myview.MyTitleBar
@@ -57,8 +57,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
-        android:text="选择分类"
+        android:text="点击选择分类"
         android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/et_stuff_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/edit_common_bg"
+        android:hint="@string/stuff_hint"
+        android:padding="8dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -82,13 +91,14 @@
             android:text="价格" />
 
         <EditText
-            android:background="@null"
-            android:inputType="numberDecimal"
+            android:id="@+id/et_stuff_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="18dp"
+            android:background="@null"
+            android:inputType="numberDecimal"
             android:text="0.00"
             android:textColor="@color/purple_700" />
 

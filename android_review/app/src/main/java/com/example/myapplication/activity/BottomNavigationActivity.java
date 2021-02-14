@@ -21,14 +21,19 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activity.admin.AdminActivity;
+import com.example.myapplication.bean.User;
 import com.example.myapplication.bottomnavigation.add.AddFragment;
 import com.example.myapplication.bottomnavigation.home.HomeFragment;
 import com.example.myapplication.bottomnavigation.my.MyFragment;
 import com.example.myapplication.myview.FixFragmentNavigator;
+import com.example.myapplication.utils.Config;
 import com.example.myapplication.utils.SharePreferencesUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.QueryListener;
 
 public class BottomNavigationActivity extends BaseActivity {
     String userId;
@@ -60,6 +65,19 @@ public class BottomNavigationActivity extends BaseActivity {
                 requestPermissions(new String[]{PERMISSION_WRITE_STORAGE}, REQUEST_PERMISSION_CODE);
             }
         }
+        userId = (String) SharePreferencesUtils.getParam(this, "userId", "");
+        if (!TextUtils.isEmpty(userId)) {
+            //查找Person表里面id为6b6c11c537的数据
+            BmobQuery<User> bmobQuery = new BmobQuery<User>();
+            bmobQuery.getObject(userId, new QueryListener<User>() {
+                @Override
+                public void done(User object, BmobException e) {
+                    if (e == null) {
+                        Config.INSTANCE.setUser(object);
+                    }
+                }
+            });
+        }
         //隐藏系统自带顶部状态栏
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
@@ -82,7 +100,6 @@ public class BottomNavigationActivity extends BaseActivity {
         navController.setGraph(navGraph);
         //底部导航设置点击事件
         navView.setOnNavigationItemSelectedListener(item -> {
-            userId = (String) SharePreferencesUtils.getParam(this, "userId", "");
             if (item.getItemId() == R.id.navigation_my) {
                 if (TextUtils.isEmpty(userId)) {
                     startActivity(new Intent(this, LoginActivity.class));

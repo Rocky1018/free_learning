@@ -31,7 +31,7 @@ class OrderAdapter(private val context: Context, private val orderList: List<Ord
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         orderList[position].stuff.apply {
-            holder.username.text = owner?.nickname
+            holder.username.text = ownerName
             holder.stuffName.text = name
             holder.stuffPrice.text = price
         }

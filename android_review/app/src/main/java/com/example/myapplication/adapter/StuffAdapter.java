@@ -2,7 +2,6 @@ package com.example.myapplication.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.activity.IdleGoodsDetailInfoActivity;
 import com.example.myapplication.bean.Stuff;
-import com.example.myapplication.myview.MyImageView;
 
 import java.util.List;
 
@@ -30,7 +27,6 @@ public class StuffAdapter extends RecyclerView.Adapter<StuffAdapter.ViewHolder> 
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        MyImageView idlePropertyImgMyImageView;
         LinearLayout idleGoodsItemLinearLayout;
         TextView idlePropertyTitleTextView;
         TextView idlePropertyPersonTextView;
@@ -40,7 +36,6 @@ public class StuffAdapter extends RecyclerView.Adapter<StuffAdapter.ViewHolder> 
         public ViewHolder(@NonNull View view) {
             super(view);
             idleGoodsItemLinearLayout = view.findViewById(R.id.ll_idleGoodsItem);
-            idlePropertyImgMyImageView = view.findViewById(R.id.mv_idleGoodsImg);
 
             idlePropertyTitleTextView = view.findViewById(R.id.tv_idleGoodsTitle);
             idlePropertyPersonTextView = view.findViewById(R.id.tv_idleGoodsPerson);
@@ -65,12 +60,9 @@ public class StuffAdapter extends RecyclerView.Adapter<StuffAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Stuff goods = this.idleGoodsInfoList.get(position);
-        if (!TextUtils.isEmpty(goods.getImg())) {
-            Glide.with(mcontext).load(goods.getImg()).into(holder.idlePropertyImgMyImageView);
-        }
         holder.idlePropertyTitleTextView.setText(goods.getName());
-        holder.idlePropertyPersonTextView.setText(goods.getOwner().getUsername());
-        holder.idlePropertyLocationTextView.setText(goods.getOwner().getAddress());
+        holder.idlePropertyPersonTextView.setText(goods.getOwnerName());
+        holder.idlePropertyLocationTextView.setText(goods.getOwnerAddress());
         holder.idlePropertyPriceTextView.setText(goods.getPrice() + "");
 
         holder.idleGoodsItemLinearLayout.setOnClickListener(v -> {

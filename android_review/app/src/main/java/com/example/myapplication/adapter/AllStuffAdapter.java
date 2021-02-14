@@ -1,7 +1,6 @@
 package com.example.myapplication.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
-import com.example.myapplication.activity.IdleGoodsDetailInfoActivity;
 import com.example.myapplication.bean.Stuff;
 import com.example.myapplication.myview.MyImageView;
 
@@ -76,8 +74,8 @@ public class AllStuffAdapter extends RecyclerView.Adapter<AllStuffAdapter.ViewHo
             Glide.with(mcontext).load(goods.getImg()).into(holder.idlePropertyImgMyImageView);
         }
         holder.idlePropertyTitleTextView.setText(goods.getName());
-        holder.idlePropertyPersonTextView.setText(goods.getOwner().getUsername());
-        holder.idlePropertyLocationTextView.setText(goods.getOwner().getAddress());
+        holder.idlePropertyPersonTextView.setText(goods.getOwnerName());
+        holder.idlePropertyLocationTextView.setText(goods.getOwnerAddress());
         holder.idlePropertyPriceTextView.setText(goods.getPrice() + "");
         holder.del.setOnClickListener(v -> {
             Stuff stuff = new Stuff(idleGoodsInfoList.get(position).getName());

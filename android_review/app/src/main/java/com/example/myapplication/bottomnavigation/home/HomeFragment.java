@@ -77,10 +77,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private void getStuffList() {
         BmobQuery<Stuff> bmobQuery = new BmobQuery<>();
-        List<Stuff> result = new ArrayList<>();
         bmobQuery.setLimit(10).order("-publishTime").findObjects(new FindListener<Stuff>() {
             @Override
             public void done(List<Stuff> list, BmobException e) {
+                idleGoodsInfoList.clear();
                 idleGoodsInfoList.addAll(list);
                 idleGoodsAdapter = new StuffAdapter(idleGoodsInfoList, getActivity());
                 idlePropertyRecyclerView.setAdapter(idleGoodsAdapter);
@@ -145,11 +145,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             }
         });
         refreshStuff.setOnRefreshListener(() -> {
-            idleGoodsInfoList.add(new Stuff("im new item"));
             refreshStuff.setRefreshing(false);
-            if (idleGoodsAdapter != null) {
-                idleGoodsAdapter.notifyDataSetChanged();
-            }
+            getStuffList();
         });
 
         //监听搜索框被选中，即force监听
