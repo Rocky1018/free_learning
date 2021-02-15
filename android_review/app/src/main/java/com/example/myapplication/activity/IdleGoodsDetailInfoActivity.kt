@@ -42,16 +42,17 @@ class IdleGoodsDetailInfoActivity : AppCompatActivity() {
 
         et_commemt.setOnEditorActionListener { v: TextView, actionId: Int, event: KeyEvent? ->
             Log.d("onEditorAction", "" + v.text)
+            val temp = Stuff(stuff!!.name)
+            temp.comments = stuff!!.comments
             var comment = Comment(v.text.toString())
             comment.username = stuff?.ownerName
-            var commentList = mutableListOf<Comment>()
-            commentList.add(comment)
-            if (stuff?.comments == null) {
-                stuff?.comments = commentList
+            if (temp.comments == null) {
+                temp.comments = mutableListOf(comment)
             } else {
-                stuff?.comments?.addAll(commentList)
+                temp.comments.add(comment)
             }
-            stuff?.update(stuff?.objectId, object : UpdateListener() {
+
+            temp.update(stuff?.objectId, object : UpdateListener() {
                 override fun done(p0: BmobException?) {
                     if (p0 == null) {
                         Log.d("et_commemt", "评论成功")

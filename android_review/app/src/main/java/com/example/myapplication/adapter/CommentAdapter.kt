@@ -1,14 +1,12 @@
 package com.example.myapplication.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.myapplication.R
 import com.example.myapplication.bean.Comment
 
@@ -30,11 +28,6 @@ class CommentAdapter(private val context: Context, private val commentList: List
         holder.content.text = commentList[position].content
         holder.username.text = commentList[position].username
         holder.date.text = commentList[position].date
-        try {
-            Glide.with(context).load(commentList[position].portrait).into(holder.portrait)
-        } catch (e: Exception) {
-            Log.w("onBindViewHolder", "error.${e.message}")
-        }
     }
 
     override fun getItemCount(): Int {
