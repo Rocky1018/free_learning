@@ -9,7 +9,7 @@ data class User(val username: String) : BmobObject() {
     var password: String? = null
     var portrait: String? = null
     var userRole: Int? = null
-    var shoppingCar: List<Stuff>? = null
+    var shoppingCar: MutableList<Stuff>? = null
     var stuffs: List<Stuff>? = null
     var collections: MutableList<Stuff>? = null
     var orderList: List<Order>? = null

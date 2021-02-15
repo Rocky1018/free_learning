@@ -30,6 +30,7 @@ import kotlin.collections.ArrayList
 class IdleGoodsDetailInfoActivity : AppCompatActivity() {
     private var stuff: Stuff? = null
     private var isCollected: Boolean = false
+    private var isShopCar: Boolean = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -165,6 +166,54 @@ class IdleGoodsDetailInfoActivity : AppCompatActivity() {
             .negativeText(android.R.string.cancel)
             .onPositive { _: MaterialDialog, _: DialogAction? ->
                 Toast.makeText(this, "加入购物车", Toast.LENGTH_SHORT).show()
+                if (stuff == null) {
+                    Toast.makeText(this, "收藏失败，未获取商品详情", Toast.LENGTH_SHORT).show()
+                    return@onPositive
+                }
+                if (Config.user == null) {
+                    Toast.makeText(this, "收藏失败，未获取用户信息", Toast.LENGTH_SHORT).show()
+                    return@onPositive
+                }
+                val temp = User(Config.user!!.username)
+                if (!isShopCar) {
+                    temp.apply {
+                        if (shoppingCar == null) {
+                            shoppingCar = mutableListOf(stuff!!)
+                        } else {
+                            shoppingCar!!.add(stuff!!)
+                        }
+                        update(Config.user!!.objectId, object : UpdateListener() {
+                            override fun done(p0: BmobException?) {
+                                if (p0 != null) {
+                                    Log.w("collectStuff", "error  ${p0.message}")
+                                    return
+                                }
+                                Toast.makeText(
+                                    this@IdleGoodsDetailInfoActivity, "添加购物车成功",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                isShopCar = true
+                            }
+                        })
+                    }
+                } else {
+                    temp.apply {
+                        shoppingCar?.remove(stuff)
+                        update(Config.user!!.objectId, object : UpdateListener() {
+                            override fun done(p0: BmobException?) {
+                                if (p0 != null) {
+                                    Log.w("collectStuff", "error  ${p0.message}")
+                                    return
+                                }
+                                Toast.makeText(
+                                    this@IdleGoodsDetailInfoActivity, "取消购物车",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                isShopCar = false
+                            }
+                        })
+                    }
+                }
             }.show()
     }
 }
