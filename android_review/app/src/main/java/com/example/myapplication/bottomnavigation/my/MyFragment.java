@@ -1,9 +1,7 @@
 package com.example.myapplication.bottomnavigation.my;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +16,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activity.BottomNavigationActivity;
-import com.example.myapplication.activity.LoginActivity;
 import com.example.myapplication.activity.MyCollectedListActivity;
 import com.example.myapplication.activity.MyDetailInfoActivity;
 import com.example.myapplication.utils.Config;
 import com.example.myapplication.utils.SharePreferencesUtils;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class MyFragment extends Fragment implements View.OnClickListener {
 

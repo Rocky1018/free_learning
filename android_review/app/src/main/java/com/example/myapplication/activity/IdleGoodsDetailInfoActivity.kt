@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
@@ -13,15 +12,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.QueryListener
+import cn.bmob.v3.listener.SaveListener
 import cn.bmob.v3.listener.UpdateListener
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.example.myapplication.R
 import com.example.myapplication.adapter.CommentAdapter
+import com.example.myapplication.adapter.StuffAdapter
+import com.example.myapplication.bean.Comment
 import com.example.myapplication.bean.Stuff
 import com.example.myapplication.utils.Config
 import kotlinx.android.synthetic.main.activity_idle_goods_detail_info.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 class IdleGoodsDetailInfoActivity : AppCompatActivity() {
     private var stuff: Stuff? = null
@@ -35,26 +38,35 @@ class IdleGoodsDetailInfoActivity : AppCompatActivity() {
         // 更改顶部菜单栏标题
         myTitleBar_idleGoodsDetailInfo.setTvTitleText("闲置物详情")
         myTitleBar_idleGoodsDetailInfo.tvForward?.visibility = View.GONE
-        val bmobQuery = BmobQuery<Stuff>()
-        bmobQuery.getObject(intent.getStringExtra("goodsId"), object : QueryListener<Stuff>() {
-            override fun done(p0: Stuff?, p1: BmobException?) {
-                stuff = p0
-                stuff?.apply {
-                    tv_desc.text = desc
-                    tv_username.text = name
-                }
-
-                rv_comments.layoutManager = LinearLayoutManager(this@IdleGoodsDetailInfoActivity)
-                rv_comments.adapter =
-                    stuff?.comments?.let { CommentAdapter(this@IdleGoodsDetailInfoActivity, it) }
-            }
-
-        })
+        getStuffDetail()
 
         et_commemt.setOnEditorActionListener { v: TextView, actionId: Int, event: KeyEvent? ->
-            if (actionId == EditorInfo.IME_ACTION_SEND) {
-                Log.d("onEditorAction", "" + v.text)
+            Log.d("onEditorAction", "" + v.text)
+            var comment = Comment(v.text.toString())
+            comment.username = stuff?.ownerName
+            var commentList = mutableListOf<Comment>()
+            commentList.add(comment)
+            if (stuff?.comments == null) {
+                stuff?.comments = commentList
+            } else {
+                stuff?.comments?.addAll(commentList)
             }
+            stuff?.update(stuff?.objectId, object : UpdateListener() {
+                override fun done(p0: BmobException?) {
+                    if (p0 == null) {
+                        Log.d("et_commemt", "评论成功")
+                        getStuffDetail()
+                        Toast.makeText(this@IdleGoodsDetailInfoActivity, "评论成功", Toast.LENGTH_SHORT)
+                    } else {
+                        Toast.makeText(
+                            this@IdleGoodsDetailInfoActivity,
+                            "评论失败${p0.message}",
+                            Toast.LENGTH_SHORT
+                        )
+                    }
+                }
+
+            })
             false
         }
         ll_leave_comment?.setOnClickListener { v: View? ->
@@ -70,6 +82,24 @@ class IdleGoodsDetailInfoActivity : AppCompatActivity() {
             collectStuff()
         }
 
+    }
+
+    private fun getStuffDetail() {
+        val bmobQuery = BmobQuery<Stuff>()
+        bmobQuery.getObject(intent.getStringExtra("goodsId"), object : QueryListener<Stuff>() {
+            override fun done(p0: Stuff?, p1: BmobException?) {
+                stuff = p0
+                stuff?.apply {
+                    tv_desc.text = desc
+                    tv_username.text = name
+                }
+
+                rv_comments.layoutManager = LinearLayoutManager(this@IdleGoodsDetailInfoActivity)
+                rv_comments.adapter =
+                    stuff?.comments?.let { CommentAdapter(this@IdleGoodsDetailInfoActivity, it) }
+            }
+
+        })
     }
 
     private fun collectStuff() {
