@@ -21,6 +21,7 @@ import com.example.myapplication.adapter.CommentAdapter
 import com.example.myapplication.adapter.StuffAdapter
 import com.example.myapplication.bean.Comment
 import com.example.myapplication.bean.Stuff
+import com.example.myapplication.bean.User
 import com.example.myapplication.utils.Config
 import kotlinx.android.synthetic.main.activity_idle_goods_detail_info.*
 import java.util.*
@@ -108,10 +109,19 @@ class IdleGoodsDetailInfoActivity : AppCompatActivity() {
             Toast.makeText(this, "收藏失败，未获取商品详情", Toast.LENGTH_SHORT).show()
             return
         }
+        if (Config.user == null) {
+            Toast.makeText(this, "收藏失败，未获取用户信息", Toast.LENGTH_SHORT).show()
+            return
+        }
+        val temp = User(Config.user!!.username)
         if (!isCollected) {
-            Config.user?.apply {
-                collections?.add(stuff!!)
-                update(object : UpdateListener() {
+            temp.apply {
+                if (collections == null) {
+                    collections = mutableListOf(stuff!!)
+                } else {
+                    collections!!.add(stuff!!)
+                }
+                update(Config.user!!.objectId, object : UpdateListener() {
                     override fun done(p0: BmobException?) {
                         if (p0 != null) {
                             Log.w("collectStuff", "error  ${p0.message}")
@@ -127,9 +137,9 @@ class IdleGoodsDetailInfoActivity : AppCompatActivity() {
                 })
             }
         } else {
-            Config.user?.apply {
+            temp.apply {
                 collections?.remove(stuff)
-                update(object : UpdateListener() {
+                update(Config.user!!.objectId, object : UpdateListener() {
                     override fun done(p0: BmobException?) {
                         if (p0 != null) {
                             Log.w("collectStuff", "error  ${p0.message}")
