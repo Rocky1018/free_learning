@@ -16,6 +16,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.activity.IdleGoodsDetailInfoActivity;
 import com.example.myapplication.bean.Stuff;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,7 +47,11 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.ViewHold
     }
 
     public ShopCarAdapter(List<Stuff> idleGoodsInfoList, Context mcontext) {
-        this.idleGoodsInfoList = idleGoodsInfoList;
+        if (idleGoodsInfoList == null) {
+            this.idleGoodsInfoList = new ArrayList<>();
+        } else {
+            this.idleGoodsInfoList = idleGoodsInfoList;
+        }
         this.mcontext = mcontext;
     }
 

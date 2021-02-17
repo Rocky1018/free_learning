@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.MyCollectedListAdapter;
+import com.example.myapplication.adapter.ShopCarAdapter;
 import com.example.myapplication.bean.Stuff;
 import com.example.myapplication.bean.User;
 import com.example.myapplication.myview.MyTitleBar;
@@ -21,7 +22,7 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.QueryListener;
 
-public class MyCollectedListActivity extends AppCompatActivity {
+public class ShopCarListActivity extends AppCompatActivity {
     //闲置物列表
     public List<Stuff> idleGoodsInfoList = new ArrayList<>();
     private RecyclerView myCollectedListRecyclerView;
@@ -45,11 +46,11 @@ public class MyCollectedListActivity extends AppCompatActivity {
         }
 
         myCollectedListRecyclerView = findViewById(R.id.rv_myCollectedList);
-        LinearLayoutManager manager = new LinearLayoutManager(MyCollectedListActivity.this);
+        LinearLayoutManager manager = new LinearLayoutManager(ShopCarListActivity.this);
         myCollectedListRecyclerView.setLayoutManager(manager);
 
 
-        myCollectedMyTitleBar.setTvTitleText("收藏夹");
+        myCollectedMyTitleBar.setTvTitleText("购物车");
         myCollectedMyTitleBar.getTvForward().setVisibility(View.INVISIBLE);
 
         BmobQuery query = new BmobQuery<User>();
@@ -57,7 +58,7 @@ public class MyCollectedListActivity extends AppCompatActivity {
             @Override
             public void done(User o, BmobException e) {
                 if (e != null) {
-                    MyCollectedListAdapter myCollectedListAdapter = new MyCollectedListAdapter(idleGoodsInfoList);
+                    ShopCarAdapter myCollectedListAdapter = new ShopCarAdapter(idleGoodsInfoList, ShopCarListActivity.this);
 
                     myCollectedListRecyclerView.setAdapter(myCollectedListAdapter);
                 }

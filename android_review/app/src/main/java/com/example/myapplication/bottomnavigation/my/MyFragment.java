@@ -73,6 +73,13 @@ public class MyFragment extends Fragment implements View.OnClickListener {
             case R.id.tv_myCollection:
             case R.id.iv_myCollection:
                 intent = new Intent(getContext(), MyCollectedListActivity.class);
+                intent.putExtra("userId", Config.INSTANCE.getUser().getObjectId());
+                startActivity(intent);
+                break;
+            case R.id.iv_myBrowse:
+            case R.id.tv_myBrowse:
+                intent = new Intent(getContext(), MyCollectedListActivity.class);
+                intent.putExtra("userId", Config.INSTANCE.getUser().getObjectId());
                 startActivity(intent);
                 break;
         }

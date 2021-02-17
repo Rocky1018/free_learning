@@ -43,7 +43,10 @@
             android:label="个人详情" />
         <activity
             android:name=".activity.LoginActivity"
-            android:label="@string/title_activity_login" /> <!-- 设置进入该页面时从返回栈中查找而不是重新创建 -->
+            android:label="@string/title_activity_login" />
+        <activity
+            android:name=".activity.ShopCarListActivity"
+            android:label="购物车" />
         <activity
             android:name=".activity.BottomNavigationActivity"
             android:launchMode="singleTask">
