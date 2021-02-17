@@ -10,24 +10,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.example.myapplication.R;
-import com.example.myapplication.domain.DoMainStuff;
+import com.example.myapplication.adapter.MyCollectedListAdapter;
+import com.example.myapplication.bean.Stuff;
+import com.example.myapplication.bean.User;
 import com.example.myapplication.myview.MyTitleBar;
 import com.example.myapplication.service.GetMyCollectedList;
-import com.example.myapplication.adapter.MyCollectedListAdapter;
 import com.example.myapplication.utils.SharePreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.QueryListener;
+
 public class MyCollectedListActivity extends AppCompatActivity {
     //闲置物列表
-    public List<DoMainStuff> idleGoodsInfoList;
+    public List<Stuff> idleGoodsInfoList = new ArrayList<>();
     private RecyclerView myCollectedListRecyclerView;
 
     private MyTitleBar myCollectedMyTitleBar;
-    private SharedPreferences userinformation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +38,7 @@ public class MyCollectedListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_collected_list);
 
         // 获取userId
-        userinformation = getSharedPreferences(SharePreferencesUtils.USER_INFORMATION_FILE, MODE_PRIVATE);
-        String localUserId = userinformation.getString("userId", null);
+        String localUserId = getIntent().getStringExtra("userId");
 
         myCollectedMyTitleBar = findViewById(R.id.myTitleBar_myCollected);
 
@@ -46,22 +48,25 @@ public class MyCollectedListActivity extends AppCompatActivity {
             supportActionBar.hide();
         }
 
+        myCollectedListRecyclerView = findViewById(R.id.rv_myCollectedList);
+        LinearLayoutManager manager = new LinearLayoutManager(MyCollectedListActivity.this);
+        myCollectedListRecyclerView.setLayoutManager(manager);
+
+
         myCollectedMyTitleBar.setTvTitleText("收藏夹");
         myCollectedMyTitleBar.getTvForward().setVisibility(View.INVISIBLE);
 
-        if (localUserId != null) {
-            idleGoodsInfoList = GetMyCollectedList.getMyCollectedList(localUserId);
-            if (idleGoodsInfoList == null) {
-                idleGoodsInfoList = new ArrayList<>();
+        BmobQuery query = new BmobQuery<User>();
+        query.getObject(localUserId, new QueryListener<User>() {
+            @Override
+            public void done(User o, BmobException e) {
+                if (e != null) {
+                    MyCollectedListAdapter myCollectedListAdapter = new MyCollectedListAdapter(idleGoodsInfoList);
+
+                    myCollectedListRecyclerView.setAdapter(myCollectedListAdapter);
+                }
             }
+        });
 
-            Log.d("GetMyCollectedList", idleGoodsInfoList.toString());
-            myCollectedListRecyclerView = findViewById(R.id.rv_myCollectedList);
-            LinearLayoutManager manager = new LinearLayoutManager(MyCollectedListActivity.this);
-            myCollectedListRecyclerView.setLayoutManager(manager);
-            MyCollectedListAdapter myCollectedListAdapter = new MyCollectedListAdapter(idleGoodsInfoList);
-
-            myCollectedListRecyclerView.setAdapter(myCollectedListAdapter);
-        }
     }
 }

@@ -12,6 +12,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.bean.Stuff;
 import com.example.myapplication.myview.MyImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,8 +39,12 @@ public class MyCollectedListAdapter extends RecyclerView.Adapter<MyCollectedList
         }
     }
 
-    public MyCollectedListAdapter(List<Stuff> idleGoodsInfoList) {
-        this.idleGoodsInfoList = idleGoodsInfoList;
+    public MyCollectedListAdapter(List<Stuff> stuffs) {
+        if (stuffs == null) {
+            idleGoodsInfoList = new ArrayList<>();
+        } else {
+            idleGoodsInfoList = stuffs;
+        }
     }
 
     @NonNull

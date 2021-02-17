@@ -233,7 +233,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                                 }).collect(Collectors.toList());
 
                         Intent intent = new Intent(getActivity(), MySearchResultActivity.class);
-                        intent.putExtra("searchResult", new Gson().toJson(collect));
+                        intent.putExtra("stuff_name", query);
                         startActivity(intent);
                     }
                     return true;

@@ -64,15 +64,17 @@ public class MySearchResultActivity extends AppCompatActivity {
 
     private void getStuffList() {
         BmobQuery<Stuff> bmobQuery = new BmobQuery<>();
-        bmobQuery.findObjects(new FindListener<Stuff>() {
-            @Override
-            public void done(List<Stuff> list, BmobException e) {
-                if (list != null && list.size() > 0) {
-                    mySearchResultList.addAll(list);
-                    mySearchResultRecyclerView.setAdapter(new MyCollectedListAdapter(mySearchResultList));
-                }
-            }
-        });
+        //模糊查询仅对付费用户开放
+        bmobQuery.addWhereEqualTo("name", getIntent().getStringExtra("stuff_name"))
+                .findObjects(new FindListener<Stuff>() {
+                    @Override
+                    public void done(List<Stuff> list, BmobException e) {
+                        if (list != null && list.size() > 0) {
+                            mySearchResultList.addAll(list);
+                            mySearchResultRecyclerView.setAdapter(new MyCollectedListAdapter(mySearchResultList));
+                        }
+                    }
+                });
     }
 
 }
