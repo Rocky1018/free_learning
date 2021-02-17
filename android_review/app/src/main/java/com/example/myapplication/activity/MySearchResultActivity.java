@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,6 +48,7 @@ public class MySearchResultActivity extends AppCompatActivity {
 
         mySearchResultMyTitleBar.setTvTitleText("搜索结果");
         mySearchResultMyTitleBar.getTvForward().setVisibility(View.INVISIBLE);
+        Toast.makeText(this, "因模糊查询为后端云收费功能，本版仅支持精确查询", Toast.LENGTH_SHORT).show();
 
         Intent intent = getIntent();
         String searchResult = intent.getStringExtra("searchResult");
