@@ -18,6 +18,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.activity.BottomNavigationActivity;
 import com.example.myapplication.activity.MyCollectedListActivity;
 import com.example.myapplication.activity.MyDetailInfoActivity;
+import com.example.myapplication.activity.ShopCarListActivity;
 import com.example.myapplication.utils.Config;
 import com.example.myapplication.utils.SharePreferencesUtils;
 
@@ -43,6 +44,12 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         // 查看我收藏的事件绑定
         myCollectionImageView.setOnClickListener(this);
         myCollectionTextView.setOnClickListener(this);
+        root.findViewById(R.id.iv_myBrowse).setOnClickListener(this);
+        root.findViewById(R.id.tv_myBrowse).setOnClickListener(this);
+        root.findViewById(R.id.tv_mySold).setOnClickListener(this);
+        root.findViewById(R.id.iv_mySold).setOnClickListener(this);
+        root.findViewById(R.id.iv_myBought).setOnClickListener(this);
+        root.findViewById(R.id.tv_myBought).setOnClickListener(this);
 
         // 简单个人信息展示点击进入详细信息展示页
         myUserInfoLinearLayout.setOnClickListener(this);
@@ -64,8 +71,6 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         Intent intent;
         switch (v.getId()) {
             case R.id.btn_showMyInfoDetail:
-                break;
-            case R.id.ly_myUserInfo:
                 // 简单个人信息展示点击进入详细信息展示页
                 intent = new Intent(getContext(), MyDetailInfoActivity.class);
                 startActivity(intent);
@@ -73,15 +78,22 @@ public class MyFragment extends Fragment implements View.OnClickListener {
             case R.id.tv_myCollection:
             case R.id.iv_myCollection:
                 intent = new Intent(getContext(), MyCollectedListActivity.class);
-                intent.putExtra("userId", Config.INSTANCE.getUser().getObjectId());
+                intent.putExtra("userId", SharePreferencesUtils.getParam(getContext(), "userId", "").toString());
                 startActivity(intent);
                 break;
             case R.id.iv_myBrowse:
             case R.id.tv_myBrowse:
-                intent = new Intent(getContext(), MyCollectedListActivity.class);
-                intent.putExtra("userId", Config.INSTANCE.getUser().getObjectId());
+                intent = new Intent(getContext(), ShopCarListActivity.class);
+                intent.putExtra("userId", SharePreferencesUtils.getParam(getContext(), "userId", "").toString());
                 startActivity(intent);
                 break;
+            case R.id.tv_mySold:
+            case R.id.iv_mySold:
+            case R.id.iv_myBought:
+            case R.id.tv_myBought:
+                Toast.makeText(getContext(), R.string.cannot_order_hint, Toast.LENGTH_SHORT).show();
+                break;
+
         }
     }
 }

@@ -56,7 +56,8 @@ public class MyCollectedListActivity extends AppCompatActivity {
         query.getObject(localUserId, new QueryListener<User>() {
             @Override
             public void done(User o, BmobException e) {
-                if (e != null) {
+                if (e == null) {
+                    idleGoodsInfoList = o.getCollections();
                     MyCollectedListAdapter myCollectedListAdapter = new MyCollectedListAdapter(idleGoodsInfoList);
 
                     myCollectedListRecyclerView.setAdapter(myCollectedListAdapter);

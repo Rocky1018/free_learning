@@ -23,13 +23,10 @@ import com.example.myapplication.utils.SharePreferencesUtils;
 public class MyDetailInfoActivity extends AppCompatActivity {
 
     private MyTitleBar myInfoMyTitleBar;
-    private MyItemGroup userIdMyItemGroup;
 
-    private MyItemGroup userLoginIdMyItemGroup;
     private MyItemGroup nicknameMyItemGroup;
     private MyItemGroup userEmailMyItemGroup;
     private MyItemGroup userPhoneNumMyItemGroup;
-    private MyItemGroup userRegisterDateMyItemGroup;
     private SharedPreferences userinformation;
 
     @Override
@@ -59,12 +56,6 @@ public class MyDetailInfoActivity extends AppCompatActivity {
         String localUserPhoneNum = userinformation.getString("userPhoneNum", null);
         String localUserRegisterDate = userinformation.getString("userRegisterDate", null);
 
-        if (localUserId != null) {
-            userIdMyItemGroup.setContentTextViewText(localUserId);
-        }
-        if (localUserLoginId != null) {
-            userLoginIdMyItemGroup.setContentTextViewText(localUserLoginId);
-        }
         if (localUserName != null) {
             nicknameMyItemGroup.setContentTextViewText(localUserName);
         }
@@ -74,65 +65,7 @@ public class MyDetailInfoActivity extends AppCompatActivity {
         if (localUserPhoneNum != null) {
             userPhoneNumMyItemGroup.setContentTextViewText(localUserPhoneNum);
         }
-        if (localUserRegisterDate != null) {
-            userRegisterDateMyItemGroup.setContentTextViewText(localUserRegisterDate);
-        }
 
-        userIdMyItemGroup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MyDetailInfoActivity.this, "用户ID不允许改动！", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        userRegisterDateMyItemGroup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MyDetailInfoActivity.this, "用户注册日期不允许改动！", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        userLoginIdMyItemGroup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final EditText userloginidEditText = new EditText(MyDetailInfoActivity.this);
-                userloginidEditText.setText(userLoginIdMyItemGroup.getContentTextViewText());
-                userloginidEditText.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        if (!userloginidEditText.getText().toString().matches("^[+]{0,1}(\\d){1,3}[ ]?([-]?((\\d)|[ ]){1,12})+$")) {
-                            userloginidEditText.setError("登录账号格式有误！");
-                        }
-                    }
-                });
-
-                //创建弹窗
-                AlertDialog.Builder dialog = new AlertDialog.Builder(MyDetailInfoActivity.this);
-                dialog.setTitle("提示");
-                dialog.setMessage("更改登录账号为").setView(userloginidEditText).setNegativeButton("取消", null);
-                dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // 将信息更新至文本框中，待最终按下保存按钮再更新至本地共享文件并更新数据库
-                        if (!userloginidEditText.getText().toString().isEmpty() && userloginidEditText.getError() == null) {
-                            userLoginIdMyItemGroup.setContentTextViewText(userloginidEditText.getText().toString());
-                            Toast.makeText(MyDetailInfoActivity.this, "修改成功！", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(MyDetailInfoActivity.this, "登录账号格式错误请重试！", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-                dialog.show();
-            }
-        });
 
         nicknameMyItemGroup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -260,33 +193,6 @@ public class MyDetailInfoActivity extends AppCompatActivity {
                     }
                 });
                 dialog.show();
-            }
-        });
-
-        // 保存至本地共享文件且更新至数据库
-        myInfoMyTitleBar.getTvForward().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DoMainUser doMainUser = new DoMainUser();
-                doMainUser.setUserId(localUserId);
-                doMainUser.setUserLoginId(userLoginIdMyItemGroup.getContentTextViewText());
-                doMainUser.setUserName(nicknameMyItemGroup.getContentTextViewText());
-                doMainUser.setUserEmail(userEmailMyItemGroup.getContentTextViewText());
-                doMainUser.setUserPhoneNum(userPhoneNumMyItemGroup.getContentTextViewText());
-                // 先更新远程数据库
-                boolean flag = UpDateUserInfo.modifyUserInfo(doMainUser);
-                if (flag) {
-                    // 若更新数据库成功
-                    // 再更新本地共享文件
-                    SharePreferencesUtils.save(MyDetailInfoActivity.this, userLoginIdMyItemGroup.getContentTextViewText(),
-                            nicknameMyItemGroup.getContentTextViewText(), userEmailMyItemGroup.getContentTextViewText(),
-                            userPhoneNumMyItemGroup.getContentTextViewText(), SharePreferencesUtils.USER_INFORMATION_FILE);
-                    Toast.makeText(MyDetailInfoActivity.this, "保存成功！", Toast.LENGTH_SHORT).show();
-                } else {
-                    // 更新数据库失败
-                    Toast.makeText(MyDetailInfoActivity.this, "保存失败，请重试！", Toast.LENGTH_SHORT).show();
-                }
-                MyDetailInfoActivity.this.finish();
             }
         });
     }

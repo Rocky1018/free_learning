@@ -57,7 +57,8 @@ public class ShopCarListActivity extends AppCompatActivity {
         query.getObject(localUserId, new QueryListener<User>() {
             @Override
             public void done(User o, BmobException e) {
-                if (e != null) {
+                if (e == null) {
+                    idleGoodsInfoList = o.getShoppingCar();
                     ShopCarAdapter myCollectedListAdapter = new ShopCarAdapter(idleGoodsInfoList, ShopCarListActivity.this);
 
                     myCollectedListRecyclerView.setAdapter(myCollectedListAdapter);

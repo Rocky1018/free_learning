@@ -29,7 +29,7 @@ class CategoryStuffActivity : AppCompatActivity() {
         val bmobQuery = BmobQuery<Stuff>()
         bmobQuery.addWhereEqualTo("categoryId", categoryId)
             .findObjects(object : FindListener<Stuff>() {
-                override fun done(list: List<Stuff>, e: BmobException) {
+                override fun done(list: List<Stuff>?, e: BmobException) {
                     if (list != null)
                         result.addAll(list)
                     if (e != null)
