@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.domain.DoMainStuff;
+import com.example.myapplication.bean.Stuff;
 import com.example.myapplication.myview.MyImageView;
 
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
  * 放置闲置物品的RecyclerView的适配器
  */
 public class MyCollectedListAdapter extends RecyclerView.Adapter<MyCollectedListAdapter.ViewHolder> {
-    private final List<DoMainStuff> idleGoodsInfoList;
+    private final List<Stuff> idleGoodsInfoList;
 
     class ViewHolder extends RecyclerView.ViewHolder {
         MyImageView idlePropertyImgMyImageView;
@@ -38,7 +38,7 @@ public class MyCollectedListAdapter extends RecyclerView.Adapter<MyCollectedList
         }
     }
 
-    public MyCollectedListAdapter(List<DoMainStuff> idleGoodsInfoList) {
+    public MyCollectedListAdapter(List<Stuff> idleGoodsInfoList) {
         this.idleGoodsInfoList = idleGoodsInfoList;
     }
 
@@ -52,13 +52,13 @@ public class MyCollectedListAdapter extends RecyclerView.Adapter<MyCollectedList
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        DoMainStuff goods = this.idleGoodsInfoList.get(position);
+        Stuff goods = this.idleGoodsInfoList.get(position);
 
-        holder.idlePropertyImgMyImageView.setImageURL(goods.getGoodsCoverImgDir());
-        holder.idlePropertyTitleTextView.setText(goods.getGoodsName());
-        holder.idlePropertyPersonTextView.setText(goods.getDoMainUser().getUserName());
-        holder.idlePropertyLocationTextView.setText(goods.getGoodsProvince());
-        holder.idlePropertyPriceTextView.setText(goods.getGoodsPrice() + "");
+        //holder.idlePropertyImgMyImageView.setImageURL(goods.getGoodsCoverImgDir());
+        holder.idlePropertyTitleTextView.setText(goods.getName());
+        holder.idlePropertyPersonTextView.setText(goods.getOwnerName());
+        holder.idlePropertyLocationTextView.setText(goods.getOwnerAddress());
+        holder.idlePropertyPriceTextView.setText(goods.getPrice());
     }
 
     @Override

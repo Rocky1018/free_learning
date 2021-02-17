@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.myapplication.R;
+import com.example.myapplication.adapter.CategoryAdapter;
+import com.example.myapplication.bean.Category;
+import com.example.myapplication.bean.Stuff;
 import com.example.myapplication.domain.DoMainStuff;
 import com.example.myapplication.myview.MyTitleBar;
 import com.example.myapplication.adapter.MyCollectedListAdapter;
@@ -19,10 +22,14 @@ import com.example.myapplication.adapter.MyCollectedListAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+
 public class MySearchResultActivity extends AppCompatActivity {
     private MyTitleBar mySearchResultMyTitleBar;
     private RecyclerView mySearchResultRecyclerView;
-    private List<DoMainStuff> mySearchResultList;
+    private final List<Stuff> mySearchResultList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,15 +53,26 @@ public class MySearchResultActivity extends AppCompatActivity {
 
         Log.d("searchResult", searchResult);
 
-        mySearchResultList = DoMainStuff.parseToList(searchResult);
-        if (mySearchResultList == null) {
-            mySearchResultList = new ArrayList<>();
-        }
-
         LinearLayoutManager manager = new LinearLayoutManager(MySearchResultActivity.this);
         mySearchResultRecyclerView.setLayoutManager(manager);
         MyCollectedListAdapter myCollectedListAdapter = new MyCollectedListAdapter(mySearchResultList);
 
         mySearchResultRecyclerView.setAdapter(myCollectedListAdapter);
+        getStuffList();
     }
+
+
+    private void getStuffList() {
+        BmobQuery<Stuff> bmobQuery = new BmobQuery<>();
+        bmobQuery.findObjects(new FindListener<Stuff>() {
+            @Override
+            public void done(List<Stuff> list, BmobException e) {
+                if (list != null && list.size() > 0) {
+                    mySearchResultList.addAll(list);
+                    mySearchResultRecyclerView.setAdapter(new MyCollectedListAdapter(mySearchResultList));
+                }
+            }
+        });
+    }
+
 }
